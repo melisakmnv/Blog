@@ -9,13 +9,15 @@ dotenv.config()
 
 
 const app = express();
-
+ 
 app.use('/users', userRoutes)
 app.use('/posts', postRoutes)
 app.use('/comments', commentRoutes)
 
 
 const PORT = process.env.PORT
+
+
 
 
 
