@@ -2,6 +2,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 
 interface IPost extends Document {
 
+    user: mongoose.Types.ObjectId;
     title: string;
     slug: string;
     category: string;
@@ -15,6 +16,11 @@ interface IPost extends Document {
 
 const postSchema: Schema<IPost> = new Schema(
     {
+        user: {
+            type: Schema.ObjectId,
+            ref: "User",
+            required: true
+        },
         title: {
             type: String,
             required: true,
