@@ -1,11 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
+import { connectDB } from "./lib/db.ts";
 
 import userRoutes from "./routes/user.route.ts"
 import commentRoutes from "./routes/comment.route.ts"
 import postRoutes from "./routes/post.route.ts"
 
 dotenv.config()
+connectDB()
 
 
 const app = express();
