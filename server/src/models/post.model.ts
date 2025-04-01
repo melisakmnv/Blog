@@ -2,7 +2,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 
 interface IPost extends Document {
 
-    user: mongoose.Types.ObjectId;
+    user : mongoose.Types.ObjectId;
     title: string;
     slug: string;
     category: string;
@@ -60,6 +60,6 @@ const postSchema: Schema<IPost> = new Schema(
 )
 
 
-const PostModel: Model<IPost> = new Model('Post', postSchema);
+const PostModel: Model<IPost> = mongoose.model('Post', postSchema);
 
 export default PostModel;
