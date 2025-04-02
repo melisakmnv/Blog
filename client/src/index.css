@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -25,3 +26,6 @@ body {
   min-height: 100vh;
 }
 
+.animatedButton {
+    animation-duration: 10000ms;
+}
