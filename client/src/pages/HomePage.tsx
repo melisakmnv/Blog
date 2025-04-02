@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import "../index.css"
 import MainCategories from "../components/MainCategories"
+import FeaturedPosts from "../components/FeaturedPosts"
 
 export const HomePage = () => {
     return (
@@ -56,6 +57,7 @@ export const HomePage = () => {
             </div>
 
             <MainCategories />
+            <FeaturedPosts />
         </div>
     )
 }

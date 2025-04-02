@@ -2,10 +2,10 @@ import { IKImage } from 'imagekitio-react';
 
 interface ImageProps {
     src: string;
-    className: string;
+    className?: string;
     alt: string;
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
 }
 export const Image = ({ src, className, alt, width, height }: ImageProps) => {
     return (
