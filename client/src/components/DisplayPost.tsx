@@ -22,9 +22,12 @@ export const DisplayPost = ({ main, number }: DisplayPostProps) => {
             {/* Content */}
             <div className={main ? "flex flex-col" : "w-2/3"}>
                 {/* Header */}
-                <div className="flex items-center gap-4 text-sm lg:text-base mb-4">
-                    <h1 className="font-semibold">{number}.</h1>
-                    <Link to={link} className="text-blue-400 lg:text-lg">{category}</Link>
+                <div className="flex flex-col md:flex-row md:items-center  gap-1 md:gap-4 text-sm lg:text-base mb-2 md:mb-4">
+                    <div className="flex items-center gap-2">
+                        <h1 className="font-semibold">{number}.</h1>
+                        <Link to={link} className="text-blue-400 lg:text-lg">{category}</Link>
+                    </div>
+
                     <span className="text-gray-500">{postDate}</span>
                 </div>
 
