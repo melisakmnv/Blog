@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+
 import { useState } from "react"
 import { Link } from "react-router-dom";
 
@@ -6,12 +6,14 @@ export const Navbar = () => {
 
     const [openMenu, setOpenMenu] = useState(false);
 
+
+    // text-[#ae7a72]
     return (
         <div className="w-full h-16 md:h-20 flex items-center justify-between">
-            {/* LOGO */}
-            <Link to="/" className="flex items-center gap-4 text-2xl font-bold">
-                LOGO
+            <Link to="/" className="flex items-center gap-4 text-4xl font-bold logo">
+                Story •
             </Link>
+
             {/* MOBILE MENU */}
             <div className="md:hidden">
                 <div
@@ -38,14 +40,6 @@ export const Navbar = () => {
                 <Link to="/">Trending</Link>
                 <Link to="/">Most popular</Link>
                 <Link to="/">About</Link>
-                <SignedOut>
-                    <Link to="/login">
-                        <button className="py-2 px-4 rounded-3xl bg-neutral-700 cursor-pointer">Login</button>
-                    </Link>
-                </SignedOut>
-                <SignedIn>
-                    <UserButton />
-                </SignedIn>
             </div>
         </div>
     )
