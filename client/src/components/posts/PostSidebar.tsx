@@ -3,7 +3,7 @@ import { Badge } from "../ui/badge";
 import { Avatar } from "../ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "../ui/button";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "../ui/input";
 
 export const PostSidebar = () => {
