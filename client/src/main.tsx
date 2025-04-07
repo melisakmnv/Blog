@@ -12,6 +12,8 @@ import {
 
 import { Home } from './pages/Home.tsx';
 import { Login } from './pages/connexion/Login.tsx';
+import { Posts } from './pages/posts/Posts.tsx';
+import { Post } from './pages/posts/Post.tsx';
 
 
 
@@ -28,6 +30,14 @@ const router = createBrowserRouter(
                 {
                     path: "/login",
                     element: <Login />
+                },
+                {
+                    path: "/posts",
+                    element: <Posts />
+                },
+                {
+                    path: "/posts/:slug",
+                    element: <Post />
                 },
                 
             ]

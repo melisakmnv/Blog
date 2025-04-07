@@ -12,7 +12,7 @@ export const Navbar = () => {
     
 
     return (
-        <div className="w-full h-16 md:h-20 flex items-center justify-between">
+        <div className="w-full h-16 md:h-30 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-4 text-4xl font-bold logo">
                 <Logo />
             </Link>
