@@ -3,7 +3,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -122,8 +121,6 @@
   }
 }
 
-
-
 .font-Poppins {
   font-family: "Poppins", sans-serif;
 }
@@ -139,7 +136,6 @@
 .font-DancingScript {
   font-family: "Dancing Script", cursive;
 }
-
 
 .word-spacing {
     word-spacing: 5px;

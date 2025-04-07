@@ -9,7 +9,7 @@ import { FaArrowUp } from "react-icons/fa";
 
 export const Home = () => {
     return (
-        <div className="flex flex-col gap-6 md:gap-20">
+        <main className="flex flex-col gap-6 md:gap-20">
             <Header/>
             <section className="flex flex-col gap-4">
                 <h2 className="font-Montserrat font-bold text-xl">Newest post</h2>
@@ -17,8 +17,8 @@ export const Home = () => {
             </section>
             <section className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
-                    <h2 className="font-Montserrat font-bold text-xl">Featured blog posts</h2>
-                    <Link to="/login" className="">
+                    <h2 className="font-Montserrat font-bold text-xl">Featured Posts</h2>
+                    <Link to="/posts" className="">
                         <Button className="hidden md:block">See all posts</Button>
                         <div className="border px-3 py-2 rounded-md md:hidden">
                             <FaArrowUp className=" transform rotate-45" />
@@ -41,6 +41,6 @@ export const Home = () => {
                     <BlogCard />
                 </div>
             </section>
-        </div>
+        </main>
     )
 }
