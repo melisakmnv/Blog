@@ -14,8 +14,8 @@ export const BlogCard = () => {
     const postPublisher = "John Doe";
     const publisherAvatar = "https://www.citypng.com/public/uploads/preview/round-netflix-logo-701751694792607bemlfazrrl.png";
     const publishTime = "12 Jan 2025";
-    const postCategory = "Movies";
-    const readingTime = "4 min";
+    // const postCategory = "Movies";
+    // const readingTime = "4 min";
 
 
     return (
