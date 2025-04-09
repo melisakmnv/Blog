@@ -40,7 +40,7 @@ export const CommentSidebar = ({ comments, value, onChange, onSubmit }: CommentS
 
                     />
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 p-4 md:p-0">
                         {comments.map((comment) => (
                             <CommentBlock key={comment._id} comment={comment} />
                         ))}

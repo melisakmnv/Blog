@@ -53,7 +53,7 @@ export const Post = () => {
 
                 {/* COMMENT */}
                 <footer className="w-full max-w-3xl mx-auto pt-10 border-t lg:mt-14">
-                    <h3 className="text-2xl font-semibold text-neutral-800 mb-4">{comments.length} Comments</h3>
+                    <h3 className="text-2xl font-semibold text-neutral-800 mb-6">{comments.length} Comments</h3>
 
                     {/* Comment Input */}
                     <CommentInput
@@ -68,17 +68,31 @@ export const Post = () => {
 
                         ))}
                     </div>
+                    <div className="hidden md:block">
+                        <Drawer direction="right">
+                            <DrawerTrigger asChild>
+                                <div className="mt-10">
+                                    <Button variant={"outline"}>Show all comments</Button>
+                                </div>
+                            </DrawerTrigger>
+                            <CommentSidebar comments={comments} value={commentText}
+                                onChange={handleChange}
+                                onSubmit={handleAddComment} />
+                        </Drawer>
 
-                    <Drawer direction="right">
-                        <DrawerTrigger asChild>
-                            <div className="mt-10">
-                                <Button variant={"outline"}>Show all comments</Button>
-                            </div>
-                        </DrawerTrigger>
-                        <CommentSidebar comments={comments} value={commentText}
-                            onChange={handleChange}
-                            onSubmit={handleAddComment} />
-                    </Drawer>
+                    </div>
+                    <div className="block md:hidden">
+                        <Drawer direction="bottom">
+                            <DrawerTrigger asChild>
+                                <div className="mt-10">
+                                    <Button variant={"outline"}>Show all comments</Button>
+                                </div>
+                            </DrawerTrigger>
+                            <CommentSidebar comments={comments} value={commentText}
+                                onChange={handleChange}
+                                onSubmit={handleAddComment} />
+                        </Drawer>
+                    </div>
 
                 </footer>
             </div>

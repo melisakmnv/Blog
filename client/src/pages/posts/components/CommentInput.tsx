@@ -9,7 +9,7 @@ interface CommentInputProps {
 }
 export const CommentInput = ({ value, onChange, onSubmit }: CommentInputProps) => {
     return (
-        <div className="flex gap-3 mb-6">
+        <div className="flex gap-3 mb-6 p-4 md:p-0">
             <Avatar>
                 <AvatarImage src="" alt="Your Avatar" />
                 <AvatarFallback>C</AvatarFallback>
