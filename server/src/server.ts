@@ -4,6 +4,8 @@ import cors from "cors";
 
 import { connectDB } from "./config/db";
 
+import postRoutes from "./routes/post.routes"
+
 dotenv.config()
 connectDB()
 
@@ -21,6 +23,9 @@ app.use(
 app.get("/", (req, res) => {
     res.send("Hello");
 });
+
+
+app.use('/api/v1/posts', postRoutes);
 
 
 const PORT = process.env.PORT

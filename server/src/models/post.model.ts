@@ -1,9 +1,22 @@
-import mongoose, { Schema, Model } from "mongoose";
+import mongoose, { Schema, Model, Document } from "mongoose";
 import slugify from "slug";
 
 
+interface IPost extends Document {
+    author: string;
+    title: string;
+    slug?: string;
+    cover: string;
+    description: string;
+    content: string;
+    readingTime: string;
+    tag: string[];
+    likes: string[];
+    comments: string[];
+}
 
-const postSchema = new Schema(
+
+const postSchema: Schema<IPost> = new Schema(
     {
         author: String,
         title: {
@@ -12,6 +25,10 @@ const postSchema = new Schema(
         },
         slug: {
             type: String,
+        },
+        cover: {
+            type: String,
+            default: "https://plus.unsplash.com/premium_photo-1684581214880-2043e5bc8b8b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmxvZyUyMGNvdmVyfGVufDB8fDB8fHww"
         },
         description: {
             type: String,
@@ -43,6 +60,6 @@ postSchema.pre('save', function (next) {
 });
 
 
-const PostModel = mongoose.model('Post', postSchema);
+const PostModel: Model<IPost> = mongoose.model('Post', postSchema);
 
 export default PostModel;
