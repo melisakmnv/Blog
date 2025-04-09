@@ -1,24 +1,38 @@
 import { useState } from "react"
+import { useParams } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
 
-import { posts } from "@/data/posts"
 import { IPost } from "@/interfaces/post.interface"
+import { getPostDetails } from "@/api/requests/post"
+
+import { mockComments } from "@/data/comments"
 
 import { PostHeader } from "./components/PostHeader"
 import { PostContent } from "./components/PostContent"
-import { mockComments } from "@/data/comments"
 import { CommentBlock } from "./components/CommentBlock"
 import { CommentInput } from "./components/CommentInput"
+import { CommentSidebar } from "./components/CommentSidebar"
+
 import { Button } from "@/components/ui/button"
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer"
-import { CommentSidebar } from "./components/CommentSidebar"
 
 
 export const Post = () => {
 
     const maxComment = 3;
 
-    // const user = true;
-    const [post] = useState<IPost>(posts[0])
+    const { slug } = useParams<{ slug: string }>()
+
+    if (!slug) {
+        return <div>Error: Slug is missing.</div>;
+    }
+
+    const { data: post, isLoading } = useQuery<IPost>({
+        queryFn: () => getPostDetails(slug),
+        queryKey: ["posts", slug]
+
+    })
+
     const [comments, setComments] = useState(mockComments);
     const [commentText, setCommentText] = useState("");
 
@@ -42,6 +56,18 @@ export const Post = () => {
         setComments([newComment, ...comments]);
         setCommentText("");
     };
+
+
+    if (isLoading) {
+        return (
+            <div>
+                Loading...
+            </div>
+        )
+    }
+
+    if (!post) return <div>No post found.</div>;
+
 
     return (
         <main className="mt-10">

@@ -22,7 +22,7 @@ export const BlogCardSide = ({ post }: BlogCardSideProps) => {
 
     return (
         <Card className="w-[90%] border rounded-sm flex">
-            <Link to={post._id}>
+            <Link to={`/posts/${post.slug}`}>
                 <CardHeader className="flex justify-between items-center">
                     <div className="flex gap-2 items-center">
                         <Avatar>
