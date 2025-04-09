@@ -9,7 +9,7 @@ interface PostContentProps {
 export const PostContent = ({post}:PostContentProps) => {
     return (
         <section className="mx-auto">
-            <article className="flex flex-col justify-center gap-8 text-xl text-neutral-700 font-thin word-spacing">
+            <article className="flex flex-col justify-center gap-4 md:gap-8 text-sm md:text-base lg:text-xl text-neutral-700 font-thin word-spacing">
                 <CoverImage src={post.cover}/>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor nisi, eum, ipsa delectus eos sint molestiae odit pariatur cum nemo, aspernatur doloremque odio officiis ut quis? Soluta repudiandae sunt aut impedit, ea nisi, laudantium totam, sint ut vitae deserunt debitis nihil nemo voluptates laboriosam saepe. Iusto qui eum sed ipsum!</p>
 

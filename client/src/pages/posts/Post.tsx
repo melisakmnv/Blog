@@ -11,7 +11,7 @@ import { CommentInput } from "./components/CommentInput"
 import { Button } from "@/components/ui/button"
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer"
 import { CommentSidebar } from "./components/CommentSidebar"
-import { UserAvatar } from "@/components/UserAvatar"
+
 
 export const Post = () => {
 
@@ -45,14 +45,14 @@ export const Post = () => {
 
     return (
         <main className="mt-10">
-            <div className="w-[70%] mx-auto flex flex-col gap-14 justify-center items-center">
+            <div className="w-[90%] md:w-[70%] mx-auto flex flex-col gap-10 md:gap-14 items-center">
                 <PostHeader post={post} />
 
                 {/* CONTENT */}
                 <PostContent post={post} />
 
                 {/* COMMENT */}
-                <footer className="w-full max-w-3xl mx-auto pt-10 border-t mt-14">
+                <footer className="w-full max-w-3xl mx-auto pt-10 border-t lg:mt-14">
                     <h3 className="text-2xl font-semibold text-neutral-800 mb-4">{comments.length} Comments</h3>
 
                     {/* Comment Input */}
