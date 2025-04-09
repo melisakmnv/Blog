@@ -30,7 +30,7 @@ export const CommentBlock = ({ comment }: CommentBlockProps) => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <LikeButton />
+                    <LikeButton variant="button" />
                     <Button variant={"ghost"} className="text-neutral-500 font-light">
                         <FaRegComment />
                     </Button>
