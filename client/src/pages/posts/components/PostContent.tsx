@@ -1,3 +1,4 @@
+import { CoverImage } from "@/components/CoverImage";
 import { IPost } from "@/interfaces/post.interface"
 
 
@@ -9,7 +10,7 @@ export const PostContent = ({post}:PostContentProps) => {
     return (
         <section className="mx-auto">
             <article className="flex flex-col justify-center gap-8 text-xl text-neutral-700 font-thin word-spacing">
-                <img className="object-cover" src={post.cover} alt="Post Cover" />
+                <CoverImage src={post.cover}/>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor nisi, eum, ipsa delectus eos sint molestiae odit pariatur cum nemo, aspernatur doloremque odio officiis ut quis? Soluta repudiandae sunt aut impedit, ea nisi, laudantium totam, sint ut vitae deserunt debitis nihil nemo voluptates laboriosam saepe. Iusto qui eum sed ipsum!</p>
 
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus totam, nostrum rem doloribus vel quos cum eum hic ex error placeat tenetur expedita eveniet eligendi iure quaerat. Ipsa quo tempore impedit quos fugit tenetur aperiam a, aspernatur nihil esse inventore in aliquam molestiae. Illum assumenda amet veritatis vel nisi. Quo!</p>

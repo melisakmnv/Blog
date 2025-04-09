@@ -1,9 +1,7 @@
-import { posts } from "@/data/posts"
-import { IPost } from "@/interfaces/post.interface"
-
-
 import { useState } from "react"
 
+import { posts } from "@/data/posts"
+import { IPost } from "@/interfaces/post.interface"
 
 import { PostHeader } from "./components/PostHeader"
 import { PostContent } from "./components/PostContent"
@@ -13,8 +11,7 @@ import { CommentInput } from "./components/CommentInput"
 import { Button } from "@/components/ui/button"
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer"
 import { CommentSidebar } from "./components/CommentSidebar"
-
-
+import { UserAvatar } from "@/components/UserAvatar"
 
 export const Post = () => {
 
@@ -45,9 +42,6 @@ export const Post = () => {
         setComments([newComment, ...comments]);
         setCommentText("");
     };
-
-
-
 
     return (
         <main className="mt-10">

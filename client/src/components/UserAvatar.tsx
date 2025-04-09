@@ -98,7 +98,6 @@ export const UserAvatar = ({ user, variant, post, comment }: UserAvatarProps) =>
                     </div>
 
 
-
                     <HoverCardContent className="w-80 flex flex-col gap-4">
                         <div className="flex justify-between items-end">
                             <Avatar className="size-16">
