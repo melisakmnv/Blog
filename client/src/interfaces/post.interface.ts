@@ -2,14 +2,14 @@ export interface IPost {
     _id: string;
     cover: string;
     title: string;
+    slus: string;
     description: string;
     content: string;
-    tag: string;
+    tag: string[];
     author: string;
-    avatar: string;
-    createdAt: string;
-    // updatedAt : string;
     readingTime: string;
-    likes : number;
-    comments : number;
+    likes: string[];
+    comments: string[];
+    createdAt: string;
+    updatedAt: string;
 }

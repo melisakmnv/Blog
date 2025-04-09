@@ -47,7 +47,7 @@ export const BlogCardSide = ({ post }: BlogCardSideProps) => {
                 <div className='flex items-center gap-2'>
                     <Badge variant="outline" className="cursor-pointer rounded-full">{post.tag}</Badge>
                     <p className='text-sm text-neutral-500 hidden md:block'> • {post.readingTime}</p>
-                    <LikeButton variant={"display"} initialCount={post.likes} />
+                    <LikeButton variant={"display"} initialCount={post.likes.length} />
                     <CommentButton post={post} variant={"display"} />
                 </div>
                 <div className="flex items-center gap-2 md:gap-4">

@@ -1,11 +1,31 @@
 
+import { getPosts } from "@/api/requests/post"
 import { BlogCardSide } from "@/components/card/BlogCardSide"
 import { PostSidebar } from "@/components/posts/PostSidebar"
-import { posts } from "@/data/posts"
+import { IPost } from "@/interfaces/post.interface"
+
+
+
+import { useQuery } from "@tanstack/react-query"
+
 
 
 
 export const Posts = () => {
+
+    const { data: posts, isLoading } = useQuery<IPost[]>({
+        queryFn: getPosts,
+        queryKey: ["posts"]
+
+    })
+
+    if (isLoading) {
+        return (
+            <div>
+                Loading...
+            </div>
+        )
+    }
 
     return (
         <main>
@@ -15,7 +35,7 @@ export const Posts = () => {
                 <div className="flex">
                     <div className="flex-2 flex flex-col items-center justify-center gap-10">
                         {
-                            posts.map((post) => (
+                            posts?.map((post) => (
                                 <BlogCardSide key={post._id} post={post} />
                             ))
                         }
@@ -25,11 +45,6 @@ export const Posts = () => {
                     </div>
                 </div>
             </section>
-
-            {/* POSTS  */}
-
-            {/* SIDE BAR */}
-
         </main>
     )
 }
