@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom"
 import { Button } from "../ui/button"
 import { LinkItem } from "./LinkItem"
+import useUserStore from "@/store/useUserStore";
+import { UserMenu } from "./UserMenu";
 
 
 export const Desktop = () => {
+
+    const { user, logout } = useUserStore();
+
+
+
+
+    // const { user, isAuthenticated } = useUserStore();
+
+
 
     const routes = [
         {
@@ -18,10 +29,6 @@ export const Desktop = () => {
             link: "/",
             label: "Most popular"
         },
-        {
-            link: "/",
-            label: "About"
-        },
     ]
 
     return (
@@ -31,9 +38,15 @@ export const Desktop = () => {
                     <LinkItem key={index} link={route.link} label={route.label} />
                 ))
             }
-            <Link to={"/login"}>
-                <Button>Login</Button>
-            </Link>
+            {
+                user ? (
+                    <UserMenu logout={logout}/>
+                ) : (
+                    <Link to={"/login"}>
+                        <Button>Login</Button>
+                    </Link>
+                )
+            }
         </div>
     )
 }

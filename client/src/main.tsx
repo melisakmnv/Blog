@@ -17,6 +17,7 @@ import { Home } from './pages/Home.tsx';
 import { Login } from './pages/connexion/Login.tsx';
 import { Posts } from './pages/posts/Posts.tsx';
 import { Post } from './pages/posts/Post.tsx';
+import { Profile } from './pages/profile/Profile.tsx';
 
 
 
@@ -43,7 +44,10 @@ const router = createBrowserRouter(
                     path: "/posts/:slug",
                     element: <Post />
                 },
-
+                {
+                    path: "/profile",
+                    element: <Profile />
+                },
             ]
         },
 

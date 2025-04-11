@@ -8,3 +8,11 @@ export interface IUser {
     followers : number;
     followings : number;
 }
+
+
+export interface IUserPayload {
+    _id: string; 
+    firstname: string; 
+    lastname: string; 
+    role: string
+}

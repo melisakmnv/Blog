@@ -2,6 +2,7 @@ import { signin } from "@/api/requests/auth"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useUserStore from "@/store/useUserStore"
 
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -26,6 +27,7 @@ export type SigninSchema = z.infer<typeof formSchema>
 export const Login = () => {
 
     const navigate = useNavigate()
+    const setUser = useUserStore((state) => state.setUser);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -38,8 +40,14 @@ export const Login = () => {
 
     const mutation = useMutation({
         mutationFn: signin,
-        onSuccess: () => {
-            navigate("/")
+        onSuccess: (data) => {
+            setUser({
+                _id: data._id,
+                firstname: data.firstname,
+                lastname: data.lastname,
+                role: data.role,
+            });
+            navigate("/profile")
         },
         onError: (error: any) => {
             console.log(error.response?.data)
