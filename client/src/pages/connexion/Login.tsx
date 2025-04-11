@@ -41,12 +41,7 @@ export const Login = () => {
     const mutation = useMutation({
         mutationFn: signin,
         onSuccess: (data) => {
-            setUser({
-                _id: data._id,
-                firstname: data.firstname,
-                lastname: data.lastname,
-                role: data.role,
-            });
+            setUser(data.user);
             navigate("/profile")
         },
         onError: (error: any) => {

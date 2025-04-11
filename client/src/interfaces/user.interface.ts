@@ -14,5 +14,10 @@ export interface IUserPayload {
     _id: string; 
     firstname: string; 
     lastname: string; 
-    role: string
+    role: string;
+    email : string;
+    avatar : string;
+    savedPost : string[];
+    createdAt : string;
+    updatedAt : string;
 }

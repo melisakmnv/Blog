@@ -9,8 +9,6 @@ import { IPost } from "@/interfaces/post.interface"
 import { useQuery } from "@tanstack/react-query"
 
 
-
-
 export const Posts = () => {
 
     const { data: posts, isLoading } = useQuery<IPost[]>({
@@ -32,7 +30,7 @@ export const Posts = () => {
             {/* FILTER BOX */}
             <section>
                 <h2 className="font-Montserrat font-bold text-xl">Featured Posts</h2>
-                <div className="flex">
+                <div className="flex gap-10">
                     <div className="flex-2 flex flex-col items-center justify-center gap-10">
                         {
                             posts?.map((post) => (

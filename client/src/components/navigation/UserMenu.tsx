@@ -3,12 +3,14 @@
 import { useNavigate } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "../ui/menubar"
+import { IUserPayload } from "@/interfaces/user.interface";
 
 interface UserMenuProps {
-    logout : () => void;
+    logout: () => void;
+    user: IUserPayload;
 }
 
-export const UserMenu = ({ logout }: UserMenuProps) => {
+export const UserMenu = ({ logout, user }: UserMenuProps) => {
 
     const navigate = useNavigate();
 
@@ -17,8 +19,8 @@ export const UserMenu = ({ logout }: UserMenuProps) => {
             <Menubar>
                 <MenubarMenu>
                     <MenubarTrigger className="focus:bg-none">
-                        <Avatar>
-                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                        <Avatar className="size-10">
+                            <AvatarImage src={user.avatar} alt={`${user.firstname} ${user.lastname}'s Avatar`}/>
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                     </MenubarTrigger>
