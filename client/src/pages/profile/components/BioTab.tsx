@@ -1,7 +1,6 @@
 import { Separator } from "@/components/ui/separator"
 
 
-
 export const BioTab = () => {
     return (
         <div className="flex flex-col gap-8">
