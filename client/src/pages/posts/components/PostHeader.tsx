@@ -15,7 +15,7 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
             
             <div className="flex items-center gap-4">
                 <Avatar className="size-14">
-                    <AvatarImage src={post.avatar} alt="Publisher Avatar" />
+                    <AvatarImage src="user" alt="Publisher Avatar" />
                     <AvatarFallback>Publisher Avatar</AvatarFallback>
                 </Avatar>
                 <div>
