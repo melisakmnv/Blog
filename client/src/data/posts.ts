@@ -1,6 +1,6 @@
-import { IPost } from "@/interfaces/post.interface";
 
-export const posts: IPost[] = [
+
+export const posts = [
     {
         _id: '1',
         cover: "https://hapy.design/wp-content/uploads/2024/03/web-design-concept-with-drawings_1134-77.jpg",

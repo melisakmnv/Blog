@@ -7,9 +7,10 @@ import { Mobile } from "./navigation/Mobile";
 import { Desktop } from "./navigation/Desktop";
 
 
+
 export const Navbar = () => {
 
-    
+
 
     return (
         <div className="w-full h-16 md:h-30 flex items-center justify-between">
@@ -18,10 +19,10 @@ export const Navbar = () => {
             </Link>
 
             <div className="md:hidden">
-                <Mobile />
+                <Mobile  />
             </div>
             <div className="hidden md:block">
-                <Desktop />
+                <Desktop/>
             </div>
 
         </div>

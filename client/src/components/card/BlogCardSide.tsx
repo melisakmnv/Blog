@@ -21,8 +21,8 @@ interface BlogCardSideProps {
 export const BlogCardSide = ({ post }: BlogCardSideProps) => {
 
     return (
-        <Card className="w-[90%] border rounded-sm flex">
-            <Link to={post._id}>
+        <Card className=" border rounded-sm flex">
+            <Link to={`/posts/${post.slug}`}>
                 <CardHeader className="flex justify-between items-center">
                     <div className="flex gap-2 items-center">
                         <Avatar>
@@ -47,7 +47,7 @@ export const BlogCardSide = ({ post }: BlogCardSideProps) => {
                 <div className='flex items-center gap-2'>
                     <Badge variant="outline" className="cursor-pointer rounded-full">{post.tag}</Badge>
                     <p className='text-sm text-neutral-500 hidden md:block'> • {post.readingTime}</p>
-                    <LikeButton variant={"display"} initialCount={post.likes} />
+                    <LikeButton variant={"display"} initialCount={post.likes.length} />
                     <CommentButton post={post} variant={"display"} />
                 </div>
                 <div className="flex items-center gap-2 md:gap-4">
