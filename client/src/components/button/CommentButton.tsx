@@ -24,21 +24,21 @@ export const CommentButton = ({ post, variant }: CommentButtonProps) => {
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>{post.comments} comment{post.comments !== 1 && "s"}</p>
+                            <p>{post.comments} comment{post.comments.length > 1 && "s"}</p>
                         </TooltipContent>
                     </Tooltip>
                 ) : (
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button variant="ghost">
-                                    <FaRegComment className="text-neutral-500" />
-                                    <p className="text-neutral-500">{post.comments}</p>
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>{post.comments} comment{post.comments !== 1 && "s"}</p>
-                            </TooltipContent>
-                        </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost">
+                                <FaRegComment className="text-neutral-500" />
+                                <p className="text-neutral-500">{post.comments}</p>
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>{post.comments} comment{post.comments.length > 1 && "s"}</p>
+                        </TooltipContent>
+                    </Tooltip>
                 )
             }
         </>
