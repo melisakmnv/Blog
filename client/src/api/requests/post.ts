@@ -2,8 +2,6 @@ import { IPost } from "@/interfaces/post.interface";
 import { axiosInstance } from "../instance";
 
 
-
-
 export const getPosts = async (): Promise<IPost[]> => {
     try {
 
