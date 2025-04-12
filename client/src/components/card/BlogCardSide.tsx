@@ -26,7 +26,7 @@ export const BlogCardSide = ({ post }: BlogCardSideProps) => {
                 <CardHeader className="flex justify-between items-center">
                     <div className="flex gap-2 items-center">
                         <Avatar>
-                            <AvatarImage src={post.avatar} alt="Publisher Avatar" />
+                            <AvatarImage src="user" alt="Publisher Avatar" />
                             <AvatarFallback>Publisher Avatar</AvatarFallback>
                         </Avatar>
                         <p className="text-sm text-neutral-500 font-Poppins truncate">{post.author}</p>
