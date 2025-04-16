@@ -1,3 +1,5 @@
+import { IUserPayload } from "./user.interface";
+
 export interface IPost {
     _id: string;
     cover: string;
@@ -6,7 +8,7 @@ export interface IPost {
     description: string;
     content: string;
     tag: string[];
-    author: string;
+    author: IUserPayload;
     readingTime: string;
     likes: string[];
     comments: string[];

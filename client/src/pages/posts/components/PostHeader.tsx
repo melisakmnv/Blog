@@ -15,12 +15,12 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
             
             <div className="flex items-center gap-4">
                 <Avatar className="size-14">
-                    <AvatarImage src="user" alt="Publisher Avatar" />
+                    <AvatarImage src={post.author.avatar} alt="Publisher Avatar" />
                     <AvatarFallback>Publisher Avatar</AvatarFallback>
                 </Avatar>
                 <div>
                     <div className="flex items-center gap-2 text-sm text-neutral-500 font-Poppins">
-                        <p className="">{post.author}</p>
+                        <p className="">{post.author.firstname} {post.author.lastname}</p>
                         <p>•</p>
                         <p className="underline text-neutral-800" >Follow+</p>
                     </div>
