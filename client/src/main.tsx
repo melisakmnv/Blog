@@ -18,6 +18,7 @@ import { Login } from './pages/connexion/Login.tsx';
 import { Posts } from './pages/posts/Posts.tsx';
 import { Post } from './pages/posts/Post.tsx';
 import { Profile } from './pages/profile/Profile.tsx';
+import { Write } from './pages/write/Write.tsx';
 
 
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter(
                 {
                     path: "/profile",
                     element: <Profile />
+                },
+                {
+                    path: "/new-story",
+                    element: <Write />
                 },
             ]
         },

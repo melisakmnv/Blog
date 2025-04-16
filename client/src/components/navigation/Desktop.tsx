@@ -33,7 +33,7 @@ export const Desktop = () => {
             {
                 user ? (
                     <>
-                        <Link to="/">
+                        <Link to="/new-story">
                             <div className="flex items-center gap-2 font-Karla uppercase font-light text-neutral-500 border-b border-transparent transition-all ease-in-out duration-300 hover:text-neutral-800">
                                 <BiSolidEditAlt className="size-6" />
                                 <p>Write</p>
