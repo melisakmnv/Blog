@@ -1,70 +1,155 @@
+import { createPost } from '@/api/requests/post';
 import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import useUserStore from '@/store/useUserStore';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
+import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+
+const formSchema = z.object({
+    title: z.string(),
+    description: z.string(),
+    content: z.string(),
+    tag: z.string(),
+    author: z.string(),
+})
+
+export type CreatePostSchema = z.infer<typeof formSchema>
 
 export const Write = () => {
-    const [value, setValue] = useState('');
+
+    const navigate = useNavigate()
+
+    const { user } = useUserStore();
+    const userId = user?._id;
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            title: "",
+            description: "",
+            content: "",
+            tag: "",
+            author: userId,
+        },
+    })
+
+    const mutation = useMutation({
+        mutationFn: createPost,
+        onSuccess: (data) => {
+            navigate(`/posts/${data.slug}`);
+        },
+        onError: (error: any) => {
+            console.log(error.response?.data)
+            alert(error.response?.data || 'Error creating new post');
+        },
+    });
+
+    const onSubmit = (values: CreatePostSchema) => {
+
+        console.log('Form Submitted:', values);
+        mutation.mutate(values)
+    };
 
     return (
         <div className="max-w-3xl mx-auto py-10 px-4 space-y-8">
-          <h1 className="text-3xl font-bold text-center">Create Your Story</h1>
-    
-          <form className="space-y-6">
-            {/* Title */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Title</label>
-              <Input placeholder="Enter your blog title..." />
-            </div>
-    
-            {/* Description */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Short Description</label>
-              <Textarea placeholder="Brief summary of your blog post..." />
-            </div>
-    
-            {/* Category / Tags */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Category</label>
-              <Select>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose a category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Categories</SelectLabel>
-                    <SelectItem value="tech">Tech</SelectItem>
-                    <SelectItem value="travel">Travel</SelectItem>
-                    <SelectItem value="lifestyle">Lifestyle</SelectItem>
-                    <SelectItem value="health">Health</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-    
-            {/* Content */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Content</label>
-              <div className="bg-white h-[500px]">
-                <ReactQuill
-                  theme="snow"
-                  value={value}
-                  onChange={setValue}
-                  style={{ height: '480px' }}
-                />
-              </div>
-            </div>
-    
-            {/* Buttons */}
-            <div className="flex justify-end gap-4 pt-4">
-              <Button variant="outline">Save as Draft</Button>
-              <Button type="submit">Publish</Button>
-            </div>
-          </form>
+            <h1 className="text-3xl font-bold text-center">Create Your Story</h1>
+
+            <Form {...form}>
+                <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+                    {/* Title */}
+
+                    <FormField
+                        control={form.control}
+                        name="title"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Title</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter your blog title..." {...field} type="text" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Description */}
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Short Description</FormLabel>
+                                <FormControl>
+                                    <Textarea placeholder="Brief summary of your blog post..." {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Category / Tags */}
+                    <FormField
+                        control={form.control}
+                        name="tag"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Category</FormLabel>
+                                <FormControl>
+                                    {/* <Textarea placeholder="Brief summary of your blog post..." {...field} /> */}
+                                    <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Choose a category" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>Categories</SelectLabel>
+                                                <SelectItem value="tech">Tech</SelectItem>
+                                                <SelectItem value="travel">Travel</SelectItem>
+                                                <SelectItem value="lifestyle">Lifestyle</SelectItem>
+                                                <SelectItem value="health">Health</SelectItem>
+                                                <SelectItem value="other">Other</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="content"
+                        render={({ field }) => (
+                            <FormItem className='h-[500px]'>
+                                <FormLabel>Category</FormLabel>
+                                <FormControl>
+                                    <ReactQuill
+                                        {...field}
+                                        theme="snow"
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        style={{ height: '450px' }}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <div className="flex justify-end gap-4 pt-4">
+                        <Button variant="outline">Save as Draft</Button>
+                        <Button type="submit">Publish</Button>
+                    </div>
+                </form>
+            </Form >
         </div>
-      );
+    );
 }

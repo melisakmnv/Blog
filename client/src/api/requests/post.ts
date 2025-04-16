@@ -1,4 +1,4 @@
-import { IPost } from "@/interfaces/post.interface";
+import { IPost, IPostForm } from "@/interfaces/post.interface";
 import { axiosInstance } from "../instance";
 
 
@@ -23,6 +23,18 @@ export const getPostDetails = async (slug: string): Promise<IPost> => {
 
     } catch (error) {
         console.error("❌ Error during fetching:", error);
+        throw error;
+    }
+}
+
+export const createPost = async (formData: IPostForm): Promise<IPost> => {
+    try {
+
+        const { data } = await axiosInstance.post(`/posts/`, formData)
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during creating post:", error);
         throw error;
     }
 }

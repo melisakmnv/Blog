@@ -13,3 +13,13 @@ export interface IPost {
     createdAt: string;
     updatedAt: string;
 }
+
+
+export interface IPostForm {
+    // cover: string;
+    title: string;
+    description: string;
+    content: string;
+    tag: string;
+    author: string;
+}
