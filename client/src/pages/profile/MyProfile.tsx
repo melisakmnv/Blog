@@ -38,7 +38,7 @@ export const MyProfile = () => {
                             <TabsTrigger value="bio">Bio</TabsTrigger>
                         </TabsList>
                         <TabsContent value="home">
-                            <BlogTab posts={posts} />
+                            <BlogTab posts={posts} currentUser={currentUser}  />
                         </TabsContent>
                         <TabsContent value="list">
                             <ListTab />

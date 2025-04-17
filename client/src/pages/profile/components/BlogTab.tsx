@@ -1,12 +1,14 @@
 import { BlogCardSide } from "@/components/card/BlogCardSide"
 import { IPost } from "@/interfaces/post.interface"
+import { IUserPayload } from "@/interfaces/user.interface";
 
 
 
 interface BlogTabProps {
-    posts: IPost[]
+    posts: IPost[];
+    currentUser : IUserPayload;
 }
-export const BlogTab = ({ posts }: BlogTabProps) => {
+export const BlogTab = ({ posts, currentUser }: BlogTabProps) => {
 
     return (
         <section className="w-full">
@@ -14,7 +16,7 @@ export const BlogTab = ({ posts }: BlogTabProps) => {
                 <div className="flex-2 flex flex-col justify-center gap-10">
                     {posts && posts.length > 0 ? (
                         posts.map((post) => (
-                            <BlogCardSide key={post._id} post={post} />
+                            <BlogCardSide key={post._id} post={post} currentUser={currentUser} />
                         ))
                     ) : (
                         <div className="font-Karla font-extralight text-lg leading-[40px] border-dashed border p-10 flex items-center justify-center">

@@ -14,14 +14,19 @@ import { LikeButton } from '../button/LikeButton';
 import { BlogMenuBar } from './BlogMenuBar';
 import { CommentButton } from '../button/CommentButton';
 import { CoverImage } from '../CoverImage';
+import { IUserPayload } from '@/interfaces/user.interface';
 
 interface BlogCardSideProps {
     post: IPost;
+    currentUser: IUserPayload;
 }
-export const BlogCardSide = ({ post }: BlogCardSideProps) => {
+export const BlogCardSide = ({ post, currentUser }: BlogCardSideProps) => {
 
-    
-    console.log(post)
+    console.log(currentUser)
+
+    const isSaved = currentUser.savedPosts.some((p) => p === post._id)
+
+    console.log(isSaved)
 
     return (
         <Card className=" border rounded-sm flex">
@@ -54,7 +59,7 @@ export const BlogCardSide = ({ post }: BlogCardSideProps) => {
                     <CommentButton post={post} variant={"display"} />
                 </div>
                 <div className="flex items-center gap-2 md:gap-4">
-                    <SaveButton />
+                    <SaveButton postId={post._id} isSaved={isSaved} />
                     <BlogMenuBar />
                 </div>
             </CardFooter>

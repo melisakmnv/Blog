@@ -17,7 +17,7 @@ export interface IUserPayload {
     role: string;
     email : string;
     avatar : string;
-    savedPost : string[];
+    savedPosts : string[];
     createdAt : string;
     updatedAt : string;
     followers : IUserSummary[];
