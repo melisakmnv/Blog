@@ -20,16 +20,18 @@ interface BlogCardSideProps {
 }
 export const BlogCardSide = ({ post }: BlogCardSideProps) => {
 
+    console.log(post)
+
     return (
         <Card className=" border rounded-sm flex">
             <Link to={`/posts/${post.slug}`}>
                 <CardHeader className="flex justify-between items-center">
                     <div className="flex gap-2 items-center">
                         <Avatar>
-                            <AvatarImage src="user" alt="Publisher Avatar" />
+                            <AvatarImage className='object-cover' src={post.author.avatar} alt="Publisher Avatar" />
                             <AvatarFallback>Publisher Avatar</AvatarFallback>
                         </Avatar>
-                        <p className="text-sm text-neutral-500 font-Poppins truncate">{post.author}</p>
+                        <p className="text-sm text-neutral-800 font-Poppins capitalize truncate">{post.author.firstname} {post.author.lastname}</p>
                     </div>
                     <p className="text-sm text-neutral-500 font-Poppins">{formattedDate(post.createdAt)}</p>
                 </CardHeader>
