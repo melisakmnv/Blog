@@ -7,15 +7,12 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "@/api/requests/user";
 import { getUserPosts } from "@/api/requests/post";
-import useUserStore from "@/store/useUserStore";
-
-
 
 export const UserProfile = () => {
 
     const isOwnProfile = false
     const { username } = useParams();
-    const { user: currentUser } = useUserStore();
+
 
     const { data: profileUser, isLoading, isError } = useQuery({
         queryKey: ["userProfile", username],
@@ -31,11 +28,6 @@ export const UserProfile = () => {
     if (isLoading) return <p>Loading...</p>;
     if (isError || !profileUser) return <p>User not found</p>;
 
-    console.log(profileUser)
-
-    const isFollowing = profileUser.followers.some(f => f._id === currentUser?._id);
-
-    console.log(isFollowing)
 
     return (
         <main>
@@ -65,7 +57,7 @@ export const UserProfile = () => {
                     </Tabs>
                 </div>
                 <div className="flex-1 hidden lg:block">
-                    <ProfileSidebar user={profileUser} isOwnProfile={isOwnProfile} isFollowing={isFollowing} />
+                    <ProfileSidebar user={profileUser} isOwnProfile={isOwnProfile} />
                 </div>
             </section>
         </main>

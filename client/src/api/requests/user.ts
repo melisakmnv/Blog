@@ -51,3 +51,21 @@ export const followUser = async (username: string) => {
         throw error;
     }
 };
+
+
+export const unFollowUser = async (username: string) => {
+    try {
+        const { data } = await axiosInstance.post(
+            `/users/unfollow/${username}`,
+            {}, // no body
+            {
+                withCredentials: true, // place in config object
+            }
+        );
+
+        return data;
+    } catch (error) {
+        console.error("❌ Error during fetching:", error);
+        throw error;
+    }
+};

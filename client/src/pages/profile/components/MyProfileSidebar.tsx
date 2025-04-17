@@ -4,9 +4,9 @@ import { IUserPayload } from "@/interfaces/user.interface"
 import { Link } from "react-router-dom";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { followUser, unFollowUser } from "@/api/requests/user";
+import { unFollowUser } from "@/api/requests/user";
 import { toast } from "react-toastify";
-import useUserStore from "@/store/useUserStore";
+
 
 interface ProfileSidebarProps {
     user: IUserPayload;
@@ -14,32 +14,27 @@ interface ProfileSidebarProps {
 
 }
 
-export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
-
-    const { user: currentUser } = useUserStore();
-
+export const MyProfileSidebar = ({ user }: ProfileSidebarProps) => {
 
     const followers = user.followers.length
 
+
     const queryClient = useQueryClient();
 
-    const followMutation = useMutation({
-        mutationFn: () => followUser(user.username),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["userProfile", user.username] });
-            toast.success(`You are now following`);
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            toast.error(error?.response?.data?.message || "Something went wrong");
-        },
-    });
-
     const unFollowMutation = useMutation({
-        mutationFn: () => unFollowUser(user.username),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["userProfile", user.username] });
-            toast.success(`You are now following`);
+        mutationFn: (username: string) => unFollowUser(username),
+        onSuccess: (data, username) => {
+            // Update myProfile cache to remove the unfollowed user
+            queryClient.setQueryData(["myProfile"], (oldData: IUserPayload | undefined) => {
+                if (!oldData) return oldData;
+
+                return {
+                    ...oldData,
+                    followings: oldData.followings.filter(f => f.username !== username),
+                };
+            });
+
+            toast.success(data.message);
         },
         onError: (error: any) => {
             console.log(error.response?.data)
@@ -47,16 +42,10 @@ export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
         },
     })
 
+    const handleUnFollow = (username: string) => {
 
-    const isFollowing = currentUser?.followers.some(f => f._id === currentUser?._id);
-
-
-    const handleFollow = () => {
-        followMutation.mutate()
-    }
-
-    const handleUnFollow = () => {
-        unFollowMutation.mutate()
+        console.log(username)
+        unFollowMutation.mutate(username);
     }
 
     return (
@@ -79,25 +68,8 @@ export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
                 {/* FOLLOW BUTTONS or Edit button */}
 
                 <div className="flex items-center gap-4">
-                    {
-                        isOwnProfile ? (
-                            <>
-                                <Button variant={"outline"}>Edit profile</Button>
-                                <BiSolidEditAlt className="text-2xl" />
-                            </>
-                        ) : (
-                            <>
-                                {
-                                    isFollowing ? (
-                                        <Button onClick={handleUnFollow} variant={"outline"}>Unfollow</Button>
-                                    ) : (
-                                        <Button onClick={handleFollow} variant={"outline"}>Follow</Button>
-                                    )
-                                }
-                            </>
-                        )
-                    }
-
+                    <Button variant={"outline"}>Edit profile</Button>
+                    <BiSolidEditAlt className="text-2xl" />
                 </div>
 
                 {/* People to Follow */}
@@ -118,13 +90,7 @@ export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
                                         </div>
                                     </Link>
                                 </div>
-                                {
-                                    user.followings.some(f => f._id === person._id) ? (
-                                        <Button variant="outline" className="text-sm">Unfollow</Button>
-                                    ) : (
-                                        <Button variant="default" className="text-sm">Follow</Button>
-                                    )
-                                }
+                                <Button onClick={() => handleUnFollow(person.username)} variant="outline" className="text-sm">Unfollow</Button>
                             </li>
                         ))}
                     </ul>

@@ -1,31 +1,33 @@
 
-import { ProfileSidebar } from "./components/ProfileSidebar";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BlogTab } from "./components/BlogTab";
 import { ListTab } from "./components/ListTab";
 import { BioTab } from "./components/BioTab";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getUserPosts } from "@/api/requests/post";
 import { getMyProfile } from "@/api/requests/user";
+import { MyProfileSidebar } from "./components/MyProfileSidebar";
 
 
 export const MyProfile = () => {
 
-    const isOwnProfile = true
-
-    const { data: currentUser, isLoading, isError } = useQuery({
+    const { data: currentUser, isLoading, isError, } = useSuspenseQuery({
         queryKey: ["myProfile"],
         queryFn: getMyProfile,
     });
 
-    const { data: posts } = useQuery({
+    const { data: posts } = useSuspenseQuery({
         queryKey: ["posts", currentUser?._id],
-        queryFn: () => getUserPosts(currentUser!.username),
-        enabled: !!currentUser,
+        queryFn: () => getUserPosts(currentUser._id),
     });
 
     if (isLoading || !currentUser) return <div>Loading...</div>;
     if (isError || !currentUser) return <p>User not found</p>;
+
+
+
+    console.log(posts)
 
     return (
         <main>
@@ -55,9 +57,7 @@ export const MyProfile = () => {
                     </Tabs>
                 </div>
                 <div className="flex-1 hidden lg:block">
-                    {
-                        currentUser && <ProfileSidebar user={currentUser} isOwnProfile={isOwnProfile} />
-                    }
+                    <MyProfileSidebar user={currentUser} />
                 </div>
             </section>
         </main>
