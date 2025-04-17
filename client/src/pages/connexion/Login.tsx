@@ -42,7 +42,7 @@ export const Login = () => {
         mutationFn: signin,
         onSuccess: (data) => {
             setUser(data.user);
-            navigate("/profile")
+            navigate(`/profile/me`)
         },
         onError: (error: any) => {
             console.log(error.response?.data)
@@ -52,9 +52,6 @@ export const Login = () => {
 
 
     function onSubmit(values: SigninSchema) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
         mutation.mutate(values);
     }
 

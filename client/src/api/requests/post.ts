@@ -38,3 +38,17 @@ export const createPost = async (formData: IPostForm): Promise<IPost> => {
         throw error;
     }
 }
+
+
+export const getUserPosts = async (username:string):Promise<IPost[]> => {
+    try {
+
+        const { data } = await axiosInstance.get(`/posts/user/${username}`)
+        return data
+        
+    } catch (error) {
+        console.error("❌ Error during fetching user' post:", error);
+        throw error;
+    }
+
+}

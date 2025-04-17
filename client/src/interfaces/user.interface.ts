@@ -20,4 +20,16 @@ export interface IUserPayload {
     savedPost : string[];
     createdAt : string;
     updatedAt : string;
+    followers : IUserSummary[];
+    followings : IUserSummary[];
+    username : string;
+}
+
+export interface IUserSummary {
+    _id : string;
+    firstname: string; 
+    lastname: string; 
+    username : string;
+    avatar : string
+    bio : string;
 }

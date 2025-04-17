@@ -1,22 +1,37 @@
-import useUserStore from "@/store/useUserStore";
+
 import { ProfileSidebar } from "./components/ProfileSidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BlogTab } from "./components/BlogTab";
 import { ListTab } from "./components/ListTab";
 import { BioTab } from "./components/BioTab";
+import { useQuery } from "@tanstack/react-query";
+import { getUserPosts } from "@/api/requests/post";
+import { getMyProfile } from "@/api/requests/user";
 
 
+export const MyProfile = () => {
 
-export const Profile = () => {
+    const isOwnProfile = true
 
-    const { user } = useUserStore();
+    const { data: currentUser, isLoading, isError } = useQuery({
+        queryKey: ["myProfile"],
+        queryFn: getMyProfile,
+    });
 
+    const { data: posts } = useQuery({
+        queryKey: ["posts", currentUser?._id],
+        queryFn: () => getUserPosts(currentUser!.username),
+        enabled: !!currentUser,
+    });
+
+    if (isLoading || !currentUser) return <div>Loading...</div>;
+    if (isError || !currentUser) return <p>User not found</p>;
 
     return (
         <main>
             <section className="flex">
                 <div className="flex-2 px-20">
-                    <h1 className="text-5xl font-semiBold font-Poppins text-neutral-800 my-10">{user?.firstname} {user?.lastname}</h1>
+                    <h1 className="text-5xl capitalize font-semiBold font-Poppins text-neutral-800 my-10">{currentUser?.firstname} {currentUser?.lastname}</h1>
                     <Tabs defaultValue="home">
                         <TabsList className="grid w-full grid-cols-3 mb-10">
                             <TabsTrigger value="home">Home</TabsTrigger>
@@ -24,7 +39,11 @@ export const Profile = () => {
                             <TabsTrigger value="bio">Bio</TabsTrigger>
                         </TabsList>
                         <TabsContent value="home">
-                            <BlogTab />
+                            {
+                                posts && (
+                                    <BlogTab posts={posts} />
+                                )
+                            }
                         </TabsContent>
                         <TabsContent value="list">
                             <ListTab />
@@ -37,7 +56,7 @@ export const Profile = () => {
                 </div>
                 <div className="flex-1 hidden lg:block">
                     {
-                        user && <ProfileSidebar user={user} />
+                        currentUser && <ProfileSidebar user={currentUser} isOwnProfile={isOwnProfile} />
                     }
                 </div>
             </section>

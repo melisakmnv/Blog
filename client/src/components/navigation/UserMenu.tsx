@@ -20,12 +20,12 @@ export const UserMenu = ({ logout, user }: UserMenuProps) => {
                 <MenubarMenu>
                     <MenubarTrigger className="focus:bg-none">
                         <Avatar className="size-10">
-                            <AvatarImage src={user.avatar} alt={`${user.firstname} ${user.lastname}'s Avatar`}/>
+                            <AvatarImage className="object-cover" src={user.avatar} alt={`${user.firstname} ${user.lastname}'s Avatar`} />
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                     </MenubarTrigger>
                     <MenubarContent className="mr-16">
-                        <MenubarItem inset onSelect={() => navigate('/profile')} >
+                        <MenubarItem inset onSelect={() => navigate(`/profile/me`)} >
                             Profile
                         </MenubarItem>
                         <MenubarItem inset >Library</MenubarItem>

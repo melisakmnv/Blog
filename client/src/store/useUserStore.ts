@@ -1,4 +1,4 @@
-// src/store/useUserStore.ts
+
 import { IUserPayload } from '@/interfaces/user.interface';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -19,7 +19,7 @@ const useUserStore = create<UserState>()(
             logout: () => set({ user: null, isAuthenticated: false }),
         }),
         {
-            name: 'user-store', // name of the storage item (localStorage/sessionStorage)
+            name: 'user-store',
         }
     )
 );

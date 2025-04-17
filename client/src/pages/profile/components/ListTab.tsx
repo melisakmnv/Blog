@@ -14,8 +14,10 @@ export const ListTab = () => {
                                 <BlogCardSide key={post._id} post={post} />
                             ))
                         ) : (
-                            <div>
-                                <p className="font-Karla font-extralight text-xl leading-[40px]"> You have no list</p>
+                            <div className="font-Karla font-extralight text-lg leading-[40px] border-dashed border p-10 flex items-center justify-center">
+                                <p>
+                                    Your list is empty. Start building it by saving a story you love!
+                                </p>
                             </div>
                         )
                     }
