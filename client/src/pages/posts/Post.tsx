@@ -30,7 +30,6 @@ export const Post = () => {
     const { data: post, isLoading } = useQuery<IPost>({
         queryFn: () => getPostDetails(slug),
         queryKey: ["posts", slug]
-
     })
 
     const [comments, setComments] = useState(mockComments);

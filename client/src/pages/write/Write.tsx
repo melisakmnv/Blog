@@ -1,17 +1,18 @@
-import { createPost } from '@/api/requests/post';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+
+import useUserStore from '@/store/useUserStore';
+import { useCreatePost } from '@/hooks/useCreatePost';
+
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
+
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import useUserStore from '@/store/useUserStore';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 
 const formSchema = z.object({
     title: z.string(),
@@ -25,10 +26,10 @@ export type CreatePostSchema = z.infer<typeof formSchema>
 
 export const Write = () => {
 
-    const navigate = useNavigate()
-
     const { user } = useUserStore();
     const userId = user?._id;
+
+    const { createPost, isLoading } = useCreatePost();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -41,21 +42,8 @@ export const Write = () => {
         },
     })
 
-    const mutation = useMutation({
-        mutationFn: createPost,
-        onSuccess: (data) => {
-            navigate(`/posts/${data.slug}`);
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            alert(error.response?.data || 'Error creating new post');
-        },
-    });
-
     const onSubmit = (values: CreatePostSchema) => {
-
-        console.log('Form Submitted:', values);
-        mutation.mutate(values)
+        createPost(values)
     };
 
     return (
@@ -146,7 +134,7 @@ export const Write = () => {
                     />
                     <div className="flex justify-end gap-4 pt-4">
                         <Button variant="outline">Save as Draft</Button>
-                        <Button type="submit">Publish</Button>
+                        <Button disabled={isLoading} type="submit">Publish</Button>
                     </div>
                 </form>
             </Form >
