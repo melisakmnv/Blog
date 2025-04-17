@@ -26,9 +26,6 @@ export const MyProfile = () => {
     if (isError || !currentUser) return <p>User not found</p>;
 
 
-
-    console.log(posts)
-
     return (
         <main>
             <section className="flex">
@@ -41,11 +38,7 @@ export const MyProfile = () => {
                             <TabsTrigger value="bio">Bio</TabsTrigger>
                         </TabsList>
                         <TabsContent value="home">
-                            {
-                                posts && (
-                                    <BlogTab posts={posts} />
-                                )
-                            }
+                            <BlogTab posts={posts} />
                         </TabsContent>
                         <TabsContent value="list">
                             <ListTab />
