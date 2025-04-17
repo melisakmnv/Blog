@@ -1,15 +1,12 @@
-import { signin } from "@/api/requests/auth"
+
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { useSignin } from "@/hooks/useSignin"
+
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import useUserStore from "@/store/useUserStore"
-
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
-import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
-import { z } from "zod"
 
 
 const formSchema = z.object({
@@ -26,8 +23,7 @@ export type SigninSchema = z.infer<typeof formSchema>
 
 export const Login = () => {
 
-    const navigate = useNavigate()
-    const setUser = useUserStore((state) => state.setUser);
+    const { signin, isLoading } = useSignin();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -37,24 +33,9 @@ export const Login = () => {
         },
     })
 
-
-    const mutation = useMutation({
-        mutationFn: signin,
-        onSuccess: (data) => {
-            setUser(data.user);
-            navigate(`/profile/me`)
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            alert(error.response?.data || 'Error signing in');
-        },
-    });
-
-
-    function onSubmit(values: SigninSchema) {
-        mutation.mutate(values);
+    const onSubmit = (values: SigninSchema) => {
+        signin(values);
     }
-
 
     return (
         <Form {...form}>
@@ -73,7 +54,7 @@ export const Login = () => {
                     )}
                 />
                 <FormField
-                
+
                     control={form.control}
                     name="password"
                     render={({ field }) => (
@@ -86,7 +67,7 @@ export const Login = () => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button disabled={isLoading} type="submit">Submit</Button>
             </form>
         </Form>
     )
