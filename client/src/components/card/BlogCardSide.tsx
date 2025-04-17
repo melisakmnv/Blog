@@ -20,6 +20,7 @@ interface BlogCardSideProps {
 }
 export const BlogCardSide = ({ post }: BlogCardSideProps) => {
 
+    
     console.log(post)
 
     return (
