@@ -27,3 +27,40 @@ export const BlogMenuBar = () => {
         </Menubar>
     )
 }
+
+
+export interface MenuAction {
+    label: string
+    onClick?: () => void
+    danger?: boolean
+    separatorBefore?: boolean
+}
+
+interface OptionsMenuProps {
+    actions: MenuAction[]
+}
+
+export const OptionsMenu = ({ actions }: OptionsMenuProps) => {
+    return (
+        <Menubar>
+            <MenubarMenu>
+                <MenubarTrigger className="cursor-pointer">
+                    <MoreButton />
+                </MenubarTrigger>
+                <MenubarContent>
+                    {actions.map((action, index) => (
+                        <div key={index}>
+                            {action.separatorBefore && <MenubarSeparator />}
+                            <MenubarItem
+                                onClick={action.onClick}
+                                className={action.danger ? "text-red-600 hover:text-red-600" : ""}
+                            >
+                                {action.label}
+                            </MenubarItem>
+                        </div>
+                    ))}
+                </MenubarContent>
+            </MenubarMenu>
+        </Menubar>
+    )
+}

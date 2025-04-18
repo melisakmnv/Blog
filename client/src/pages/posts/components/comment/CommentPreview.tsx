@@ -1,19 +1,28 @@
+import useUserStore from "@/store/useUserStore";
+
 import { IComment } from "@/interfaces/comment.interface"
 import { formattedDate } from "@/lib/utils";
 
 import { FaRegComment } from "react-icons/fa";
 
 import { LikeButton } from "@/components/button/LikeButton";
+import { OptionsMenu } from "@/components/card/BlogMenuBar";
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 
 interface CommentPreviewProps {
     comment: IComment;
 }
 
 export const CommentPreview = ({ comment }: CommentPreviewProps) => {
+
+    const { user } = useUserStore()
+
+    const isAuthor = user?._id === comment.author._id
+
 
     return (
         <div className="flex flex-col gap-4">
@@ -31,13 +40,25 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
                         </div>
                     </div>
                 </div>
+                {
+                    isAuthor ? (
+                        <OptionsMenu
+                            actions={[
+                                { label: "Edit response", onClick: () => console.log("Edit") },
+                                { label: "Delete response", onClick: () => console.log("Delete"), danger: true }
+                            ]}
+                        />
+                    ) : (
+                        <div className="flex items-center gap-4">
+                            <LikeButton variant="button" />
+                            <Button variant={"ghost"} className="text-neutral-500 font-light">
+                                <FaRegComment />
+                            </Button>
+                        </div>
+                    )
+                }
 
-                <div className="flex items-center gap-4">
-                    <LikeButton variant="button" />
-                    <Button variant={"ghost"} className="text-neutral-500 font-light">
-                        <FaRegComment />
-                    </Button>
-                </div>
+
             </div>
             <div className="flex">
                 <div className="w-[80px]"></div>

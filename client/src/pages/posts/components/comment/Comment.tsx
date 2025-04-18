@@ -35,7 +35,7 @@ export const Comment = ({ postId }: ICommentProps) => {
 
                 ))}
             </section>
-
+            
             {
                 commentLenght > maxComment && (
                     <section className="hidden md:block">
