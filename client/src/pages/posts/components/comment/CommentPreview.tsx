@@ -1,20 +1,20 @@
-import { LikeButton } from "@/components/button/LikeButton";
-import { Button } from "@/components/ui/button";
 import { IComment } from "@/interfaces/comment.interface"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import { FaRegComment } from "react-icons/fa";
-import { Separator } from "@/components/ui/separator";
 import { formattedDate } from "@/lib/utils";
 
+import { FaRegComment } from "react-icons/fa";
 
-interface CommentBlockProps {
+import { LikeButton } from "@/components/button/LikeButton";
+
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+interface CommentPreviewProps {
     comment: IComment;
 }
 
-export const CommentBlock = ({ comment }: CommentBlockProps) => {
+export const CommentPreview = ({ comment }: CommentPreviewProps) => {
 
-    console.log(comment)
     return (
         <div className="flex flex-col gap-4">
             <div className="flex justify-between">
@@ -43,7 +43,7 @@ export const CommentBlock = ({ comment }: CommentBlockProps) => {
                 <div className="w-[80px]"></div>
                 <p className="text-neutral-800 font-Karla font-light">{comment.content}</p>
             </div>
-            <Separator className="border-dotted border-t-2 border-neutral-300" />
+            <Separator className="border-dashed border-t border-neutral-300" />
         </div>
     )
 }

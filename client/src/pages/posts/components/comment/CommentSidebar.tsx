@@ -1,22 +1,21 @@
-import { Button } from '@/components/ui/button'
-import { DrawerClose, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
-import { Separator } from '@/components/ui/separator'
 import { IComment } from '@/interfaces/comment.interface'
 
 import { IoClose } from "react-icons/io5";
-import { CommentBlock } from './CommentBlock';
 
+import { CommentPreview } from './CommentPreview';
 
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { DrawerClose, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
+import { CommentForm } from './CommentForm';
 
 
 interface CommentSidebarProps {
     comments: IComment[]
-    // value: string;
-    // onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    // onSubmit: () => void;
+    postId: string
 }
 
-export const CommentSidebar = ({ comments }: CommentSidebarProps) => {
+export const CommentSidebar = ({ comments, postId }: CommentSidebarProps) => {
     return (
         <DrawerContent>
             <div className="h-full overflow-y-auto">
@@ -33,16 +32,11 @@ export const CommentSidebar = ({ comments }: CommentSidebarProps) => {
                         <Separator className="my-4 bg-border" />
                     </DrawerHeader>
 
-                    {/* <CommentInput
-                        value={value}
-                        onChange={onChange}
-                        onSubmit={onSubmit}
+                    <CommentForm postId={postId} />
 
-                    /> */}
-
-                    <div className="flex flex-col gap-4 p-4 md:p-0">
+                    <div className="flex flex-col gap-4 p-4 md:p-0 md:mb-10">
                         {comments.map((comment) => (
-                            <CommentBlock key={comment._id} comment={comment} />
+                            <CommentPreview key={comment._id} comment={comment} />
                         ))}
                     </div>
                 </div>

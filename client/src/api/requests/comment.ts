@@ -1,4 +1,5 @@
-import { CreateCommentSchema } from "@/pages/posts/Post";
+
+import { CreateCommentSchema } from "@/pages/posts/components/comment/CommentForm";
 import { axiosInstance } from "../instance";
 import { IComment } from "@/interfaces/comment.interface";
 

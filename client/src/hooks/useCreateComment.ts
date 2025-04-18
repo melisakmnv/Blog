@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { CreateCommentSchema } from "@/pages/posts/Post";
 import { createComment } from "@/api/requests/comment";
+import { CreateCommentSchema } from "@/pages/posts/components/comment/CommentForm";
 
 
 export const useCreateComment = () => {
