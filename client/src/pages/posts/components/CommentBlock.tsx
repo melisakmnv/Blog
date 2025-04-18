@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { FaRegComment } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
+import { formattedDate } from "@/lib/utils";
 
 
 interface CommentBlockProps {
@@ -12,19 +13,21 @@ interface CommentBlockProps {
 }
 
 export const CommentBlock = ({ comment }: CommentBlockProps) => {
+
+    console.log(comment)
     return (
         <div className="flex flex-col gap-4">
             <div className="flex justify-between">
                 <div className="flex items-start gap-4">
                     <Avatar className="size-14">
-                        <AvatarImage src={comment.avatar} alt={`${comment.username}'s avatar`} />
-                        <AvatarFallback>{comment.username[0].toUpperCase()}</AvatarFallback>
+                        <AvatarImage className="object-cover" src={comment.author.avatar} alt={`${comment.author.firstname} ${comment.author.lastname} 's avatar`} />
+                        <AvatarFallback>{comment.author.firstname.toUpperCase()}</AvatarFallback>
                     </Avatar>
 
                     <div >
                         <div className=" flex flex-col items-center gap-1">
-                            <p className="text-md text-[#bba07f] font-medium cursor-pointer">@{comment.username}</p>
-                            <p className="font-light text-neutral-600 text-xs">{comment.createdAt}</p>
+                            <p className="text-md text-[#bba07f] font-medium capitalize cursor-pointer">{comment.author.firstname} {comment.author.lastname}</p>
+                            <p className="font-light text-neutral-600 text-xs">{formattedDate(comment.createdAt)}</p>
                         </div>
                     </div>
                 </div>

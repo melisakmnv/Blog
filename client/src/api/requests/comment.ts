@@ -1,3 +1,4 @@
+import { CreateCommentSchema } from "@/pages/posts/Post";
 import { axiosInstance } from "../instance";
 import { IComment } from "@/interfaces/comment.interface";
 
@@ -16,9 +17,11 @@ export const getComments = async (postId: string): Promise<IComment[]> => {
 }
 
 // CREATE COMMENT
-export const createComment = async (postId: string, content: string): Promise<IComment> => {
+export const createComment = async (postId: string, content: CreateCommentSchema): Promise<IComment> => {
     try {
-        const { data } = await axiosInstance.post(`/comments/${postId}`, { content });
+        const { data } = await axiosInstance.post(`/comments/${postId}`, content,  {
+            withCredentials: true,
+        });
         return data;
     } catch (error) {
         console.error("❌ Error during creating comment:", error);

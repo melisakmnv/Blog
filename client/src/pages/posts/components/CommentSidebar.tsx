@@ -5,18 +5,18 @@ import { IComment } from '@/interfaces/comment.interface'
 
 import { IoClose } from "react-icons/io5";
 import { CommentBlock } from './CommentBlock';
-import { CommentInput } from './CommentInput';
+
 
 
 
 interface CommentSidebarProps {
     comments: IComment[]
-    value: string;
-    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onSubmit: () => void;
+    // value: string;
+    // onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    // onSubmit: () => void;
 }
 
-export const CommentSidebar = ({ comments, value, onChange, onSubmit }: CommentSidebarProps) => {
+export const CommentSidebar = ({ comments }: CommentSidebarProps) => {
     return (
         <DrawerContent>
             <div className="h-full overflow-y-auto">
@@ -33,12 +33,12 @@ export const CommentSidebar = ({ comments, value, onChange, onSubmit }: CommentS
                         <Separator className="my-4 bg-border" />
                     </DrawerHeader>
 
-                    <CommentInput
+                    {/* <CommentInput
                         value={value}
                         onChange={onChange}
                         onSubmit={onSubmit}
 
-                    />
+                    /> */}
 
                     <div className="flex flex-col gap-4 p-4 md:p-0">
                         {comments.map((comment) => (

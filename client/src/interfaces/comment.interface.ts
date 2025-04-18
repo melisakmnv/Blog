@@ -4,4 +4,5 @@ export interface IComment {
     _id: string;
     author: IUserPayload;
     content: string;
+    createdAt : string;
 }
