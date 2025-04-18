@@ -34,7 +34,9 @@ export const createComment = async (postId: string, content: CommentFormSchema):
 export const deleteComment = async (id: string) => {
 
     try {
-        const { data } = await axiosInstance.delete(`/comments/${id}`)
+        const { data } = await axiosInstance.delete(`/comments/${id}`, {
+            withCredentials: true,
+        })
         return data
 
     } catch (error) {

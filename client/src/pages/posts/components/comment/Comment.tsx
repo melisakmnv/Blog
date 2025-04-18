@@ -26,7 +26,7 @@ export const Comment = ({ postId }: ICommentProps) => {
 
     return (
         <>
-            <h3 className="text-2xl font-semibold text-neutral-800 mb-6">{comments.length} Comments</h3>
+            <h3 className="text-2xl font-semibold text-neutral-800 mb-6">{commentLenght} {commentLenght > 1 ? "Comments" : "Comment"} </h3>
             <CommentCreateForm postId={postId} />
 
             <section className="space-y-8">
