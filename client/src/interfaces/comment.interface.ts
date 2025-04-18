@@ -1,8 +1,7 @@
-export interface IComment {
+import { IUserPayload } from "./user.interface";
 
+export interface IComment {
     _id: string;
-    username: string;
-    avatar: string;
+    author: IUserPayload;
     content: string;
-    createdAt : string;
 }
