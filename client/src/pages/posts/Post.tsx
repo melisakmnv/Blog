@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { useParams } from "react-router-dom"
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
+import { useSuspenseQuery } from "@tanstack/react-query"
 
 import { IPost } from "@/interfaces/post.interface"
 import { getPostDetails } from "@/api/requests/post"
@@ -14,15 +14,9 @@ import { CommentSidebar } from "./components/CommentSidebar"
 import { Button } from "@/components/ui/button"
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer"
 import { IComment } from "@/interfaces/comment.interface"
-import { createComment, getComments } from "@/api/requests/comment"
+import { getComments } from "@/api/requests/comment"
+import { z } from "zod"
 
-import { z } from "zod";
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
-
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "react-toastify"
 
 const formSchema = z.object({
     content: z.string()
@@ -37,7 +31,7 @@ export const Post = () => {
     // GET POST SLUG //
     const { slug } = useParams<{ slug: string }>()
 
-    const queryClient = useQueryClient()
+
     // if (!slug) {
     //     return <div>Error: Slug is missing.</div>;
     // }
@@ -53,30 +47,30 @@ export const Post = () => {
     })
 
 
-    const form = useForm<CreateCommentSchema>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            content: ""
-        }
-    })
+    // const form = useForm<CreateCommentSchema>({
+    //     resolver: zodResolver(formSchema),
+    //     defaultValues: {
+    //         content: ""
+    //     }
+    // })
 
-    const createCommentMutation = useMutation({
+    // const createCommentMutation = useMutation({
 
-        mutationFn: ({ postId, content }: { postId: string; content: CreateCommentSchema }) => createComment(postId, content),
-        onSuccess: () => {
-            toast.success("You just added a comment")
-            queryClient.invalidateQueries({ queryKey: ["comments"] })
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data);
-            toast.error(error?.response?.data?.message || "Something went wrong");
-        },
-    })
+    //     mutationFn: ({ postId, content }: { postId: string; content: CreateCommentSchema }) => createComment(postId, content),
+    //     onSuccess: () => {
+    //         toast.success("You just added a comment")
+    //         queryClient.invalidateQueries({ queryKey: ["comments"] })
+    //     },
+    //     onError: (error: any) => {
+    //         console.log(error.response?.data);
+    //         toast.error(error?.response?.data?.message || "Something went wrong");
+    //     },
+    // })
 
-    const onSubmit = (values: CreateCommentSchema) => {
-        createCommentMutation.mutate({ postId: post._id, content: values });
-        form.reset()
-    };
+    // const onSubmit = (values: CreateCommentSchema) => {
+    //     createCommentMutation.mutate({ postId: post._id, content: values });
+    //     form.reset()
+    // };
 
     // HANDLE POST LOADING //
     if (isLoading) {
@@ -106,7 +100,7 @@ export const Post = () => {
 
                         {/* Comment Input */}
 
-                        <Form {...form}>
+                        {/* <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
                                 <FormField
                                     control={form.control}
@@ -122,7 +116,7 @@ export const Post = () => {
                                 />
                                 <Button type="submit">Respond</Button>
                             </form>
-                        </Form>
+                        </Form> */}
 
 
                         {/* COMMENTS */}
