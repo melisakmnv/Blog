@@ -1,9 +1,10 @@
-import { z } from "zod"
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import useUserStore from "@/store/useUserStore"
 import { useCreateComment } from "@/hooks/useCreateComment"
+import { commentSchema, CreateCommentSchema } from "@/schema/comment.schema"
 
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -15,12 +16,6 @@ interface CommentFormProps {
     postId: string;
 }
 
-const formSchema = z.object({
-    content: z.string()
-})
-
-export type CreateCommentSchema = z.infer<typeof formSchema>
-
 export const CommentForm = ({ postId }: CommentFormProps) => {
 
     const { user } = useUserStore()
@@ -28,7 +23,7 @@ export const CommentForm = ({ postId }: CommentFormProps) => {
     const { createComment, isLoading } = useCreateComment()
 
     const form = useForm<CreateCommentSchema>({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(commentSchema),
         defaultValues: {
             content: ""
         }

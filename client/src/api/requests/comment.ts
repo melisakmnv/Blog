@@ -1,8 +1,7 @@
 
-import { CreateCommentSchema } from "@/pages/posts/components/comment/CommentForm";
 import { axiosInstance } from "../instance";
+import { CreateCommentSchema } from "@/schema/comment.schema";
 import { IComment } from "@/interfaces/comment.interface";
-
 
 // ALL COMMENTS
 export const getComments = async (postId: string): Promise<IComment[]> => {
