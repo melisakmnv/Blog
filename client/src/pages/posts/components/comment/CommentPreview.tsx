@@ -11,6 +11,7 @@ import { OptionsMenu } from "@/components/card/BlogMenuBar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useDeleteComment } from "@/hooks/useComment";
 
 
 interface CommentPreviewProps {
@@ -20,6 +21,7 @@ interface CommentPreviewProps {
 export const CommentPreview = ({ comment }: CommentPreviewProps) => {
 
     const { user } = useUserStore()
+    const { deleteComment } = useDeleteComment()
 
     const isAuthor = user?._id === comment.author._id
 
@@ -45,7 +47,7 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
                         <OptionsMenu
                             actions={[
                                 { label: "Edit response", onClick: () => console.log("Edit") },
-                                { label: "Delete response", onClick: () => console.log("Delete"), danger: true }
+                                { label: "Delete response", onClick: () => deleteComment(comment._id), danger: true }
                             ]}
                         />
                     ) : (

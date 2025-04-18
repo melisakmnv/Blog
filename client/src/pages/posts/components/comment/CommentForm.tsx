@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import useUserStore from "@/store/useUserStore"
-import { useCreateComment } from "@/hooks/useCreateComment"
+import { useCreateComment } from "@/hooks/useComment"
 import { commentSchema, CreateCommentSchema } from "@/schema/comment.schema"
 
 import { Button } from "@/components/ui/button"
