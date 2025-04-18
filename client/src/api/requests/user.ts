@@ -6,7 +6,7 @@ export const getProfile = async (username: string): Promise<IUserPayload> => {
     try {
 
         const { data } = await axiosInstance.get(`/users/${username}`, {
-            withCredentials: true, // Sends the HTTP-only cookie with the request
+            withCredentials: true, 
         });
 
         return data
@@ -22,7 +22,7 @@ export const getMyProfile = async (): Promise<IUserPayload> => {
     try {
 
         const { data } = await axiosInstance.get(`/users/me`, {
-            withCredentials: true, // Sends the HTTP-only cookie with the request
+            withCredentials: true,
         });
 
         return data
@@ -39,9 +39,9 @@ export const followUser = async (username: string) => {
     try {
         const { data } = await axiosInstance.post(
             `/users/follow/${username}`,
-            {}, // no body
+            {},
             {
-                withCredentials: true, // place in config object
+                withCredentials: true,
             }
         );
 

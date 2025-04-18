@@ -22,9 +22,10 @@ interface BlogCardSideProps {
 }
 export const BlogCardSide = ({ post, currentUser }: BlogCardSideProps) => {
 
-    console.log(currentUser)
 
-    const isSaved = currentUser.savedPosts.some((p) => p === post._id)
+    console.log(currentUser)
+    // const isSaved = currentUser.savedPosts.some((p) => p === post._id)
+    const isSaved = false
 
     console.log(isSaved)
 

@@ -52,10 +52,10 @@ const router = createBrowserRouter(
                     path: "/profile/:username",
                     element: <UserProfile />
                 },
-                {
-                    path: "/profile/me",
-                    element: <MyProfile />
-                },
+                // {
+                //     path: "/profile/me",
+                //     element: <MyProfile />
+                // },
                 {
                     path: "/new-story",
                     element: <Write />

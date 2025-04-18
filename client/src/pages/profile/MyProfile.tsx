@@ -6,24 +6,29 @@ import { ListTab } from "./components/ListTab";
 import { BioTab } from "./components/BioTab";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getUserPosts } from "@/api/requests/post";
-import { getMyProfile } from "@/api/requests/user";
 import { MyProfileSidebar } from "./components/MyProfileSidebar";
+import useUserStore from "@/store/useUserStore";
+import { getMyProfile } from "@/api/requests/user";
 
 
 export const MyProfile = () => {
+
+    const { user } = useUserStore();
 
     const { data: currentUser, isLoading, isError, } = useSuspenseQuery({
         queryKey: ["myProfile"],
         queryFn: getMyProfile,
     });
 
+    console.log(currentUser)
+
     const { data: posts } = useSuspenseQuery({
-        queryKey: ["posts", currentUser?._id],
-        queryFn: () => getUserPosts(currentUser._id),
+        queryKey: ["posts", currentUser!._id],
+        queryFn: () => getUserPosts(currentUser!._id),
     });
 
-    if (isLoading || !currentUser) return <div>Loading...</div>;
-    if (isError || !currentUser) return <p>User not found</p>;
+    // if (isLoading || !currentUser) return <div>Loading...</div>;
+    // if (isError || !currentUser) return <p>User not found</p>;
 
 
     return (
@@ -38,7 +43,7 @@ export const MyProfile = () => {
                             <TabsTrigger value="bio">Bio</TabsTrigger>
                         </TabsList>
                         <TabsContent value="home">
-                            <BlogTab posts={posts} currentUser={currentUser}  />
+                            <BlogTab posts={posts} currentUser={currentUser!} />
                         </TabsContent>
                         <TabsContent value="list">
                             <ListTab />
@@ -50,7 +55,7 @@ export const MyProfile = () => {
                     </Tabs>
                 </div>
                 <div className="flex-1 hidden lg:block">
-                    <MyProfileSidebar user={currentUser} />
+                    <MyProfileSidebar user={currentUser!} />
                 </div>
             </section>
         </main>
