@@ -4,4 +4,4 @@ export const commentSchema = z.object({
     content: z.string()
 })
 
-export type CreateCommentSchema = z.infer<typeof commentSchema>
+export type CommentFormSchema = z.infer<typeof commentSchema>

@@ -1,6 +1,6 @@
 
 import { axiosInstance } from "../instance";
-import { CreateCommentSchema } from "@/schema/comment.schema";
+import { CommentFormSchema } from "@/schema/comment.schema";
 import { IComment } from "@/interfaces/comment.interface";
 
 // ALL COMMENTS
@@ -17,9 +17,9 @@ export const getComments = async (postId: string): Promise<IComment[]> => {
 }
 
 // CREATE COMMENT
-export const createComment = async (postId: string, content: CreateCommentSchema): Promise<IComment> => {
+export const createComment = async (postId: string, content: CommentFormSchema): Promise<IComment> => {
     try {
-        const { data } = await axiosInstance.post(`/comments/${postId}`, content,  {
+        const { data } = await axiosInstance.post(`/comments/${postId}`, content, {
             withCredentials: true,
         });
         return data;
@@ -30,7 +30,7 @@ export const createComment = async (postId: string, content: CreateCommentSchema
 }
 
 
-// GET USER POSTS
+// DELETE COMMENT
 export const deleteComment = async (id: string) => {
 
     try {
@@ -39,6 +39,23 @@ export const deleteComment = async (id: string) => {
 
     } catch (error) {
         console.error("❌ Error during deleting comment:", error);
+        throw error;
+    }
+
+}
+
+// EDIT COMMENT
+
+export const editComment = async (id: string, content: CommentFormSchema): Promise<IComment> => {
+
+    try {
+        const { data } = await axiosInstance.patch(`/comments/${id}`, content, {
+            withCredentials: true,
+        })
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during editing comment:", error);
         throw error;
     }
 

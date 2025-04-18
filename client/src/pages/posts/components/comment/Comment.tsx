@@ -4,7 +4,7 @@ import { IComment } from "@/interfaces/comment.interface"
 import { getComments } from "@/api/requests/comment";
 
 import { CommentSidebar } from "./CommentSidebar";
-import { CommentForm } from "./CommentForm";
+import { CommentCreateForm } from "./CommentForm";
 import { CommentPreview } from "./CommentPreview";
 
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ export const Comment = ({ postId }: ICommentProps) => {
     return (
         <>
             <h3 className="text-2xl font-semibold text-neutral-800 mb-6">{comments.length} Comments</h3>
-            <CommentForm postId={postId} />
+            <CommentCreateForm postId={postId} />
 
             <section className="space-y-8">
                 {comments.slice(0, maxComment).map((comment) => (
@@ -35,7 +35,7 @@ export const Comment = ({ postId }: ICommentProps) => {
 
                 ))}
             </section>
-            
+
             {
                 commentLenght > maxComment && (
                     <section className="hidden md:block">

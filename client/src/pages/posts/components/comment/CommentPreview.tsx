@@ -12,6 +12,8 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useDeleteComment } from "@/hooks/useComment";
+import { useState } from "react";
+import { CommentEditForm } from "./CommentForm";
 
 
 interface CommentPreviewProps {
@@ -22,8 +24,14 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
 
     const { user } = useUserStore()
     const { deleteComment } = useDeleteComment()
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
     const isAuthor = user?._id === comment.author._id
+
+
+    const handleEditToggle = (prev:boolean) => {
+        setIsEditing(prev)
+    }
 
 
     return (
@@ -46,7 +54,7 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
                     isAuthor ? (
                         <OptionsMenu
                             actions={[
-                                { label: "Edit response", onClick: () => console.log("Edit") },
+                                { label: "Edit response", onClick: () => handleEditToggle(true) },
                                 { label: "Delete response", onClick: () => deleteComment(comment._id), danger: true }
                             ]}
                         />
@@ -64,7 +72,13 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
             </div>
             <div className="flex">
                 <div className="w-[80px]"></div>
-                <p className="text-neutral-800 font-Karla font-light">{comment.content}</p>
+                {
+                    isEditing ? (
+                        <CommentEditForm comment={comment} handleToggle={handleEditToggle} />
+                    ) : (
+                        <p className="text-neutral-800 font-Karla font-light">{comment.content}</p>
+                    )
+                }
             </div>
             <Separator className="border-dashed border-t border-neutral-300" />
         </div>

@@ -7,7 +7,7 @@ import { CommentPreview } from './CommentPreview';
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { DrawerClose, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
-import { CommentForm } from './CommentForm';
+import { CommentCreateForm } from './CommentForm';
 
 
 interface CommentSidebarProps {
@@ -32,7 +32,7 @@ export const CommentSidebar = ({ comments, postId }: CommentSidebarProps) => {
                         <Separator className="my-4 bg-border" />
                     </DrawerHeader>
 
-                    <CommentForm postId={postId} />
+                    <CommentCreateForm postId={postId} />
 
                     <div className="flex flex-col gap-4 p-4 md:p-0 md:mb-10">
                         {comments.map((comment) => (
