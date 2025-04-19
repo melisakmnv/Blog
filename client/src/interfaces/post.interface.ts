@@ -7,7 +7,7 @@ export interface IPost {
     slug: string;
     description: string;
     content: string;
-    tag: string[];
+    tag: string;
     author: IUserPayload;
     readingTime: string;
     likes: string[];

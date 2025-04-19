@@ -19,6 +19,7 @@ export const Post = () => {
         queryFn: () => getPostDetails(slug!),
         queryKey: ["posts", slug]
     })
+
     if (isLoading) {
         return (
             <div>
@@ -28,7 +29,6 @@ export const Post = () => {
     }
 
     if (!post) return <div>No post found.</div>;
-
 
     return (
         <Suspense>

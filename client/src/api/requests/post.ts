@@ -43,13 +43,25 @@ export const createPost = async (formData: IPostForm): Promise<IPost> => {
 }
 
 
+export const editPost = async (id: string, formData: IPostForm): Promise<IPost> => {
+
+    try {
+        const { data } = await axiosInstance.patch(`/posts/${id}`, formData)
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during creating post:", error);
+        throw error;
+    }
+}
+
 // GET USER POSTS
-export const getUserPosts = async (id:string):Promise<IPost[]> => {
+export const getUserPosts = async (id: string): Promise<IPost[]> => {
     try {
 
         const { data } = await axiosInstance.get(`/posts/user/${id}`)
         return data
-        
+
     } catch (error) {
         console.error("❌ Error during fetching user' post:", error);
         throw error;

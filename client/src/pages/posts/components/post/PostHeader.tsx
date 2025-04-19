@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { IPost } from "@/interfaces/post.interface";
 import { formattedDate } from "@/lib/utils";
 
@@ -10,7 +12,7 @@ interface PostHeaderProps {
 }
 
 export const PostHeader = ({ post }: PostHeaderProps) => {
-    
+
     const { user: currentUser } = useUserStore()
     const isAuthor = currentUser?._id === post.author._id
 
@@ -47,7 +49,9 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
                 {
                     isAuthor && (
                         <div className="flex items-center gap-4">
-                            <Button variant={"outline"}>Edit</Button>
+                            <Link to={`/edit-story/${post.slug}`}>
+                                <Button variant={"outline"}>Edit</Button>
+                            </Link>
                             <Button variant={"destructive"}>Delete</Button>
                         </div>
                     )
