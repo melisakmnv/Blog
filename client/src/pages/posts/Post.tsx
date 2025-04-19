@@ -32,7 +32,6 @@ export const Post = () => {
 
     return (
         <Suspense>
-
             <main className="mt-10">
                 <div className="w-[90%] md:w-[70%] mx-auto flex flex-col gap-10 md:gap-14 items-center">
                     <PostHeader post={post} />

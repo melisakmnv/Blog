@@ -53,7 +53,7 @@ export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "
                                         <FaRegHeart className="text-neutral-500" />
                                     )}
                                     {
-                                        <p className="text-[#bba07f]">{count > 0 && count}</p>
+                                        <span className="text-[#bba07f]">{count > 0 && count}</span>
                                     }
                                 </p>
 
