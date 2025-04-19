@@ -31,26 +31,28 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
     const isAuthor = user?._id === comment.author._id
     const hasLiked = comment.likes.includes(user?._id!)
 
-
     const handleEditToggle = (prev: boolean) => {
         setIsEditing(prev)
     }
-
-    console.log(hasLiked)
-
+    
     return (
         <div className="flex flex-col gap-4">
             <div className="flex justify-between">
-                <div className="flex items-start gap-4">
+                <div className="flex items-center gap-4">
                     <Avatar className="size-14">
                         <AvatarImage className="object-cover" src={comment.author.avatar} alt={`${comment.author.firstname} ${comment.author.lastname} 's avatar`} />
                         <AvatarFallback>{comment.author.firstname.toUpperCase()}</AvatarFallback>
                     </Avatar>
 
                     <div >
-                        <div className=" flex flex-col items-center gap-1">
+                        <div className=" flex flex-col gap-1">
                             <p className="text-md text-[#bba07f] font-medium capitalize cursor-pointer">{comment.author.firstname} {comment.author.lastname}</p>
-                            <p className="font-light text-neutral-600 text-xs">{formattedDate(comment.createdAt)}</p>
+                            <div className="font-light text-neutral-600 text-xs">
+                                <div className="flex ">
+                                    <p >{comment.isEdited ? formattedDate(comment.updatedAt) : formattedDate(comment.createdAt)}</p>
+                                    {comment.isEdited && <p><span className="mx-1">•</span>Edited</p>}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
