@@ -10,18 +10,12 @@ interface PostHeaderProps {
 }
 
 export const PostHeader = ({ post }: PostHeaderProps) => {
-
-    // User be able to delete or edit post directly from post page 
-
+    
     const { user: currentUser } = useUserStore()
-
     const isAuthor = currentUser?._id === post.author._id
 
-    console.log(isAuthor)
-
-
     return (
-        <header className="flex flex-col gap-4 md:gap-6">
+        <header className="flex flex-col gap-4 md:gap-6 w-full">
             <h1 className="text-2xl md:text-4xl text-neutral-800 lg:text-center font-Montserrat font-bold">{post.title}</h1>
             <h2 className="text-neutral-500 text-base md:text-xl font-Karla font-light">{post.description}</h2>
 
@@ -32,12 +26,17 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
                         <AvatarFallback>Publisher Avatar</AvatarFallback>
                     </Avatar>
                     <div>
-                        <div className="flex items-center gap-2 text-sm text-neutral-500 font-Poppins">
-                            <p className="">{post.author.firstname} {post.author.lastname}</p>
-                            <p>•</p>
-                            <p className="underline text-neutral-800" >Follow+</p>
+                        <div className="flex items-center gap-2">
+                            <p className="capitalize text-lg text-neutral-600 font-Poppins font-semibold">{post.author.firstname} {post.author.lastname}</p>
+                            {!isAuthor && (
+                                <>
+                                    <p>•</p>
+                                    <p className="underline text-neutral-800 font-light">Follow+</p>
+                                </>
+                            )}
+
                         </div>
-                        <div className="flex items-center gap-2 text-neutral-500 text-sm  font-Poppins">
+                        <div className="flex items-center gap-2 text-neutral-500 text-sm font-Poppins font-light">
                             <p className="">{formattedDate(post.createdAt)}</p>
                             <p>•</p>
                             <p className="">{post.readingTime}</p>
@@ -45,10 +44,14 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
                     </div>
 
                 </div>
-                <div className="flex items-center gap-4">
-                    <Button variant={"outline"}>Edit</Button>
-                    <Button variant={"destructive"}>Delete</Button>
-                </div>
+                {
+                    isAuthor && (
+                        <div className="flex items-center gap-4">
+                            <Button variant={"outline"}>Edit</Button>
+                            <Button variant={"destructive"}>Delete</Button>
+                        </div>
+                    )
+                }
             </div>
         </header>
     )
