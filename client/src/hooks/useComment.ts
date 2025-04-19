@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createComment, deleteComment, editComment } from "@/api/requests/comment";
+import { createComment, deleteComment, editComment, likeComment } from "@/api/requests/comment";
 import { CommentFormSchema } from "@/schema/comment.schema";
 
 
@@ -67,6 +67,28 @@ export const useEditComment = () => {
 
     return {
         editComment: mutation.mutate,
+        isLoading: mutation.isPending
+    }
+}
+
+
+export const useLikeComment = () => {
+
+    const queryClient = useQueryClient()
+    const mutation = useMutation({
+        mutationFn: (commentId: string) => likeComment(commentId),
+        onSuccess: (data) => {
+            toast.success(data.message)
+            queryClient.invalidateQueries({ queryKey: ["comments"] })
+        },
+        onError: (error: any) => {
+            console.log(error.response?.data);
+            toast.error(error?.response?.data?.message || "Something went wrong");
+        },
+    })
+
+    return {
+        likeComment: mutation.mutate,
         isLoading: mutation.isPending
     }
 }

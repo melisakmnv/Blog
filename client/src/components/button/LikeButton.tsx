@@ -8,9 +8,10 @@ interface LikeButtonProps {
     initialLiked?: boolean;
     initialCount?: number;
     variant: "display" | "button"
+    onClick: () => void;
 }
 
-export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "button" }: LikeButtonProps) => {
+export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "button", onClick }: LikeButtonProps) => {
     const [liked, setLiked] = useState(initialLiked)
     const [count, setCount] = useState(initialCount)
 
@@ -19,16 +20,23 @@ export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "
         setCount((prev) => (liked ? prev - 1 : prev + 1))
     }
 
+    const handleClick = () => {
+        toggleLike()
+        onClick()
+    }
+
     return (
         <>
             {
                 variant === "display" ? (
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="ghost">
+                            <div className="flex items-center gap-2">
+                                {/* <Button variant="ghost"> */}
                                 <FaHeart className="text-neutral-500" />
                                 <p className="text-neutral-500">{initialCount}</p>
-                            </Button>
+                                {/* </Button> */}
+                            </div>
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>{initialCount} like{initialCount !== 1 && "s"} </p>
@@ -37,12 +45,18 @@ export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "
                 ) : (
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button onClick={toggleLike} variant="ghost" size="icon">
-                                {liked ? (
-                                    <FaHeart className="text-[#bba07f]" />
-                                ) : (
-                                    <FaRegHeart className="text-neutral-500" />
-                                )}
+                            <Button onClick={handleClick} variant="ghost">
+                                <p className="flex items-center gap-2 text-neutral-500">
+                                    {liked ? (
+                                        <FaHeart className="text-[#bba07f]" />
+                                    ) : (
+                                        <FaRegHeart className="text-neutral-500" />
+                                    )}
+                                    {
+                                        <p className="text-[#bba07f]">{count > 0 && count}</p>
+                                    }
+                                </p>
+
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>

@@ -11,7 +11,7 @@ import { OptionsMenu } from "@/components/card/BlogMenuBar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useDeleteComment } from "@/hooks/useComment";
+import { useDeleteComment, useLikeComment } from "@/hooks/useComment";
 import { useState } from "react";
 import { CommentEditForm } from "./CommentForm";
 
@@ -24,15 +24,19 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
 
     const { user } = useUserStore()
     const { deleteComment } = useDeleteComment()
+    const { likeComment } = useLikeComment()
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
+    const likes = comment.likes.length
     const isAuthor = user?._id === comment.author._id
+    const hasLiked = comment.likes.includes(user?._id!)
 
 
-    const handleEditToggle = (prev:boolean) => {
+    const handleEditToggle = (prev: boolean) => {
         setIsEditing(prev)
     }
 
+    console.log(hasLiked)
 
     return (
         <div className="flex flex-col gap-4">
@@ -52,23 +56,25 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
                 </div>
                 {
                     isAuthor ? (
-                        <OptionsMenu
-                            actions={[
-                                { label: "Edit response", onClick: () => handleEditToggle(true) },
-                                { label: "Delete response", onClick: () => deleteComment(comment._id), danger: true }
-                            ]}
-                        />
+                        <div className="flex items-center gap-2">
+                            <LikeButton variant="display" onClick={() => { }} initialCount={likes} />
+                            <OptionsMenu
+                                actions={[
+                                    { label: "Edit response", onClick: () => handleEditToggle(true) },
+                                    { label: "Delete response", onClick: () => deleteComment(comment._id), danger: true }
+                                ]}
+                            />
+
+                        </div>
                     ) : (
                         <div className="flex items-center gap-4">
-                            <LikeButton variant="button" />
+                            <LikeButton variant="button" onClick={() => likeComment(comment._id)} initialCount={likes} initialLiked={hasLiked} />
                             <Button variant={"ghost"} className="text-neutral-500 font-light">
                                 <FaRegComment />
                             </Button>
                         </div>
                     )
                 }
-
-
             </div>
             <div className="flex">
                 <div className="w-[80px]"></div>

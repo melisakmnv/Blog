@@ -62,3 +62,19 @@ export const editComment = async (id: string, content: CommentFormSchema): Promi
     }
 
 }
+
+// LIKE OR DISLIKE COMMENT 
+
+export const likeComment = async (id: string) => {
+    try {
+
+        const { data } = await axiosInstance.patch(`comments/${id}/like`, {
+            withCredentials: true,
+        })
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during liking/disliking comment:", error);
+        throw error;
+    }
+}

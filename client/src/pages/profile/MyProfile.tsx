@@ -20,16 +20,12 @@ export const MyProfile = () => {
         queryFn: getMyProfile,
     });
 
-    console.log(currentUser)
 
+    // FETCH USER POSTS //
     const { data: posts } = useSuspenseQuery({
         queryKey: ["posts", currentUser!._id],
         queryFn: () => getUserPosts(currentUser!._id),
     });
-
-    // if (isLoading || !currentUser) return <div>Loading...</div>;
-    // if (isError || !currentUser) return <p>User not found</p>;
-
 
     return (
         <main>

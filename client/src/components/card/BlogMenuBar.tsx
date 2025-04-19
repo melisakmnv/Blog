@@ -44,7 +44,7 @@ export const OptionsMenu = ({ actions }: OptionsMenuProps) => {
     return (
         <Menubar>
             <MenubarMenu>
-                <MenubarTrigger className="cursor-pointer">
+                <MenubarTrigger className="cursor-pointer hover:bg-accent">
                     <MoreButton />
                 </MenubarTrigger>
                 <MenubarContent>
