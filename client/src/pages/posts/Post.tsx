@@ -1,24 +1,17 @@
 import { Suspense } from "react"
 import { useParams } from "react-router-dom"
-import { useSuspenseQuery } from "@tanstack/react-query"
-
-import { IPost } from "@/interfaces/post.interface"
-import { getPostDetails } from "@/api/requests/post"
 
 import { PostHeader } from "./components/post/PostHeader"
 import { PostContent } from "./components/post/PostContent"
 
 import { Comment } from "./components/comment/Comment"
+import { useGetPostBySlug } from "@/hooks/usePost"
 
 export const Post = () => {
 
     // GET POST SLUG //
     const { slug } = useParams<{ slug: string }>()
-
-    const { data: post, isLoading } = useSuspenseQuery<IPost>({
-        queryFn: () => getPostDetails(slug!),
-        queryKey: ["posts", slug]
-    })
+    const { data: post, isLoading } = useGetPostBySlug(slug!);
 
     if (isLoading) {
         return (

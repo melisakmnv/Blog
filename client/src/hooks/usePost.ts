@@ -12,7 +12,8 @@ import { IPost } from "@/interfaces/post.interface";
 export const useFetchPosts = () => {
     return useSuspenseQuery<IPost[]>({
         queryKey: ["posts"],
-        queryFn: getPosts
+        queryFn: getPosts,
+        staleTime : 10000,
     })
 }
 

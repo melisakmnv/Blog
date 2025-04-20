@@ -11,9 +11,10 @@ import { IComment } from "@/interfaces/comment.interface";
 
 interface CommentButtonProps {
     post: IPost;
-    comments: IComment[];
+    comments?: IComment[];
     variant: "display" | "button";
 }
+
 export const CommentButton = ({ post, variant, comments }: CommentButtonProps) => {
 
     return (
@@ -50,7 +51,7 @@ export const CommentButton = ({ post, variant, comments }: CommentButtonProps) =
                                 </p>
                             </TooltipContent>
                         </Tooltip>
-                        <CommentSidebar postId={post._id} comments={comments} />
+                        <CommentSidebar postId={post._id} comments={comments!} />
                     </Drawer>
                 )
             }

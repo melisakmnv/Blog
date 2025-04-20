@@ -25,6 +25,7 @@ export const CommentPreview = ({ comment }: CommentPreviewProps) => {
     const { user } = useUserStore()
     const { deleteComment } = useDeleteComment()
     const { likeComment } = useLikeComment()
+
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
     const likes = comment.likes.length
