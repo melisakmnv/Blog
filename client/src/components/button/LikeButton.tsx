@@ -39,7 +39,7 @@ export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "
                             </div>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>{initialCount} like{initialCount !== 1 && "s"} </p>
+                            <p>{initialCount} like{initialCount > 1 && "s"} </p>
                         </TooltipContent>
                     </Tooltip>
                 ) : (
@@ -60,7 +60,7 @@ export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>{count} like{count !== 1 && "s"}</p>
+                            <p>{count} like{count > 1 && "s"}</p>
                         </TooltipContent>
                     </Tooltip>
                 )
