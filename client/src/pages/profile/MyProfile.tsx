@@ -15,9 +15,6 @@ export const MyProfile = () => {
     const {data : posts} = useFetchUserPosts(user?._id!)
     const {data : savedPosts} = useFetchUserSavedPosts(user?._id!)
 
-
-    console.log("savedPosts :", savedPosts)
-
     return (
         <main>
             <section className="flex">

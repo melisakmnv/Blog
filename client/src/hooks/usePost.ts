@@ -8,6 +8,7 @@ import { createPost, editPost, getPostDetails, getPosts, getUserPosts, likePost,
 import { PostFormSchema } from "@/schema/post.schema";
 import { IPost } from "@/interfaces/post.interface";
 import { getUserSavedPosts } from "@/api/requests/user";
+import useUserStore from "@/store/useUserStore";
 
 
 export const useFetchPosts = () => {
@@ -30,7 +31,7 @@ export const useGetPostBySlug = (slug: string) => {
 export const useFetchUserPosts = (userId: string) => {
 
     return useSuspenseQuery<IPost[]>({
-        queryKey: ["posts", userId],
+        queryKey: ["user-posts", userId],
         queryFn: () => getUserPosts(userId)
     })
 }
@@ -116,15 +117,21 @@ export const useLikePost = () => {
 
 // SAVE OR UNSAVE POST //
 export const useSavePost = () => {
-    // const { user, setUser } = useUserStore();
+    const { user } = useUserStore();
 
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
         mutationFn: (postId: string) => savePost(postId),
-        onSuccess: (data) => {
+        onSuccess: (data, postId) => {
+            if (!user?._id) return;
+            if (data.message === "You have unsaved the post") {
+                queryClient.setQueryData<IPost[]>(["saved-posts", user._id], (old) =>
+                  old?.filter((post) => post._id !== postId)
+                );
+              }
             toast.success(data.message);
-            queryClient.invalidateQueries({ queryKey: ["posts"] });
+            queryClient.invalidateQueries({ queryKey: ["posts" , "saved-posts"] });
         },
         onError: (error: any) => {
             console.log(error.response?.data);
