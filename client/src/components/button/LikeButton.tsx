@@ -33,8 +33,8 @@ export const LikeButton = ({ initialLiked = false, initialCount = 0, variant = "
                         <TooltipTrigger asChild>
                             <div className="flex items-center gap-2">
                                 {/* <Button variant="ghost"> */}
-                                <FaHeart className="text-neutral-500" />
-                                <p className="text-neutral-500">{initialCount}</p>
+                                <FaHeart className="text-neutral-400" />
+                                <p className="text-neutral-400">{initialCount}</p>
                                 {/* </Button> */}
                             </div>
                         </TooltipTrigger>

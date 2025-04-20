@@ -24,8 +24,8 @@ export const CommentButton = ({ post, variant, comments }: CommentButtonProps) =
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="ghost">
-                                <FaComment className="text-neutral-500" />
-                                <p className="text-neutral-500">{post.comments.length > 0 && post.comments.length}</p>
+                                <FaComment className="text-neutral-400" />
+                                <p className="text-neutral-400">{post.comments.length > 0 && post.comments.length}</p>
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
