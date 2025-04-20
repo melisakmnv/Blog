@@ -1,9 +1,12 @@
-import { BlogCardSide } from "@/components/card/BlogCardSide"
+
+import { PostItemCard } from "@/components/card/PostItemCard";
+import { IPost } from "@/interfaces/post.interface"
 
 
-
-const posts: any[] = []
-export const ListTab = () => {
+interface ListTabProps {
+    posts: IPost[];
+}
+export const ListTab = ({ posts }: ListTabProps) => {
     return (
         <section className="w-full">
             <div className="flex">
@@ -11,7 +14,7 @@ export const ListTab = () => {
                     {
                         posts.length ? (
                             posts.map((post) => (
-                                <BlogCardSide key={post._id} post={post} />
+                                <PostItemCard key={post._id} post={post} />
                             ))
                         ) : (
                             <div className="font-Karla font-extralight text-lg leading-[40px] border-dashed border p-10 flex items-center justify-center">

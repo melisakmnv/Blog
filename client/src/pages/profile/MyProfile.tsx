@@ -7,12 +7,16 @@ import { BioTab } from "./components/BioTab";
 
 import { MyProfileSidebar } from "./components/MyProfileSidebar";
 import useUserStore from "@/store/useUserStore";
-import { useFetchUserPosts } from "@/hooks/usePost";
+import { useFetchUserPosts, useFetchUserSavedPosts } from "@/hooks/usePost";
 
 export const MyProfile = () => {
 
     const { user } = useUserStore();
     const {data : posts} = useFetchUserPosts(user?._id!)
+    const {data : savedPosts} = useFetchUserSavedPosts(user?._id!)
+
+
+    console.log("savedPosts :", savedPosts)
 
     return (
         <main>
@@ -29,7 +33,7 @@ export const MyProfile = () => {
                             <BlogTab posts={posts} />
                         </TabsContent>
                         <TabsContent value="list">
-                            <ListTab />
+                            <ListTab posts={savedPosts} />
                         </TabsContent>
 
                         <TabsContent value="bio">

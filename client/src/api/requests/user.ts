@@ -1,12 +1,13 @@
 import { IUserPayload } from "@/interfaces/user.interface";
 import { axiosInstance } from "../instance";
+import { IPost } from "@/interfaces/post.interface";
 
 
 export const getProfile = async (username: string): Promise<IUserPayload> => {
     try {
 
         const { data } = await axiosInstance.get(`/users/${username}`, {
-            withCredentials: true, 
+            withCredentials: true,
         });
 
         return data
@@ -34,7 +35,25 @@ export const getMyProfile = async (): Promise<IUserPayload> => {
 }
 
 
+export const getUserSavedPosts = async (id:string): Promise<IPost[]> => {
 
+    try {
+
+        const { data } = await axiosInstance.get(`/users/${id}/saved-posts`, {
+            withCredentials: true,
+        });
+
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during fetching user's saved posts:", error);
+        throw error;
+    }
+}
+
+
+
+// TO BE REMOVED //
 export const followUser = async (username: string) => {
     try {
         const { data } = await axiosInstance.post(
