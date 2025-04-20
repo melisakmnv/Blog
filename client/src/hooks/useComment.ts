@@ -71,7 +71,7 @@ export const useEditComment = () => {
     }
 }
 
-
+// LIKE OR UNLIKE //
 export const useLikeComment = () => {
 
     const queryClient = useQueryClient()

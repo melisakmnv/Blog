@@ -74,10 +74,10 @@ const queryClient = new QueryClient()
 
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
+    // <StrictMode>
         <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
             <ToastContainer position="bottom-right" />
         </QueryClientProvider>
-    </StrictMode>,
+    // </StrictMode>,
 )

@@ -15,7 +15,7 @@ export const getPosts = async (): Promise<IPost[]> => {
     }
 }
 
-// POST DETAILS
+// POST DETAILS BY SLUG
 export const getPostDetails = async (slug: string): Promise<IPost> => {
 
     try {
@@ -43,6 +43,7 @@ export const createPost = async (formData: IPostForm): Promise<IPost> => {
 }
 
 
+// EDIT POST
 export const editPost = async (id: string, formData: IPostForm): Promise<IPost> => {
 
     try {
@@ -54,6 +55,40 @@ export const editPost = async (id: string, formData: IPostForm): Promise<IPost> 
         throw error;
     }
 }
+
+
+// LIKE OR DISLIKE POST 
+export const likePost = async (id: string) => {
+    try {
+
+        const { data } = await axiosInstance.patch(`posts/${id}/like`, {
+            withCredentials: true,
+        })
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during liking/disliking comment:", error);
+        throw error;
+    }
+}
+
+
+// SAVE OR UNSAVE POST 
+export const savePost = async (id: string) => {
+
+    try {
+
+        const { data } = await axiosInstance.patch(`posts/${id}/save`, {
+            withCredentials: true,
+        })
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during saving/unsaving post:", error);
+        throw error;
+    }
+}
+
 
 // GET USER POSTS
 export const getUserPosts = async (id: string): Promise<IPost[]> => {
@@ -68,3 +103,5 @@ export const getUserPosts = async (id: string): Promise<IPost[]> => {
     }
 
 }
+
+

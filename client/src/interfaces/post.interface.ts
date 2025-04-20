@@ -11,6 +11,7 @@ export interface IPost {
     author: IUserPayload;
     readingTime: string;
     likes: string[];
+    savedBy : string[];
     comments: string[];
     createdAt: string;
     updatedAt: string;

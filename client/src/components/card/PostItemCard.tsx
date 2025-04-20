@@ -1,35 +1,37 @@
+import { IPost } from "@/interfaces/post.interface"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { CoverImage } from "../CoverImage";
+import { Badge } from "../ui/badge";
+import { LikeButton } from "../button/LikeButton";
+import { CommentButton } from "../button/CommentButton";
+import { SaveButton } from "../button/SaveButton";
+import { BlogMenuBar } from "./BlogMenuBar";
+import { formattedDate } from "@/lib/utils";
+import useUserStore from "@/store/useUserStore";
+import { useSavePost } from "@/hooks/usePost";
 
-
-import { IPost } from '@/interfaces/post.interface'
-
-import { formattedDate } from '@/lib/utils';
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
-import { Link } from 'react-router-dom';
-import { SaveButton } from '../button/SaveButton';
-import { LikeButton } from '../button/LikeButton';
-import { BlogMenuBar } from './BlogMenuBar';
-import { CommentButton } from '../button/CommentButton';
-import { CoverImage } from '../CoverImage';
-import { IUserPayload } from '@/interfaces/user.interface';
-
-interface BlogCardSideProps {
+interface PostItemCardProps {
     post: IPost;
-    currentUser: IUserPayload;
 }
-export const BlogCardSide = ({ post, currentUser }: BlogCardSideProps) => {
 
 
-    console.log(currentUser)
-    // const isSaved = currentUser.savedPosts.some((p) => p === post._id)
-    const isSaved = false
+export const PostItemCard = ({ post }: PostItemCardProps) => {
 
-    console.log(isSaved)
+    const { user } = useUserStore()
+
+    const { savePost } = useSavePost()
+
+    const hasSavedByUser = post.savedBy.includes(user?._id!)
+
+    console.log(hasSavedByUser)
+
+
 
     return (
+
+
         <Card className=" border rounded-sm flex">
             <Link to={`/posts/${post.slug}`}>
                 <CardHeader className="flex justify-between items-center">
@@ -56,15 +58,14 @@ export const BlogCardSide = ({ post, currentUser }: BlogCardSideProps) => {
                 <div className='flex items-center gap-2'>
                     <Badge variant="outline" className="cursor-pointer rounded-full">{post.tag}</Badge>
                     <p className='text-sm text-neutral-500 hidden md:block'> • {post.readingTime}</p>
-                    <LikeButton onClick={() => {}} variant={"display"} initialCount={post.likes.length} />
+                    <LikeButton onClick={() => { }} variant={"display"} initialCount={post.likes.length} />
                     <CommentButton post={post} variant={"display"} />
                 </div>
                 <div className="flex items-center gap-2 md:gap-4">
-                    <SaveButton postId={post._id} isSaved={isSaved} />
+                    <SaveButton onClick={() => savePost(post._id)} initialSaved={hasSavedByUser} />
                     <BlogMenuBar />
                 </div>
             </CardFooter>
         </Card >
-
     )
 }

@@ -1,36 +1,34 @@
 import { useState } from "react"
 
-import { useSavePost } from "@/hooks/useSavePost"
-
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs"
 
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 
-
 interface SaveButtonProps {
-    postId: string;
-    isSaved: boolean;
+    initialSaved: boolean;
+    onClick : () => void;
 }
-export const SaveButton = ({ postId, isSaved }: SaveButtonProps) => {
+export const SaveButton = ({ initialSaved,onClick }: SaveButtonProps) => {
 
-    const [saved, setSaved] = useState(isSaved)
-    const { handleSave, handleUnsave, isSaving, isUnsaving } = useSavePost();
+    const [saved, setSaved] = useState(initialSaved)
+
+
+    const handleClick = () => {
+        setSaved((prev) => !prev);
+        onClick()
+    }
 
     return (
         <Tooltip>
             <TooltipTrigger asChild>
-                {
-                    saved ? (
-                        <Button disabled={isUnsaving} variant={"ghost"} onClick={() => handleUnsave(postId, setSaved)}>
-                            <BsBookmarkFill className="text-[#bba07f]" />
-                        </Button>
+                <Button variant={"ghost"} onClick={handleClick}>
+                    {saved ? (
+                        <BsBookmarkFill className="text-[#bba07f]" />
                     ) : (
-                        <Button disabled={isSaving} variant={"ghost"} onClick={() => handleSave(postId, setSaved)}>
-                            <BsBookmark className="text-neutral-500" />
-                        </Button>
-                    )
-                }
+                        <BsBookmark className="text-neutral-500" />
+                    )}
+                </Button>
             </TooltipTrigger>
             <TooltipContent>
                 <p>{saved ? "Saved" : "Save post"}</p>
