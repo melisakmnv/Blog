@@ -10,6 +10,7 @@ interface CommentButtonProps {
     variant: "display" | "button";
 }
 export const CommentButton = ({ post, variant }: CommentButtonProps) => {
+    
 
 
     return (
@@ -20,11 +21,11 @@ export const CommentButton = ({ post, variant }: CommentButtonProps) => {
                         <TooltipTrigger asChild>
                             <Button variant="ghost">
                                 <FaComment className="text-neutral-500" />
-                                <p className="text-neutral-500">{post.comments}</p>
+                                <p className="text-neutral-500">{post.comments.length}</p>
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>{post.comments} comment{post.comments.length > 1 && "s"}</p>
+                            <p>{post.comments.length} comment{post.comments.length > 1 && "s"}</p>
                         </TooltipContent>
                     </Tooltip>
                 ) : (
@@ -32,11 +33,11 @@ export const CommentButton = ({ post, variant }: CommentButtonProps) => {
                         <TooltipTrigger asChild>
                             <Button variant="ghost">
                                 <FaRegComment className="text-neutral-500" />
-                                <p className="text-neutral-500">{post.comments}</p>
+                                <p className="text-neutral-500">{post.comments.length}</p>
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>{post.comments} comment{post.comments.length > 1 && "s"}</p>
+                            <p>{post.comments.length} comment{post.comments.length > 1 && "s"}</p>
                         </TooltipContent>
                     </Tooltip>
                 )

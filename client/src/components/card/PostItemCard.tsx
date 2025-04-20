@@ -20,14 +20,9 @@ interface PostItemCardProps {
 export const PostItemCard = ({ post }: PostItemCardProps) => {
 
     const { user } = useUserStore()
-
     const { savePost } = useSavePost()
 
     const hasSavedByUser = post.savedBy.includes(user?._id!)
-
-    console.log(hasSavedByUser)
-
-
 
     return (
 
