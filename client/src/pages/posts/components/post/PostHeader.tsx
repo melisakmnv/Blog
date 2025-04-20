@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
-
 import { IPost } from "@/interfaces/post.interface";
 import { formattedDate } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useUserStore from "@/store/useUserStore";
-import { Button } from "@/components/ui/button";
+
+import { Separator } from "@/components/ui/separator";
+import { PostActionBar, UserPostActionBar } from "./PostActionBar";
+import { useFetchComment } from "@/hooks/useComment";
 
 interface PostHeaderProps {
     post: IPost;
@@ -14,7 +15,10 @@ interface PostHeaderProps {
 export const PostHeader = ({ post }: PostHeaderProps) => {
 
     const { user: currentUser } = useUserStore()
+    const { data: comments } = useFetchComment(post._id)
     const isAuthor = currentUser?._id === post.author._id
+    const hasLiked = post.likes.includes(currentUser?._id!)
+
 
     return (
         <header className="flex flex-col gap-4 md:gap-6 w-full">
@@ -46,16 +50,20 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
                     </div>
 
                 </div>
+
+
+            </div>
+            <div>
+                <Separator className="bg-accent" />
                 {
-                    isAuthor && (
-                        <div className="flex items-center gap-4">
-                            <Link to={`/edit-story/${post.slug}`}>
-                                <Button variant={"outline"}>Edit</Button>
-                            </Link>
-                            <Button variant={"destructive"}>Delete</Button>
-                        </div>
+                    isAuthor ? (
+                        <UserPostActionBar post={post} comments={comments} />
+                    ) : (
+                        <PostActionBar post={post} hasLiked={hasLiked} comments={comments} />
                     )
                 }
+
+                <Separator className="bg-accent" />
             </div>
         </header>
     )

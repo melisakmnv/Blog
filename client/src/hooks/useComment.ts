@@ -1,8 +1,17 @@
 import { toast } from "react-toastify";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createComment, deleteComment, editComment, likeComment } from "@/api/requests/comment";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { createComment, deleteComment, editComment, getComments, likeComment } from "@/api/requests/comment";
 import { CommentFormSchema } from "@/schema/comment.schema";
+import { IComment } from "@/interfaces/comment.interface";
 
+
+
+export const useFetchComment = (postId: string) => {
+    return useSuspenseQuery<IComment[]>({
+      queryKey: ["comments", postId],
+      queryFn: () => getComments(postId),
+    });
+  };
 
 export const useCreateComment = () => {
 
