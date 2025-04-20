@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import { createPost, editPost, getPostDetails, getPosts, likePost, savePost } from "@/api/requests/post";
+import { createPost, editPost, getPostDetails, getPosts, getUserPosts, likePost, savePost } from "@/api/requests/post";
 import { PostFormSchema } from "@/schema/post.schema";
 import { IPost } from "@/interfaces/post.interface";
 
@@ -24,6 +24,16 @@ export const useGetPostBySlug = (slug: string) => {
         queryFn: () => getPostDetails(slug),
     });
 };
+
+
+export const useFetchUserPosts = (userId:string) => {
+
+    return useSuspenseQuery<IPost[]>({
+        queryKey: ["posts", userId],
+        queryFn : () => getUserPosts(userId)
+    })
+
+}
 
 
 export const useCreatePost = () => {

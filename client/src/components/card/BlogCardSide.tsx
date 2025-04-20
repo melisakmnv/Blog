@@ -27,7 +27,7 @@ export const BlogCardSide = ({ post, currentUser }: BlogCardSideProps) => {
     // const isSaved = currentUser.savedPosts.some((p) => p === post._id)
     const isSaved = false
 
-    console.log(isSaved)
+    // console.log(isSaved)
 
     return (
         <Card className=" border rounded-sm flex">

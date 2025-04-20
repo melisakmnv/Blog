@@ -21,6 +21,7 @@ import { Posts } from './pages/posts/Posts.tsx';
 import { Post } from './pages/posts/Post.tsx';
 import { UserProfile } from './pages/profile/UserProfile.tsx';
 import { Write } from './pages/write/Write.tsx';
+import { MyProfile } from './pages/profile/MyProfile.tsx';
 
 
 const router = createBrowserRouter(
@@ -49,10 +50,10 @@ const router = createBrowserRouter(
                     path: "/profile/:username",
                     element: <UserProfile />
                 },
-                // {
-                //     path: "/profile/me",
-                //     element: <MyProfile />
-                // },
+                {
+                    path: "/profile/me",
+                    element: <MyProfile />
+                },
                 {
                     path: "/new-story",
                     element: <Write />
