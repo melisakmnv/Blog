@@ -8,7 +8,6 @@ interface PostContentProps {
 
 export const PostContent = ({ post }: PostContentProps) => {
 
-    console.log(post)
     return (
         <section className="mx-auto">
             <article className="flex flex-col justify-center gap-4 md:gap-8 text-sm md:text-base lg:text-xl text-neutral-700 font-thin word-spacing">
