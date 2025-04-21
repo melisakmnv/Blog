@@ -14,7 +14,6 @@ export const UserProfile = () => {
     const { data: user } = useFetchUserProfile(username!)
     const { data: posts } = useFetchUserPosts(user._id)
 
-
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <main>

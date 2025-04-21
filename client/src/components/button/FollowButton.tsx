@@ -3,21 +3,24 @@ import { Button } from "../ui/button"
 
 
 interface FollowButtonProps {
-    initialfollowed?: boolean
+    initialfollowed: boolean;
     variant: "outline" | "link";
     className?: string;
+    onClick: () => void;
 }
 
-export const FollowButton = ({ initialfollowed, variant, className }: FollowButtonProps) => {
+export const FollowButton = ({ initialfollowed, variant, className, onClick }: FollowButtonProps) => {
+
+    const [follow, setFollow] = useState<boolean>(initialfollowed)
 
 
-    const [follow, setFollow] = useState(initialfollowed)
-
-    const toggleLike = () => {
+    const handleClick = () => {
         setFollow(!follow)
+        onClick()
     }
+
     return (
-        <Button variant={variant} onClick={toggleLike} className={className}>
+        <Button variant={variant} onClick={handleClick} className={className}>
             {follow ? "Unfollow" : "Follow"}
         </Button>
     )

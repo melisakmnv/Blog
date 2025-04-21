@@ -1,63 +1,36 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IUserPayload } from "@/interfaces/user.interface"
+import { IUserPayload, IUserSummary } from "@/interfaces/user.interface"
 import { Link } from "react-router-dom";
-import { BiSolidEditAlt } from "react-icons/bi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { followUser, unFollowUser } from "@/api/requests/user";
-import { toast } from "react-toastify";
+
+
 import useUserStore from "@/store/useUserStore";
+import { FollowButton } from "@/components/button/FollowButton";
+import { useFollowUser } from "@/hooks/useUser";
+import { useState } from "react";
 
 interface ProfileSidebarProps {
     user: IUserPayload;
-    isOwnProfile?: boolean;
-
 }
 
-export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
+export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
+
+    const [countFollow, setCountFollow] = useState(user.followers.length)
 
     const { user: currentUser } = useUserStore();
+    const { followUser } = useFollowUser()
 
 
-    const followers = user.followers.length
-
-    const queryClient = useQueryClient();
-
-    const followMutation = useMutation({
-        mutationFn: () => followUser(user.username),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["userProfile", user.username] });
-            toast.success(`You are now following`);
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            toast.error(error?.response?.data?.message || "Something went wrong");
-        },
-    });
-
-    const unFollowMutation = useMutation({
-        mutationFn: () => unFollowUser(user.username),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["userProfile", user.username] });
-            toast.success(`You are now following`);
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            toast.error(error?.response?.data?.message || "Something went wrong");
-        },
-    })
-
-
-    const isFollowing = currentUser?.followers.some(f => f._id === currentUser?._id);
-
+    // const isFollowing = user.followers.map(f => f._id).includes(currentUser?._id!)
+    const isFollowing = user.followers.some(f => f._id === currentUser?._id)
+    
 
     const handleFollow = () => {
-        followMutation.mutate()
+        setCountFollow((prev) => (isFollowing ? prev - 1 : prev + 1))
+        followUser(user._id)
     }
 
-    const handleUnFollow = () => {
-        unFollowMutation.mutate()
-    }
+    console.log(isFollowing)
 
     return (
         <aside className="sticky top-4 h-[calc(100vh-2rem)]">
@@ -71,7 +44,7 @@ export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
                     </Avatar>
                     <div className="flex flex-col gap-2 mt-4">
                         <h2 className="text-neutral-800 font-medium">{user.firstname} {user.lastname}</h2>
-                        <p className="text-neutral-500 font-light">{followers} {followers > 1 ? 'Followers' : 'Follower'} </p>
+                        <p className="text-neutral-500 font-light">{countFollow} {countFollow > 1 ? 'Followers' : 'Follower'} </p>
                         <p className="text-neutral-500 text-sm font-light">Software Engineer | Cat slave</p>
                     </div>
                 </div>
@@ -79,25 +52,7 @@ export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
                 {/* FOLLOW BUTTONS or Edit button */}
 
                 <div className="flex items-center gap-4">
-                    {
-                        isOwnProfile ? (
-                            <>
-                                <Button variant={"outline"}>Edit profile</Button>
-                                <BiSolidEditAlt className="text-2xl" />
-                            </>
-                        ) : (
-                            <>
-                                {
-                                    isFollowing ? (
-                                        <Button onClick={handleUnFollow} variant={"outline"}>Unfollow</Button>
-                                    ) : (
-                                        <Button onClick={handleFollow} variant={"outline"}>Follow</Button>
-                                    )
-                                }
-                            </>
-                        )
-                    }
-
+                    <FollowButton variant={"outline"} onClick={handleFollow} initialfollowed={isFollowing!} />
                 </div>
 
                 {/* People to Follow */}
