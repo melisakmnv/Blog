@@ -1,6 +1,7 @@
 import { IUserPayload } from "@/interfaces/user.interface";
 import { axiosInstance } from "../instance";
 import { IPost } from "@/interfaces/post.interface";
+import { UpdateProfileSchema } from "@/schema/user.schema";
 
 
 export const getUserProfile = async (username: string): Promise<IUserPayload> => {
@@ -67,3 +68,21 @@ export const followUser = async (id: string) => {
         throw error;
     }
 };
+
+export const editUser = async (formData:UpdateProfileSchema): Promise<IUserPayload> => {
+    try {
+
+        const { data } = await axiosInstance.patch(
+            `/users/me`, formData,
+            {
+                withCredentials: true,
+            }
+        );
+
+        return data;
+
+    } catch (error) {
+        console.error("❌ Error during following:", error);
+        throw error;
+    }
+}

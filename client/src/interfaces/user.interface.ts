@@ -25,6 +25,7 @@ export interface IUserPayload {
     followers : IUserSummary[];
     followings : IUserSummary[];
     username : string;
+    bio : string;
 }
 
 export interface IUserSummary {

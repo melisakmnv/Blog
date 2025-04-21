@@ -1,3 +1,8 @@
+
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+
 import {
     Form,
     FormField,
@@ -9,39 +14,37 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { Separator } from "@/components/ui/separator"
-
-
-const formSchema = z.object({
-    email: z.string().email({
-        message: "Please provide a correct email address",
-    }),
-    currentPassword: z.string(),
-    newPassword: z.string().min(6, {
-        message: "password must be at least 6 characters.",
-    }),
-})
+import { useEditUser } from "@/hooks/useUser"
+import { updateProfileSchema, UpdateProfileSchema } from "@/schema/user.schema"
+import useUserStore from "@/store/useUserStore"
 
 
 export const ProfileForm = () => {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const { user } = useUserStore();
+
+    const { editUser } = useEditUser()
+    const form = useForm<z.infer<typeof updateProfileSchema>>({
+        resolver: zodResolver(updateProfileSchema),
         defaultValues: {
-            email: "",
-            currentPassword: "",
-            newPassword: ""
+            firstname: user?.firstname || "",
+            lastname: user?.lastname || "",
+            bio: user?.bio || "",
         },
     })
+
+
+    const onSubmit = (values: UpdateProfileSchema) => {
+        editUser(values);
+    }
+
+    console.log(user)
+
     return (
         <Form {...form}>
-            <form className="w-full p-6 bg-white rounded-2xl border shadow-sm space-y-7 h-[calc(100vh-10rem)]">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full p-6 bg-white rounded-2xl border shadow-sm space-y-8 h-[calc(100vh-10rem)]">
 
                 <header className="space-y-1">
                     <h2 className="text-2xl font-semibold">Edit Profile</h2>
@@ -52,91 +55,87 @@ export const ProfileForm = () => {
 
                 <Separator className="bg-accent" />
 
-                <div className="flex flex-col items-center gap-2">
-                    <Avatar className="size-30">
-                        <AvatarImage
-                            src="https://i.pravatar.cc/150?img=5"
-                            alt="User avatar"
-                            className="object-cover"
-                        />
+                {/* Avatar Section */}
+                <div className="flex flex-col items-center gap-3">
+                    <Avatar className="size-28">
+                        <AvatarImage src="https://i.pravatar.cc/150?img=5" alt="User avatar" />
                         <AvatarFallback>U</AvatarFallback>
                     </Avatar>
-                    <div className="flex items-center gap-4">
-                        <Button variant={"outline"}>
-                            Edit
-                        </Button>
-                        <Button variant={"destructive"}>
-                            Delete
-                        </Button>
+
+                    <div className="flex gap-3">
+                        <Button type="button" variant="outline">Edit</Button>
+                        <Button type="button" variant="destructive">Delete</Button>
                     </div>
-
                 </div>
+
                 <Separator className="bg-accent" />
 
-                {/* Section: Name Fields */}
-                <div>
-                    <FormField
+                {/* Fields */}
+
+                <div className="space-y-6">
+                    <ProfileField
+                        label="Firstname"
                         name="firstname"
-                        render={({ field }) => (
-                            <FormItem>
-                                <div className="flex items-center gap-8">
-                                    <div className="w-[200px]">
-                                        <FormLabel>FirstName</FormLabel>
-                                    </div>
-                                    <FormControl>
-                                        <Input placeholder="John" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </div>
-                            </FormItem>
-                        )}
+                        placeholder="John"
+                        control={form.control}
                     />
-                </div>
-
-                <Separator className="bg-accent" />
-                <div>
-                    <FormField
+                    <Separator className="bg-accent" />
+                    <ProfileField
+                        label="Lastname"
                         name="lastname"
-                        render={({ field }) => (
-                            <FormItem>
-                                <div className="flex items-center gap-8">
-                                    <div className="w-[200px]">
-                                        <FormLabel>Last Name</FormLabel>
-                                    </div>
-                                    <FormControl>
-                                        <Input placeholder="Doe" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </div>
-                            </FormItem>
-                        )}
+                        placeholder="Doe"
+                        control={form.control}
                     />
-                </div>
-
-                <Separator className="bg-accent" />
-                <div>
-                    <FormField
+                    <Separator className="bg-accent" />
+                    <ProfileField
+                        label="Biography"
                         name="bio"
-                        render={({ field }) => (
-                            <FormItem>
-                                <div className="flex items-center gap-8">
-                                    <div className="w-[200px]">
-                                        <FormLabel>Biography</FormLabel>
-                                    </div>
-                                    <FormControl>
-                                        <Textarea placeholder="Tell us about yourself..." rows={4} {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </div>
-                            </FormItem>
-                        )}
+                        placeholder="Tell us about yourself..."
+                        textarea
+                        control={form.control}
                     />
                 </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-end pt-4">
                     <Button type="submit">Save Changes</Button>
                 </div>
             </form>
         </Form>
     )
 }
+
+
+
+interface FieldProps {
+    label: string
+    name: "firstname" | "lastname" | "bio";
+    placeholder: string
+    textarea?: boolean
+    control: any
+}
+
+const ProfileField = ({ label, name, placeholder, textarea = false, control }: FieldProps) => (
+    <FormField
+        name={name}
+        control={control}
+        render={({ field }) => (
+            <FormItem>
+                <div className="flex items-start gap-6">
+                    <div className="w-40 pt-2">
+                        <FormLabel>{label}</FormLabel>
+                    </div>
+                    <div className="flex-1 space-y-1">
+                        <FormControl>
+                            {textarea ? (
+                                <Textarea rows={4} placeholder={placeholder} {...field} />
+                            ) : (
+                                <Input placeholder={placeholder} {...field} />
+                            )}
+                        </FormControl>
+                        <FormMessage />
+                    </div>
+                </div>
+            </FormItem>
+        )}
+    />
+)

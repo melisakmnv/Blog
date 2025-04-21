@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ProfileForm } from "./components/settings/ProfileForm"
@@ -48,7 +48,7 @@ export const SettingsPage = () => {
 
               <nav className="flex flex-col gap-2 py-4 px-2">
                 {settingsSections.map(({ key, label }) => (
-                  <>
+                  <React.Fragment key={key}>
                   <Separator className="bg-accent"/>
                     <Button
                       key={key}
@@ -61,7 +61,7 @@ export const SettingsPage = () => {
                     >
                       {label}
                     </Button>
-                  </>
+                  </React.Fragment>
                 ))}
               </nav>
             </div>

@@ -1,5 +1,6 @@
-import { followUser, getMyProfile, getUserProfile } from "@/api/requests/user"
+import { editUser, followUser, getMyProfile, getUserProfile } from "@/api/requests/user"
 import { IUserPayload } from "@/interfaces/user.interface"
+import { UpdateProfileSchema } from "@/schema/user.schema"
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 
@@ -55,6 +56,29 @@ export const useFollowUser = () => {
 
     return {
         followUser: mutation.mutate,
+        isLoading: mutation.isPending
+    }
+}
+
+
+export const useEditUser = () => {
+
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: (values: UpdateProfileSchema ) => editUser(values),
+        onSuccess: () => {
+            toast.success("Your profile has been updated")
+            queryClient.invalidateQueries({ queryKey: ["me"] })
+        },
+        onError: (error: any) => {
+            console.log(error.response?.data);
+            toast.error(error?.response?.data?.message || "Something went wrong");
+        },
+    })
+
+    return {
+        editUser: mutation.mutate,
         isLoading: mutation.isPending
     }
 }
