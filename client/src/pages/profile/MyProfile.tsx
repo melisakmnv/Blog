@@ -6,14 +6,11 @@ import { ListTab } from "./components/ListTab";
 import { BioTab } from "./components/BioTab";
 
 import { MyProfileSidebar } from "./components/MyProfileSidebar";
-import useUserStore from "@/store/useUserStore";
-import { useFetchUserPosts, useFetchUserSavedPosts } from "@/hooks/usePost";
+import { useFetchMyProfile } from "@/hooks/useUser";
 
 export const MyProfile = () => {
 
-    const { user } = useUserStore();
-    const {data : posts} = useFetchUserPosts(user?._id!)
-    const {data : savedPosts} = useFetchUserSavedPosts(user?._id!)
+    const { data: user } = useFetchMyProfile()
 
     return (
         <main>
@@ -27,10 +24,10 @@ export const MyProfile = () => {
                             <TabsTrigger value="bio">Bio</TabsTrigger>
                         </TabsList>
                         <TabsContent value="home">
-                            <BlogTab posts={posts} />
+                            <BlogTab posts={user.savedPosts} />
                         </TabsContent>
                         <TabsContent value="list">
-                            <ListTab posts={savedPosts} />
+                            <ListTab posts={user.savedPosts} />
                         </TabsContent>
 
                         <TabsContent value="bio">
@@ -39,7 +36,7 @@ export const MyProfile = () => {
                     </Tabs>
                 </div>
                 <div className="flex-1 hidden lg:block">
-                    <MyProfileSidebar user={user!} />
+                    <MyProfileSidebar user={user} />
                 </div>
             </section>
         </main>

@@ -8,7 +8,7 @@ import { createPost, editPost, getPostDetails, getPosts, getUserPosts, likePost,
 import { PostFormSchema } from "@/schema/post.schema";
 import { IPost } from "@/interfaces/post.interface";
 import { getUserSavedPosts } from "@/api/requests/user";
-import useUserStore from "@/store/useUserStore";
+import { IUserPayload } from "@/interfaces/user.interface";
 
 
 export const useFetchPosts = () => {
@@ -37,12 +37,12 @@ export const useFetchUserPosts = (userId: string) => {
 }
 
 
-export const useFetchUserSavedPosts = (userId: string) => {
+export const useFetchUserSavedPosts = () => {
 
-   
+
     return useSuspenseQuery<IPost[]>({
-        queryKey: ["saved-posts", userId],
-        queryFn: () => getUserSavedPosts(userId)
+        queryKey: ["saved-posts"],
+        queryFn: () => getUserSavedPosts()
     })
 }
 
@@ -117,21 +117,24 @@ export const useLikePost = () => {
 
 // SAVE OR UNSAVE POST //
 export const useSavePost = () => {
-    const { user } = useUserStore();
 
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
         mutationFn: (postId: string) => savePost(postId),
         onSuccess: (data, postId) => {
-            if (!user?._id) return;
             if (data.message === "You have unsaved the post") {
-                queryClient.setQueryData<IPost[]>(["saved-posts", user._id], (old) =>
-                  old?.filter((post) => post._id !== postId)
-                );
-              }
+                queryClient.setQueryData<IUserPayload>(["me"], (old) => {
+                    if (!old) return old;
+                    return {
+                        ...old,
+                        savedPosts: old.savedPosts.filter(post => post._id !== postId),
+                    };
+                });
+            }
+
             toast.success(data.message);
-            queryClient.invalidateQueries({ queryKey: ["posts" , "saved-posts"] });
+            queryClient.invalidateQueries({ queryKey: ["me"] });
         },
         onError: (error: any) => {
             console.log(error.response?.data);

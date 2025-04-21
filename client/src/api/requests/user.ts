@@ -32,11 +32,12 @@ export const getMyProfile = async (): Promise<IUserPayload> => {
 }
 
 
-export const getUserSavedPosts = async (id:string): Promise<IPost[]> => {
+// TO BE REMOVED
+export const getUserSavedPosts = async (): Promise<IPost[]> => {
 
     try {
 
-        const { data } = await axiosInstance.get(`/users/${id}/saved-posts`, {
+        const { data } = await axiosInstance.get(`/users/me/saved-posts`, {
             withCredentials: true,
         });
 

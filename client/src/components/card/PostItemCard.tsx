@@ -25,8 +25,6 @@ export const PostItemCard = ({ post }: PostItemCardProps) => {
     const hasSavedByUser = post.savedBy.includes(user?._id!)
 
     return (
-
-
         <Card className=" border rounded-sm flex">
             <Link to={`/posts/${post.slug}`}>
                 <CardHeader className="flex justify-between items-center">
