@@ -41,7 +41,7 @@ export const Login = () => {
         <div className="flex min-h-[80vh] items-center justify-center">
             <div className="w-full max-w-md px-8 py-10 bg-white rounded-2xl shadow-xl border border-gray-100">
                 <div className="mb-8 text-center">
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-700 bg-clip-text text-transparent">Ravi de vous revoir !</h1>
+					<h1 className="text-3xl font-bold text-[#BBA07F]">Ravi de vous revoir !</h1>
                     <p className="mt-2 text-gray-600">Connectez-vous pour accéder à votre contenu</p>
                 </div>
                 
