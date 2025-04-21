@@ -1,4 +1,5 @@
 
+import { logoutUser } from '@/api/requests/auth';
 import { IUserPayload } from '@/interfaces/user.interface';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -16,7 +17,10 @@ const useUserStore = create<UserState>()(
             user: null,
             isAuthenticated: false,
             setUser: (user) => set({ user, isAuthenticated: true }),
-            logout: () => set({ user: null, isAuthenticated: false }),
+            logout: () => {
+                logoutUser()
+                set({ user: null, isAuthenticated: false })
+            },
         }),
         {
             name: 'user-store',
