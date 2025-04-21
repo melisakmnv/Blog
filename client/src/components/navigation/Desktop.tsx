@@ -52,9 +52,6 @@ export const Desktop = () => {
 								<LinkItem key={index} link={route.link} label={route.label} />
 							))
 						}
-						<Link to={"/register"}>
-							<Button variant={"outline"}>Register</Button>
-						</Link>
 						<Link to={"/login"}>
 							<Button>Login</Button>
 						</Link>
