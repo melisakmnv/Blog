@@ -13,7 +13,7 @@ export const useFetchPosts = () => {
     return useSuspenseQuery<IPost[]>({
         queryKey: ["posts"],
         queryFn: getPosts,
-        staleTime : 10000,
+        // staleTime : 10000,
     })
 }
 
