@@ -3,13 +3,10 @@ import { axiosInstance } from "../instance";
 import { IPost } from "@/interfaces/post.interface";
 
 
-export const getProfile = async (username: string): Promise<IUserPayload> => {
+export const getUserProfile = async (username: string): Promise<IUserPayload> => {
     try {
 
-        const { data } = await axiosInstance.get(`/users/${username}`, {
-            withCredentials: true,
-        });
-
+        const { data } = await axiosInstance.get(`/users/${username}`)
         return data
 
     } catch (error) {
