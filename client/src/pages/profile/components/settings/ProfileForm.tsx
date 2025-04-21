@@ -40,8 +40,6 @@ export const ProfileForm = () => {
         editUser(values);
     }
 
-    console.log(user)
-
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full p-6 bg-white rounded-2xl border shadow-sm space-y-8 h-[calc(100vh-10rem)]">
@@ -58,8 +56,8 @@ export const ProfileForm = () => {
                 {/* Avatar Section */}
                 <div className="flex flex-col items-center gap-3">
                     <Avatar className="size-28">
-                        <AvatarImage src="https://i.pravatar.cc/150?img=5" alt="User avatar" />
-                        <AvatarFallback>U</AvatarFallback>
+                    <AvatarImage className="object-cover" src={user?.avatar} alt="Publisher Avatar" />
+                    <AvatarFallback>Publisher Avatar</AvatarFallback>
                     </Avatar>
 
                     <div className="flex gap-3">
