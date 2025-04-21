@@ -39,7 +39,9 @@ export const MyProfileSidebar = ({ user }: ProfileSidebarProps) => {
                 {/* FOLLOW BUTTONS or Edit button */}
 
                 <div className="flex items-center gap-4">
-                    <Button variant={"outline"}>Edit profile</Button>
+                    <Link to={"/profile/me/settings"}>
+                        <Button variant={"outline"}>Edit profile</Button>
+                    </Link>
                     <BiSolidEditAlt className="text-2xl" />
                 </div>
 
