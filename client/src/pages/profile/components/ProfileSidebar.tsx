@@ -14,9 +14,11 @@ interface ProfileSidebarProps {
 }
 
 export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
+    const followers = user.followers.length;
     const { user: currentUser } = useUserStore();
     const { followUser } = useFollowUser()
-    const [countFollow, setCountFollow] = useState(user.followers.length)
+    const [countFollow, setCountFollow] = useState(followers)
+
 
     // const isFollowing = user.followers.map(f => f._id).includes(currentUser?._id!)
     const isFollowing = user.followers.some(f => f._id === currentUser?._id)
@@ -26,9 +28,6 @@ export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
         setCountFollow((prev) => (isFollowing ? prev - 1 : prev + 1))
         followUser(user._id)
     }
-
-
-
     console.log(currentUser)
 
     return (
@@ -56,46 +55,60 @@ export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
 
                 {/* People to Follow */}
                 <div>
-                    <h2 className="text-lg font-semibold mb-2">Following</h2>
-                    <ul className="space-y-4 mb-2">
+                    {user.followings && user.followings.length > 0 ? (
+                        <>
+                            <h2 className="text-lg font-semibold mb-2">Following</h2>
+                            <ul className="space-y-4 mb-2">
+                                {user.followings.map((person, index) => {
+                                    const isMe = person._id === currentUser?._id;
+                                    const iFollow = currentUser?.followings?.some(f => f._id === person._id);
 
-                        {user.followings.map((person, index) => {
-                            const isMe = person._id === currentUser?._id;
-                            const iFollow = currentUser?.followings.some(f => f._id === person._id);
-
-                            return (
-                                <li key={index} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <Avatar>
-                                            <AvatarImage className="object-cover" src={person.avatar} alt="Avatar" />
-                                            <AvatarFallback>Avatar</AvatarFallback>
-                                        </Avatar>
-                                        <Link to={`/profile/${person.username}`}>
-                                            <div>
-                                                <p className="font-medium text-sm">{person.firstname} {person.lastname}</p>
-                                                <p className="text-xs text-gray-500">@{person.username}</p>
+                                    return (
+                                        <li key={person._id || index} className="flex items-center justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <Avatar>
+                                                    <AvatarImage className="object-cover" src={person.avatar} alt="Avatar" />
+                                                    <AvatarFallback>
+                                                        {person.firstname[0]}{person.lastname[0]}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <Link to={`/profile/${person.username}`}>
+                                                    <div>
+                                                        <p className="font-medium text-sm">
+                                                            {person.firstname} {person.lastname}
+                                                        </p>
+                                                        <p className="text-xs text-gray-500">@{person.username}</p>
+                                                    </div>
+                                                </Link>
                                             </div>
-                                        </Link>
-                                    </div>
 
-                                    {!isMe && (
-                                        iFollow ? (
-                                            <Button variant="outline" className="text-sm">Unfollow</Button>
-                                        ) : (
-                                            <Button variant="default" className="text-sm">Follow</Button>
-                                        )
-                                    )}
-                                </li>
-                            );
-                        })}
-
-
-                    </ul>
-                    <Link to={"/"} className="underline text-sm">see more to follow</Link>
+                                            {!isMe && (
+                                                iFollow ? (
+                                                    <Button variant="outline" className="text-sm">
+                                                        Unfollow
+                                                    </Button>
+                                                ) : (
+                                                    <Button variant="default" className="text-sm">
+                                                        Follow
+                                                    </Button>
+                                                )
+                                            )}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                            <Link to="/" className="underline text-sm">
+                                See more to follow
+                            </Link>
+                        </>
+                    ) : (
+                        <div>
+                            <p className="text-neutral-500 text-sm font-light text-center">
+                                Looks like this user hasn't followed anyone yet.
+                            </p>
+                        </div>
+                    )}
                 </div>
-
-                {/* Story List */}
-
             </div>
         </aside>
     )
