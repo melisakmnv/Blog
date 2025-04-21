@@ -1,4 +1,5 @@
 import { CoverImage } from "@/components/CoverImage";
+import { Badge } from "@/components/ui/badge";
 import { IPost } from "@/interfaces/post.interface"
 
 interface PostContentProps {
@@ -6,6 +7,7 @@ interface PostContentProps {
 }
 
 export const PostContent = ({ post }: PostContentProps) => {
+
     return (
         <section className="mx-auto">
             <article 
@@ -17,6 +19,7 @@ export const PostContent = ({ post }: PostContentProps) => {
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
             </article>
+            <Badge className="cursor-pointer mt-10 px-4 py-1" variant={"outline"}>{post.tag}</Badge>
         </section>
     )
 }

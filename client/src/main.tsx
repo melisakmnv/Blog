@@ -22,6 +22,8 @@ import { Post } from './pages/posts/Post.tsx';
 import { UserProfile } from './pages/profile/UserProfile.tsx';
 import { Write } from './pages/write/Write.tsx';
 import { Register } from './pages/connexion/Register.tsx';
+import { MyProfile } from './pages/profile/MyProfile.tsx';
+import { SettingsPage } from './pages/profile/SettingPage.tsx';
 
 
 const router = createBrowserRouter(
@@ -54,10 +56,14 @@ const router = createBrowserRouter(
                     path: "/profile/:username",
                     element: <UserProfile />
                 },
-                // {
-                //     path: "/profile/me",
-                //     element: <MyProfile />
-                // },
+                {
+                    path: "/profile/me",
+                    element: <MyProfile />
+                },
+                {
+                    path: "/profile/me/settings",
+                    element: <SettingsPage />
+                },
                 {
                     path: "/new-story",
                     element: <Write />
@@ -79,10 +85,10 @@ const queryClient = new QueryClient()
 
 
 createRoot(document.getElementById('root')!).render(
-    // <StrictMode>
+    <StrictMode>
         <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
             <ToastContainer position="bottom-right" />
         </QueryClientProvider>
-    // </StrictMode>,
+    </StrictMode>,
 )

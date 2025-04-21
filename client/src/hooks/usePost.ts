@@ -4,16 +4,18 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import { createPost, editPost, getPostDetails, getPosts, likePost, savePost } from "@/api/requests/post";
+import { createPost, editPost, getPostDetails, getPosts, getUserPosts, likePost, savePost } from "@/api/requests/post";
 import { PostFormSchema } from "@/schema/post.schema";
 import { IPost } from "@/interfaces/post.interface";
+import { getUserSavedPosts } from "@/api/requests/user";
+import { IUserPayload } from "@/interfaces/user.interface";
 
 
 export const useFetchPosts = () => {
     return useSuspenseQuery<IPost[]>({
         queryKey: ["posts"],
         queryFn: getPosts,
-        // staleTime : 10000,
+        staleTime: 10000,
     })
 }
 
@@ -24,6 +26,25 @@ export const useGetPostBySlug = (slug: string) => {
         queryFn: () => getPostDetails(slug),
     });
 };
+
+
+export const useFetchUserPosts = (userId: string) => {
+
+    return useSuspenseQuery<IPost[]>({
+        queryKey: ["user-posts", userId],
+        queryFn: () => getUserPosts(userId)
+    })
+}
+
+
+export const useFetchUserSavedPosts = () => {
+
+
+    return useSuspenseQuery<IPost[]>({
+        queryKey: ["saved-posts"],
+        queryFn: () => getUserSavedPosts()
+    })
+}
 
 
 export const useCreatePost = () => {
@@ -96,15 +117,24 @@ export const useLikePost = () => {
 
 // SAVE OR UNSAVE POST //
 export const useSavePost = () => {
-    // const { user, setUser } = useUserStore();
 
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
         mutationFn: (postId: string) => savePost(postId),
-        onSuccess: (data) => {
+        onSuccess: (data, postId) => {
+            if (data.message === "You have unsaved the post") {
+                queryClient.setQueryData<IUserPayload>(["me"], (old) => {
+                    if (!old) return old;
+                    return {
+                        ...old,
+                        savedPosts: old.savedPosts.filter(post => post._id !== postId),
+                    };
+                });
+            }
+
             toast.success(data.message);
-            queryClient.invalidateQueries({ queryKey: ["posts"] });
+            queryClient.invalidateQueries({ queryKey: ["me"] });
         },
         onError: (error: any) => {
             console.log(error.response?.data);

@@ -1,6 +1,7 @@
 import { SigninSchema } from "@/pages/connexion/Login";
 import { RegisterSchema } from "@/pages/connexion/Register"; 
 import { axiosInstance } from "../instance";
+import { toast } from "react-toastify";
 
 
 export const signin = async (formData: SigninSchema) => {
@@ -23,3 +24,17 @@ export const signup = async (formData: RegisterSchema) => {
         throw error; 
     }
 };
+}
+
+
+export const logoutUser = async () => {
+    try {
+        const { data } = await axiosInstance.post("/auth/logout")
+        toast.success("Logout successfully")
+        return data
+        
+    } catch (error) {
+        console.error("❌ Error during logout:", error);
+        throw error;
+    }
+}

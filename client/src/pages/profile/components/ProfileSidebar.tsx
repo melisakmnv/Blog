@@ -2,62 +2,33 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { IUserPayload } from "@/interfaces/user.interface"
 import { Link } from "react-router-dom";
-import { BiSolidEditAlt } from "react-icons/bi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { followUser, unFollowUser } from "@/api/requests/user";
-import { toast } from "react-toastify";
+
+
 import useUserStore from "@/store/useUserStore";
+import { FollowButton } from "@/components/button/FollowButton";
+import { useFollowUser } from "@/hooks/useUser";
+import { useState } from "react";
 
 interface ProfileSidebarProps {
     user: IUserPayload;
-    isOwnProfile?: boolean;
-
 }
 
-export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
-
+export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
+    const followers = user.followers.length;
     const { user: currentUser } = useUserStore();
+    const { followUser } = useFollowUser()
+    const [countFollow, setCountFollow] = useState(followers)
 
 
-    const followers = user.followers.length
-
-    const queryClient = useQueryClient();
-
-    const followMutation = useMutation({
-        mutationFn: () => followUser(user.username),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["userProfile", user.username] });
-            toast.success(`You are now following`);
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            toast.error(error?.response?.data?.message || "Something went wrong");
-        },
-    });
-
-    const unFollowMutation = useMutation({
-        mutationFn: () => unFollowUser(user.username),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["userProfile", user.username] });
-            toast.success(`You are now following`);
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            toast.error(error?.response?.data?.message || "Something went wrong");
-        },
-    })
-
-
-    const isFollowing = currentUser?.followers.some(f => f._id === currentUser?._id);
+    // const isFollowing = user.followers.map(f => f._id).includes(currentUser?._id!)
+    const isFollowing = user.followers.some(f => f._id === currentUser?._id)
 
 
     const handleFollow = () => {
-        followMutation.mutate()
+        setCountFollow((prev) => (isFollowing ? prev - 1 : prev + 1))
+        followUser(user._id)
     }
-
-    const handleUnFollow = () => {
-        unFollowMutation.mutate()
-    }
+    console.log(currentUser)
 
     return (
         <aside className="sticky top-4 h-[calc(100vh-2rem)]">
@@ -71,68 +42,73 @@ export const ProfileSidebar = ({ user, isOwnProfile }: ProfileSidebarProps) => {
                     </Avatar>
                     <div className="flex flex-col gap-2 mt-4">
                         <h2 className="text-neutral-800 font-medium">{user.firstname} {user.lastname}</h2>
-                        <p className="text-neutral-500 font-light">{followers} {followers > 1 ? 'Followers' : 'Follower'} </p>
-                        <p className="text-neutral-500 text-sm font-light">Software Engineer | Cat slave</p>
+                        <p className="text-neutral-500 font-light">{countFollow} {countFollow > 1 ? 'Followers' : 'Follower'} </p>
+                        <p className="text-neutral-500 text-sm font-light">{user.bio}</p>
                     </div>
                 </div>
 
                 {/* FOLLOW BUTTONS or Edit button */}
 
                 <div className="flex items-center gap-4">
-                    {
-                        isOwnProfile ? (
-                            <>
-                                <Button variant={"outline"}>Edit profile</Button>
-                                <BiSolidEditAlt className="text-2xl" />
-                            </>
-                        ) : (
-                            <>
-                                {
-                                    isFollowing ? (
-                                        <Button onClick={handleUnFollow} variant={"outline"}>Unfollow</Button>
-                                    ) : (
-                                        <Button onClick={handleFollow} variant={"outline"}>Follow</Button>
-                                    )
-                                }
-                            </>
-                        )
-                    }
-
+                    <FollowButton variant={"outline"} onClick={handleFollow} initialfollowed={isFollowing!} />
                 </div>
 
                 {/* People to Follow */}
                 <div>
-                    <h2 className="text-lg font-semibold mb-2">Following</h2>
-                    <ul className="space-y-4 mb-2">
-                        {user.followings.map((person, index) => (
-                            <li key={index} className="flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                    <Avatar>
-                                        <AvatarImage className="object-cover" src={person.avatar} alt="Publisher Avatar" />
-                                        <AvatarFallback>Publisher Avatar</AvatarFallback>
-                                    </Avatar>
-                                    <Link to={`/profile/${person.username}`}>
-                                        <div>
-                                            <p className="font-medium text-sm">{person.firstname} {person.lastname}</p>
-                                            <p className="text-xs text-gray-500">{person.username}</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                                {
-                                    user.followings.some(f => f._id === person._id) ? (
-                                        <Button variant="outline" className="text-sm">Unfollow</Button>
-                                    ) : (
-                                        <Button variant="default" className="text-sm">Follow</Button>
-                                    )
-                                }
-                            </li>
-                        ))}
-                    </ul>
-                    <Link to={"/"} className="underline text-sm">see more to follow</Link>
+                    {user.followings && user.followings.length > 0 ? (
+                        <>
+                            <h2 className="text-lg font-semibold mb-2">Following</h2>
+                            <ul className="space-y-4 mb-2">
+                                {user.followings.map((person, index) => {
+                                    const isMe = person._id === currentUser?._id;
+                                    const iFollow = currentUser?.followings?.some(f => f._id === person._id);
+
+                                    return (
+                                        <li key={person._id || index} className="flex items-center justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <Avatar>
+                                                    <AvatarImage className="object-cover" src={person.avatar} alt="Avatar" />
+                                                    <AvatarFallback>
+                                                        {person.firstname[0]}{person.lastname[0]}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <Link to={`/profile/${person.username}`}>
+                                                    <div>
+                                                        <p className="font-medium text-sm">
+                                                            {person.firstname} {person.lastname}
+                                                        </p>
+                                                        <p className="text-xs text-gray-500">@{person.username}</p>
+                                                    </div>
+                                                </Link>
+                                            </div>
+
+                                            {!isMe && (
+                                                iFollow ? (
+                                                    <Button variant="outline" className="text-sm">
+                                                        Unfollow
+                                                    </Button>
+                                                ) : (
+                                                    <Button variant="default" className="text-sm">
+                                                        Follow
+                                                    </Button>
+                                                )
+                                            )}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                            <Link to="/" className="underline text-sm">
+                                See more to follow
+                            </Link>
+                        </>
+                    ) : (
+                        <div>
+                            <p className="text-neutral-500 text-sm font-light text-center">
+                                Looks like this user hasn't followed anyone yet.
+                            </p>
+                        </div>
+                    )}
                 </div>
-
-                {/* Story List */}
-
             </div>
         </aside>
     )

@@ -2,7 +2,7 @@ import { IPost, IPostForm } from "@/interfaces/post.interface";
 import { axiosInstance } from "../instance";
 
 
-// ALL POST
+// GET ALL POST
 export const getPosts = async (): Promise<IPost[]> => {
     try {
 
@@ -15,7 +15,7 @@ export const getPosts = async (): Promise<IPost[]> => {
     }
 }
 
-// POST DETAILS BY SLUG
+// GET POST BY SLUG
 export const getPostDetails = async (slug: string): Promise<IPost> => {
 
     try {
@@ -28,6 +28,21 @@ export const getPostDetails = async (slug: string): Promise<IPost> => {
         throw error;
     }
 }
+
+
+// GET USER POSTS
+export const getUserPosts = async (id: string): Promise<IPost[]> => {
+    try {
+
+        const { data } = await axiosInstance.get(`/posts/user/${id}`)
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during fetching user' post:", error);
+        throw error;
+    }
+}
+
 
 // CREATE POST
 export const createPost = async (formData: IPostForm): Promise<IPost> => {
@@ -90,18 +105,5 @@ export const savePost = async (id: string) => {
 }
 
 
-// GET USER POSTS
-export const getUserPosts = async (id: string): Promise<IPost[]> => {
-    try {
-
-        const { data } = await axiosInstance.get(`/posts/user/${id}`)
-        return data
-
-    } catch (error) {
-        console.error("❌ Error during fetching user' post:", error);
-        throw error;
-    }
-
-}
 
 

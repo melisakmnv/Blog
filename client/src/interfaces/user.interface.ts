@@ -1,3 +1,5 @@
+import { IPost } from "./post.interface";
+
 export interface IUser {
     _id: string;
     username: string;
@@ -17,12 +19,13 @@ export interface IUserPayload {
     role: string;
     email : string;
     avatar : string;
-    savedPosts : string[];
+    savedPosts : IPost[];
     createdAt : string;
     updatedAt : string;
     followers : IUserSummary[];
     followings : IUserSummary[];
     username : string;
+    bio : string;
 }
 
 export interface IUserSummary {

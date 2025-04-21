@@ -23,10 +23,14 @@ export const CommentButton = ({ post, variant, comments }: CommentButtonProps) =
                 variant === "display" ? (
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button variant="ghost">
+                            <div className="flex items-center gap-2">
                                 <FaComment className="text-neutral-400" />
-                                <p className="text-neutral-400">{post.comments.length > 0 && post.comments.length}</p>
-                            </Button>
+                                {
+                                    post.comments.length > 0 && (<p className="text-neutral-400">
+                                        {post.comments.length}
+                                    </p>)
+                                }
+                            </div>
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>{post.comments.length} comment{post.comments.length > 1 && "s"}</p>
@@ -39,9 +43,11 @@ export const CommentButton = ({ post, variant, comments }: CommentButtonProps) =
                                 <TooltipTrigger asChild>
                                     <Button variant="ghost">
                                         <FaRegComment className="text-neutral-500" />
-                                        <p className="text-neutral-500">
-                                            {post.comments.length > 0 && post.comments.length}
-                                        </p>
+                                        {
+                                            post.comments.length > 0 && (<p className="text-neutral-500">
+                                                {post.comments.length}
+                                            </p>)
+                                        }
                                     </Button>
                                 </TooltipTrigger>
                             </DrawerTrigger>

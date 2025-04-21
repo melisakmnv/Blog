@@ -3,10 +3,8 @@ import { Button } from "@/components/ui/button";
 import { IUserPayload } from "@/interfaces/user.interface"
 import { Link } from "react-router-dom";
 import { BiSolidEditAlt } from "react-icons/bi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { unFollowUser } from "@/api/requests/user";
-import { toast } from "react-toastify";
-
+import { FollowButton } from "@/components/button/FollowButton";
+import { useFollowUser } from "@/hooks/useUser";
 
 interface ProfileSidebarProps {
     user: IUserPayload;
@@ -16,36 +14,10 @@ interface ProfileSidebarProps {
 
 export const MyProfileSidebar = ({ user }: ProfileSidebarProps) => {
 
-    const followers = user.followers.length
+    const { followUser } = useFollowUser()
 
-
-    const queryClient = useQueryClient();
-
-    const unFollowMutation = useMutation({
-        mutationFn: (username: string) => unFollowUser(username),
-        onSuccess: (data, username) => {
-            // Update myProfile cache to remove the unfollowed user
-            queryClient.setQueryData(["myProfile"], (oldData: IUserPayload | undefined) => {
-                if (!oldData) return oldData;
-
-                return {
-                    ...oldData,
-                    followings: oldData.followings.filter(f => f.username !== username),
-                };
-            });
-
-            toast.success(data.message);
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data)
-            toast.error(error?.response?.data?.message || "Something went wrong");
-        },
-    })
-
-    const handleUnFollow = (username: string) => {
-
-        console.log(username)
-        unFollowMutation.mutate(username);
+    const handleFollow = (userId: string) => {
+        followUser(userId)
     }
 
     return (
@@ -60,15 +32,16 @@ export const MyProfileSidebar = ({ user }: ProfileSidebarProps) => {
                     </Avatar>
                     <div className="flex flex-col gap-2 mt-4">
                         <h2 className="text-neutral-800 font-medium">{user.firstname} {user.lastname}</h2>
-                        <p className="text-neutral-500 font-light">{followers} {followers > 1 ? 'Followers' : 'Follower'} </p>
-                        <p className="text-neutral-500 text-sm font-light">Software Engineer | Cat slave</p>
+                        <p className="text-neutral-500 text-sm font-light">{user.bio}</p>
                     </div>
                 </div>
 
                 {/* FOLLOW BUTTONS or Edit button */}
 
                 <div className="flex items-center gap-4">
-                    <Button variant={"outline"}>Edit profile</Button>
+                    <Link to={"/profile/me/settings"}>
+                        <Button variant={"outline"}>Edit profile</Button>
+                    </Link>
                     <BiSolidEditAlt className="text-2xl" />
                 </div>
 
@@ -90,15 +63,13 @@ export const MyProfileSidebar = ({ user }: ProfileSidebarProps) => {
                                         </div>
                                     </Link>
                                 </div>
-                                <Button onClick={() => handleUnFollow(person.username)} variant="outline" className="text-sm">Unfollow</Button>
+                                {/* <Button onClick={() => {}} variant="outline" className="text-sm">Unfollow</Button> */}
+                                <FollowButton initialfollowed={true} variant={"outline"} onClick={() => handleFollow(person._id)} />
                             </li>
                         ))}
                     </ul>
                     <Link to={"/"} className="underline text-sm">see more to follow</Link>
                 </div>
-
-                {/* Story List */}
-
             </div>
         </aside>
     )
