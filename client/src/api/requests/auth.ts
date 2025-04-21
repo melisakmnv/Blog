@@ -24,7 +24,6 @@ export const signup = async (formData: RegisterSchema) => {
         throw error; 
     }
 };
-}
 
 
 export const logoutUser = async () => {
