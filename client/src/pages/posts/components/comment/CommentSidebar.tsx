@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { DrawerClose, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { CommentCreateForm } from './CommentForm';
+import useUserStore from '@/store/useUserStore';
+import { Link } from 'react-router-dom';
 
 
 interface CommentSidebarProps {
@@ -16,6 +18,7 @@ interface CommentSidebarProps {
 }
 
 export const CommentSidebar = ({ comments, postId }: CommentSidebarProps) => {
+    const { user } = useUserStore()
     return (
         <DrawerContent>
             <div className="h-full overflow-y-auto">
@@ -32,7 +35,17 @@ export const CommentSidebar = ({ comments, postId }: CommentSidebarProps) => {
                         <Separator className="my-4 bg-border" />
                     </DrawerHeader>
 
-                    <CommentCreateForm postId={postId} />
+                    {user ? (
+                        <CommentCreateForm postId={postId} />
+                    ) : (
+                        <p className="font-thin">
+                            You need to{" "}
+                            <Link to="/login" className="text-blue-600 hover:underline">
+                                log in
+                            </Link>{" "}
+                            to leave a comment.
+                        </p>
+                    )}
 
                     <div className="flex flex-col gap-4 p-4 md:p-0 md:mb-10">
                         {comments.map((comment) => (

@@ -9,12 +9,16 @@ import { CommentPreview } from "./CommentPreview";
 
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import useUserStore from "@/store/useUserStore";
+import { Link } from "react-router-dom";
 
 
 interface ICommentProps {
     postId: string;
 }
 export const Comment = ({ postId }: ICommentProps) => {
+
+    const { user } = useUserStore()
 
     const { data: comments } = useSuspenseQuery<IComment[]>({
         queryFn: () => getComments(postId),
@@ -27,7 +31,18 @@ export const Comment = ({ postId }: ICommentProps) => {
     return (
         <>
             <h3 className="text-2xl font-semibold text-neutral-800 mb-6">{commentLenght} {commentLenght > 1 ? "Comments" : "Comment"} </h3>
-            <CommentCreateForm postId={postId} />
+
+            {user ? (
+                <CommentCreateForm postId={postId} />
+            ) : (
+                <p className="font-thin">
+                    You need to{" "}
+                    <Link to="/login" className="text-blue-600 hover:underline">
+                        log in
+                    </Link>{" "}
+                    to leave a comment.
+                </p>
+            )}
 
             <section className="space-y-8">
                 {comments.slice(0, maxComment).map((comment) => (
