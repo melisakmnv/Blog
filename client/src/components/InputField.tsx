@@ -30,7 +30,8 @@ export const InputField = ({ label, name, placeholder, textarea = false, quill =
                     theme="snow"
                     value={field.value}
                     onChange={field.onChange}
-                    style={{ height: "450px" }}
+                    // style={{ height: "450px" }}
+                     className="min-h-[200px] h-[300px] sm:h-[400px] md:h-[450px]"
                 />
             );
         }

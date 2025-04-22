@@ -1,16 +1,21 @@
+import { Link } from "react-router-dom"
+
+import { useFetchPosts } from "@/hooks/usePost"
+
+import { FaArrowUp } from "react-icons/fa";
+
 import { BlogCard } from "@/components/card/BlogCard"
 import { Header } from "@/components/home/Header"
 import { NewestPost } from "@/components/home/NewestPost"
+
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
-import { FaArrowUp } from "react-icons/fa";
-
-
 
 export const Home = () => {
+
+    const { data: posts } = useFetchPosts()
     return (
         <main className="flex flex-col gap-6 md:gap-20">
-            <Header/>
+            <Header />
             <section className="flex flex-col gap-4">
                 <h2 className="font-Montserrat font-bold text-xl">Newest post</h2>
                 <NewestPost />
@@ -29,6 +34,8 @@ export const Home = () => {
 
                 {/* xl:grid-cols-5 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    {/* <BlogCard />
+                  
                     <BlogCard />
                     <BlogCard />
                     <BlogCard />
@@ -36,9 +43,12 @@ export const Home = () => {
                     <BlogCard />
                     <BlogCard />
                     <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
+                    <BlogCard /> */}
+                    {
+                        posts.map((post) => (
+                            <BlogCard key={post._id} post={post} />
+                        ))
+                    }
                 </div>
             </section>
         </main>
