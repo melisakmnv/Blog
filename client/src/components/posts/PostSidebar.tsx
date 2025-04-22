@@ -5,13 +5,23 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "../ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "../ui/input";
+import { FormEvent, useState } from "react";
+import { PostFilters } from "@/api/requests/post";
+import { X } from "lucide-react";
 
-export const PostSidebar = () => {
+interface PostSidebarProps {
+    filters: PostFilters;
+    updateFilters: (newFilters: Partial<PostFilters>) => void;
+    resetFilters: () => void;
+    totalPosts: number;
+}
+
+export const PostSidebar = ({ filters, updateFilters, resetFilters, totalPosts }: PostSidebarProps) => {
     const tags = ['React', 'JavaScript', 'Design', 'UX', 'Tailwind', 'Yoga', 'Renovation', 'Business'];
     const peopleToFollow = [
-        { name: 'Jane Doe', username: '@janedoe', avatar: 'https://randomuser.me/api/portraits/women/50.jpg', },
-        { name: 'John Smith', username: '@johnsmith', avatar: 'https://randomuser.me/api/portraits/men/25.jpg', },
-        { name: 'Jim Smith', username: '@jimsmith', avatar: 'https://randomuser.me/api/portraits/men/60.jpg', },
+        { name: 'Jane Doe', username: '@janedoe', avatar: 'https://randomuser.me/api/portraits/women/50.jpg', id: 'user1' },
+        { name: 'John Smith', username: '@johnsmith', avatar: 'https://randomuser.me/api/portraits/men/25.jpg', id: 'user2' },
+        { name: 'Jim Smith', username: '@jimsmith', avatar: 'https://randomuser.me/api/portraits/men/60.jpg', id: 'user3' },
     ];
     const recentActivity = [
         'Commented on "How to use Tailwind"',
@@ -19,30 +29,121 @@ export const PostSidebar = () => {
         'Started following @ux_guru',
     ];
 
+    // Local state for search input
+    const [searchInput, setSearchInput] = useState(filters.search || '');
+
+    // Handle search form submission
+    const handleSearch = (e: FormEvent) => {
+        e.preventDefault();
+        updateFilters({ search: searchInput });
+    };
+
+    // Handle sort change
+    const handleSortChange = (value: string) => {
+        updateFilters({ sort: value });
+    };
+
+    // Handle tag selection
+    const handleTagSelect = (tag: string) => {
+        // If the tag is already selected, remove it
+        if (filters.tag === tag) {
+            updateFilters({ tag: undefined });
+        } else {
+            updateFilters({ tag });
+        }
+    };
+
+    // Handle author selection
+    const handleAuthorSelect = (authorId: string) => {
+        updateFilters({ author: authorId });
+    };
+
     return (
         // <aside className="w-full max-w-sm p-4 space-y-8 bg-white border">
         <aside className="sticky top-4 h-[calc(100vh-2rem)]">
             <div className="h-full overflow-y-auto p-4 space-y-6 bg-white rounded-2xl shadow-sm">
+            {/* Active filters */}
+            {(filters.search || filters.tag || filters.author) && (
+                <div>
+                    <div className="flex justify-between items-center mb-2">
+                        <h2 className="text-lg font-semibold">Active Filters</h2>
+                        <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={resetFilters}
+                            className="text-xs"
+                        >
+                            Clear All
+                        </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                        {filters.search && (
+                            <Badge variant="secondary" className="flex items-center gap-1">
+                                Search: {filters.search}
+                                <X 
+                                    size={14} 
+                                    className="cursor-pointer" 
+                                    onClick={() => updateFilters({ search: undefined })}
+                                />
+                            </Badge>
+                        )}
+                        {filters.tag && (
+                            <Badge variant="secondary" className="flex items-center gap-1">
+                                Tag: {filters.tag}
+                                <X 
+                                    size={14} 
+                                    className="cursor-pointer" 
+                                    onClick={() => updateFilters({ tag: undefined })}
+                                />
+                            </Badge>
+                        )}
+                        {filters.author && (
+                            <Badge variant="secondary" className="flex items-center gap-1">
+                                By Author
+                                <X 
+                                    size={14} 
+                                    className="cursor-pointer" 
+                                    onClick={() => updateFilters({ author: undefined })}
+                                />
+                            </Badge>
+                        )}
+                    </div>
+                    <p className="text-sm mt-2 text-gray-500">Found {totalPosts} posts</p>
+                </div>
+            )}
+
             {/* Search */}
             <div>
                 <h2 className="text-lg font-semibold mb-2">Search</h2>
-                <div className="flex w-full max-w-sm items-center space-x-2">
-                    <Input type="text" placeholder="Search posts or authors.." />
+                <form className="flex w-full max-w-sm items-center space-x-2" onSubmit={handleSearch}>
+                    <Input 
+                        type="text" 
+                        placeholder="Search posts..."
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                    />
                     <Button variant={"outline"} type="submit">Search</Button>
-                </div>
+                </form>
             </div>
 
-            {/* Filter */}
+            {/* Sort */}
             <div>
-                <h2 className="text-lg font-semibold mb-2">Sort by Date</h2>
-                <Select>
+                <h2 className="text-lg font-semibold mb-2">Sort by</h2>
+                <Select 
+                    value={filters.sort}
+                    onValueChange={handleSortChange}
+                >
                     <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Newest post.." />
+                        <SelectValue placeholder="Choose sorting option..." />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectItem value="newest">Newest</SelectItem>
-                            <SelectItem value="oldest">Oldest</SelectItem>
+                            <SelectItem value="-createdAt">Newest First</SelectItem>
+                            <SelectItem value="createdAt">Oldest First</SelectItem>
+                            <SelectItem value="title">Title A-Z</SelectItem>
+                            <SelectItem value="-title">Title Z-A</SelectItem>
+                            <SelectItem value="-readingTime">Longest Read</SelectItem>
+                            <SelectItem value="readingTime">Shortest Read</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
@@ -50,22 +151,32 @@ export const PostSidebar = () => {
 
             {/* Tags */}
             <div>
-                <h2 className="text-lg font-semibold mb-2">Recommended topics</h2>
+                <h2 className="text-lg font-semibold mb-2">Filter by Topic</h2>
                 <div className="flex flex-wrap gap-2 mb-2">
                     {tags.map((tag) => (
-                        <Badge key={tag} className="cursor-pointer" variant={"outline"}>{tag}</Badge>
+                        <Badge 
+                            key={tag} 
+                            className={`cursor-pointer ${filters.tag === tag ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''}`}
+                            variant={filters.tag === tag ? "default" : "outline"}
+                            onClick={() => handleTagSelect(tag)}
+                        >
+                            {tag}
+                        </Badge>
                     ))}
                 </div>
                 <Link to={"/"} className="underline text-sm">see more topics</Link>
             </div>
 
-            {/* People to Follow */}
+            {/* People to Follow / Filter by Author */}
             <div>
-                <h2 className="text-lg font-semibold mb-2">People to Follow</h2>
+                <h2 className="text-lg font-semibold mb-2">Filter by Author</h2>
                 <ul className="space-y-4 mb-2">
                     {peopleToFollow.map((person) => (
                         <li key={person.username} className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
+                            <div 
+                                className="flex items-center gap-4 cursor-pointer"
+                                onClick={() => handleAuthorSelect(person.id)}
+                            >
                                 <Avatar>
                                     <AvatarImage src={person.avatar} alt="Publisher Avatar" />
                                     <AvatarFallback>Publisher Avatar</AvatarFallback>
@@ -75,11 +186,17 @@ export const PostSidebar = () => {
                                     <p className="text-xs text-gray-500">{person.username}</p>
                                 </div>
                             </div>
-                            <Button variant={"outline"} className="text-sm">Follow</Button>
+                            <Button 
+                                variant={filters.author === person.id ? "default" : "outline"} 
+                                className="text-sm"
+                                onClick={() => handleAuthorSelect(person.id)}
+                            >
+                                {filters.author === person.id ? 'Selected' : 'View Posts'}
+                            </Button>
                         </li>
                     ))}
                 </ul>
-                <Link to={"/"} className="underline text-sm">see more to follow</Link>
+                <Link to={"/"} className="underline text-sm">see more authors</Link>
             </div>
 
             {/* Recent Activity */}

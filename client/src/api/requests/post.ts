@@ -1,13 +1,33 @@
 import { IPost, IPostForm, IPostsResponse } from "@/interfaces/post.interface";
 import { axiosInstance } from "../instance";
 
+// Type for filter parameters
+export interface PostFilters {
+  tag?: string;
+  author?: string;
+  search?: string;
+  sort?: string;
+  page?: number;
+  limit?: number;
+}
 
 // GET ALL POST
-export const getPosts = async (): Promise<IPostsResponse> => {
+export const getPosts = async (filters?: PostFilters): Promise<IPostsResponse> => {
     try {
+        // Construct the query parameters
+        const params = new URLSearchParams();
+        
+        if (filters) {
+            if (filters.tag) params.append('tag', filters.tag);
+            if (filters.author) params.append('author', filters.author);
+            if (filters.search) params.append('search', filters.search);
+            if (filters.sort) params.append('sort', filters.sort);
+            if (filters.page) params.append('page', filters.page.toString());
+            if (filters.limit) params.append('limit', filters.limit.toString());
+        }
 
-        const { data } = await axiosInstance.get("/posts")
-        return data
+        const { data } = await axiosInstance.get("/posts", { params });
+        return data;
 
     } catch (error) {
         console.error("❌ Error during fetching:", error);

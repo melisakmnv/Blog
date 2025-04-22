@@ -1,5 +1,5 @@
 // src/hooks/useCreatePost.ts
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
@@ -9,12 +9,13 @@ import { PostFormSchema } from "@/schema/post.schema";
 import { IPost, IPostsResponse } from "@/interfaces/post.interface";
 import { getUserSavedPosts } from "@/api/requests/user";
 import { IUserPayload } from "@/interfaces/user.interface";
+import { useFilterStore } from "@/store/useFilterStore";
 
 
 export const useFetchPosts = () => {
     return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["posts"],
-        queryFn: getPosts,
+        queryFn: () => getPosts(), 
         staleTime: 10000,
         select: (data) => data.posts,
     })
@@ -149,3 +150,28 @@ export const useSavePost = () => {
         isLoading: mutation.isPending
     }
 }
+
+// New hook for filtered posts
+export const useFilteredPosts = () => {
+    // Utiliser le store pour les filtres au lieu du state local
+    const { filters, updateFilters, resetFilters } = useFilterStore();
+
+    // Utiliser useQuery au lieu de useSuspenseQuery
+    const query = useQuery<IPostsResponse>({
+        queryKey: ["posts", "filtered", filters],
+        queryFn: () => getPosts(filters),
+        staleTime: 5000,
+    });
+
+    return {
+        ...query,
+        filters,
+        updateFilters,
+        resetFilters,
+        pagination: {
+            currentPage: query.data?.currentPage || 1,
+            totalPages: query.data?.totalPages || 1,
+            totalPosts: query.data?.totalPosts || 0,
+        }
+    };
+};
