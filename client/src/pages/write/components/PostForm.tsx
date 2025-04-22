@@ -8,19 +8,15 @@ import { useCreatePost, useEditPost, useGetPostBySlug } from "@/hooks/usePost"
 import { PostFormSchema, postSchema } from "@/schema/post.schema"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Form } from "@/components/ui/form"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+import { InputField } from "@/components/InputField"
 
 export const PostCreateForm = () => {
 
     const { user } = useUserStore();
     const userId = user?._id;
-
 
     const { createPost, isLoading: createLoading } = useCreatePost();
 
@@ -39,37 +35,28 @@ export const PostCreateForm = () => {
         createPost(values)
     };
 
-
     return (
         <>
             <Form {...form}>
                 <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField
-                        control={form.control}
+
+                    <InputField
+                        label="Title"
                         name="title"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Title</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Enter your blog title..." {...field} type="text" />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
+                        placeholder="Enter your blog title..."
                         control={form.control}
-                        name="description"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Short Description</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Brief summary of your blog post..." {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
+                        variant={"story"}
                     />
+
+                    <InputField
+                        label="Short Description"
+                        name="description"
+                        placeholder="Brief summary of your blog post....."
+                        textarea
+                        control={form.control}
+                        variant={"story"}
+                    />
+
                     <FormField
                         control={form.control}
                         name="tag"
@@ -97,25 +84,15 @@ export const PostCreateForm = () => {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
+                    <InputField
+                        label="Content"
                         name="content"
-                        render={({ field }) => (
-                            <FormItem className='h-[500px]'>
-                                <FormLabel>Category</FormLabel>
-                                <FormControl>
-                                    <ReactQuill
-                                        {...field}
-                                        theme="snow"
-                                        value={field.value}
-                                        onChange={field.onChange}
-                                        style={{ height: '450px' }}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
+                        placeholder="StorY.."
+                        quill
+                        control={form.control}
+                        variant={"story"}
                     />
+
                     <div className="flex justify-end gap-4 pt-4">
                         <Button variant="outline">Save as Draft</Button>
                         <Button disabled={createLoading} type="submit">Publish</Button>
@@ -145,39 +122,28 @@ export const PostEditForm = () => {
     })
 
     const onSubmit = (values: PostFormSchema) => {
-        editPost({postId : post._id, values})
+        editPost({ postId: post._id, values })
     };
 
     return (
         <>
             <Form {...form}>
                 <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField
-                        control={form.control}
+                    <InputField
+                        label="Title"
                         name="title"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Title</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Enter your blog title..." {...field} type="text" />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
+                        placeholder="Enter your blog title..."
                         control={form.control}
-                        name="description"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Short Description</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder="Brief summary of your blog post..." {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
                     />
+
+                    <InputField
+                        label="Short Description"
+                        name="description"
+                        placeholder="Brief summary of your blog post....."
+                        textarea
+                        control={form.control}
+                    />
+
                     <FormField
                         control={form.control}
                         name="tag"
@@ -205,25 +171,15 @@ export const PostEditForm = () => {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
+                    <InputField
+                        label="Content"
                         name="content"
-                        render={({ field }) => (
-                            <FormItem className='h-[500px]'>
-                                <FormLabel>Category</FormLabel>
-                                <FormControl>
-                                    <ReactQuill
-                                        {...field}
-                                        theme="snow"
-                                        value={field.value}
-                                        onChange={field.onChange}
-                                        style={{ height: '450px' }}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
+                        placeholder="StorY.."
+                        quill
+                        control={form.control}
+                        variant={"story"}
                     />
+
                     <div className="flex justify-end gap-4 pt-4">
                         <Button variant="outline">Cancel</Button>
                         <Button disabled={editLoading} type="submit">Submit</Button>
