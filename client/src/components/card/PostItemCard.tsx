@@ -1,13 +1,13 @@
 import { IPost } from "@/interfaces/post.interface"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { CoverImage } from "../CoverImage";
 import { Badge } from "../ui/badge";
 import { LikeButton } from "../button/LikeButton";
 import { CommentButton } from "../button/CommentButton";
 import { SaveButton } from "../button/SaveButton";
-import { BlogMenuBar } from "./BlogMenuBar";
+import { OptionsMenu } from "./BlogMenuBar";
 import { formattedDate } from "@/lib/utils";
 import useUserStore from "@/store/useUserStore";
 import { useSavePost } from "@/hooks/usePost";
@@ -18,11 +18,13 @@ interface PostItemCardProps {
 
 
 export const PostItemCard = ({ post }: PostItemCardProps) => {
+    const navigate = useNavigate()
 
     const { user } = useUserStore()
     const { savePost } = useSavePost()
 
     const hasSavedByUser = post.savedBy.includes(user?._id!)
+    const isAuthor = user?._id === post.author._id
 
     return (
         <Card className=" border rounded-sm flex">
@@ -58,7 +60,25 @@ export const PostItemCard = ({ post }: PostItemCardProps) => {
                 </div>
                 <div className="flex items-center gap-2 md:gap-4">
                     <SaveButton onClick={() => savePost(post._id)} initialSaved={hasSavedByUser} />
-                    <BlogMenuBar />
+                    {
+                        isAuthor ? (
+                            <OptionsMenu
+                                actions={[
+                                    { label: "Edit post", onClick: () => { navigate(`/edit-story/${post.slug}`) } },
+                                    { label: "Delete post", onClick: () => { }, danger: true }
+                                ]}
+                            />
+                        ) : (
+                            <OptionsMenu
+                                actions={[
+                                    { label: "Follow author", onClick: () => { } },
+                                    { label: " Mute author", onClick: () => { } },
+                                    { label: "Report story", onClick: () => { }, danger: true }
+                                ]}
+                            />
+                        )
+                    }
+
                 </div>
             </CardFooter>
         </Card >

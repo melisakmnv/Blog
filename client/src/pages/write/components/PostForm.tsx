@@ -134,6 +134,7 @@ export const PostEditForm = () => {
                         name="title"
                         placeholder="Enter your blog title..."
                         control={form.control}
+                        variant={"story"}
                     />
 
                     <InputField
@@ -142,6 +143,7 @@ export const PostEditForm = () => {
                         placeholder="Brief summary of your blog post....."
                         textarea
                         control={form.control}
+                        variant={"story"}
                     />
 
                     <FormField

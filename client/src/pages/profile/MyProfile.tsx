@@ -1,5 +1,3 @@
-
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BlogTab } from "./components/BlogTab";
 import { ListTab } from "./components/ListTab";
