@@ -25,6 +25,7 @@ import { Register } from './pages/connexion/Register.tsx';
 import { MyProfile } from './pages/profile/MyProfile.tsx';
 import { SettingsPage } from './pages/profile/SettingPage.tsx';
 import { ProtectedRoutes } from './components/navigation/ProtectedRoutes.tsx';
+import { NotFound } from './pages/NotFound.tsx';
 
 
 const router = createBrowserRouter(
@@ -33,6 +34,10 @@ const router = createBrowserRouter(
             element: <App />,
             children: [
 
+                {
+                    path: "*",
+                    element: <NotFound />
+                },
                 {
                     path: "/",
                     element: <Home />
