@@ -4,6 +4,7 @@ import { PostSidebar } from "@/components/posts/PostSidebar"
 import { PostItemCard } from "@/components/card/PostItemCard";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Composant de pagination extrait pour éviter les re-renders inutiles
 const Pagination = memo(({ 
@@ -82,6 +83,50 @@ const PostsList = memo(({ posts }: { posts: any[] }) => {
     );
 });
 
+// Composant skeleton pour afficher pendant le chargement
+const PostSkeletons = () => {
+    return (
+        <div className="space-y-8">
+            {Array.from({ length: 3 }, (_, i) => (
+                <div key={i} className="flex flex-col md:flex-row gap-4 p-4 border rounded-lg">
+                    {/* Image skeleton */}
+                    <Skeleton className="h-48 md:w-64 w-full rounded-md" />
+                    
+                    <div className="flex-1 space-y-4">
+                        {/* Author and date skeleton */}
+                        <div className="flex items-center space-x-2">
+                            <Skeleton className="h-10 w-10 rounded-full" />
+                            <div className="space-y-2">
+                                <Skeleton className="h-4 w-24" />
+                                <Skeleton className="h-3 w-32" />
+                            </div>
+                        </div>
+                        
+                        {/* Title skeleton */}
+                        <Skeleton className="h-6 w-3/4" />
+                        
+                        {/* Description skeleton */}
+                        <div className="space-y-2">
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-2/3" />
+                        </div>
+                        
+                        {/* Footer skeleton */}
+                        <div className="flex justify-between items-center">
+                            <Skeleton className="h-4 w-16" />
+                            <div className="flex space-x-3">
+                                <Skeleton className="h-8 w-8 rounded-full" />
+                                <Skeleton className="h-8 w-8 rounded-full" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
+
 export const Posts = () => {
     const { 
         data, 
@@ -118,11 +163,6 @@ export const Posts = () => {
                             ? `Posts tagged with "${filters.tag}"` 
                             : "Featured Posts"}
                 </h1>
-                {!isLoading && !isError && totalPosts > 0 && (
-                    <p className="text-gray-500">
-                        Showing {posts.length} of {totalPosts} posts
-                    </p>
-                )}
             </section>
 
             {/* Main content */}
@@ -130,10 +170,11 @@ export const Posts = () => {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Posts list */}
                     <div className="lg:flex-2">
-                        {isLoading ? (
-                            <div className="flex justify-center items-center h-64">
-                                <p>Loading posts...</p>
-                            </div>
+                        {
+						isLoading 
+							// true
+						? (
+                            <PostSkeletons />
                         ) : isError ? (
                             <div className="flex justify-center items-center h-64">
                                 <p className="text-red-500">Error loading posts. Please try again.</p>
