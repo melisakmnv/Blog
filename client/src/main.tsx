@@ -24,6 +24,7 @@ import { Write } from './pages/write/Write.tsx';
 import { Register } from './pages/connexion/Register.tsx';
 import { MyProfile } from './pages/profile/MyProfile.tsx';
 import { SettingsPage } from './pages/profile/SettingPage.tsx';
+import { ProtectedRoutes } from './components/navigation/ProtectedRoutes.tsx';
 
 
 const router = createBrowserRouter(
@@ -40,10 +41,10 @@ const router = createBrowserRouter(
                     path: "/login",
                     element: <Login />
                 },
-				{
-					path: "/register",
-					element: <Register />
-				},
+                {
+                    path: "/register",
+                    element: <Register />
+                },
                 {
                     path: "/posts",
                     element: <Posts />
@@ -58,19 +59,39 @@ const router = createBrowserRouter(
                 },
                 {
                     path: "/profile/me",
-                    element: <MyProfile />
+                    element:
+                        (
+                            <ProtectedRoutes>
+                                <MyProfile />
+                            </ProtectedRoutes>
+                        )
                 },
                 {
                     path: "/profile/me/settings",
-                    element: <SettingsPage />
+                    element:
+                        (
+                            <ProtectedRoutes>
+                                <SettingsPage />
+                            </ProtectedRoutes>
+                        )
                 },
                 {
                     path: "/new-story",
-                    element: <Write />
+                    element:
+                        (
+                            <ProtectedRoutes>
+                                <Write />
+                            </ProtectedRoutes>
+                        )
                 },
                 {
                     path: "/edit-story/:slug",
-                    element: <Write />
+                    element:
+                        (
+                            <ProtectedRoutes>
+                                <Write />
+                            </ProtectedRoutes>
+                        )
                 },
             ]
         },
