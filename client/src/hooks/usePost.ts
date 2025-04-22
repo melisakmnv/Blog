@@ -6,16 +6,17 @@ import { toast } from "react-toastify";
 
 import { createPost, editPost, getPostDetails, getPosts, getUserPosts, likePost, savePost } from "@/api/requests/post";
 import { PostFormSchema } from "@/schema/post.schema";
-import { IPost } from "@/interfaces/post.interface";
+import { IPost, IPostsResponse } from "@/interfaces/post.interface";
 import { getUserSavedPosts } from "@/api/requests/user";
 import { IUserPayload } from "@/interfaces/user.interface";
 
 
 export const useFetchPosts = () => {
-    return useSuspenseQuery<IPost[]>({
+    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["posts"],
         queryFn: getPosts,
         staleTime: 10000,
+        select: (data) => data.posts,
     })
 }
 
@@ -30,19 +31,20 @@ export const useGetPostBySlug = (slug: string) => {
 
 export const useFetchUserPosts = (userId: string) => {
 
-    return useSuspenseQuery<IPost[]>({
+    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["user-posts", userId],
-        queryFn: () => getUserPosts(userId)
+        queryFn: () => getUserPosts(userId),
+        select: (data) => data.posts,
     })
 }
 
 
 export const useFetchUserSavedPosts = () => {
 
-
-    return useSuspenseQuery<IPost[]>({
+    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["saved-posts"],
-        queryFn: () => getUserSavedPosts()
+        queryFn: () => getUserSavedPosts(),
+        select: (data) => data.posts,
     })
 }
 

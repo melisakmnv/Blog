@@ -1,4 +1,11 @@
-import { IUserPayload } from "./user.interface";
+// New interface for the author structure within a post
+export interface IPostAuthor {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    avatar: string;
+    username: string;
+}
 
 export interface IPost {
     _id: string;
@@ -8,7 +15,7 @@ export interface IPost {
     description: string;
     content: string;
     tag: string;
-    author: IUserPayload;
+    author: IPostAuthor;
     readingTime: string;
     likes: string[];
     savedBy: string[];
@@ -17,6 +24,12 @@ export interface IPost {
     updatedAt: string;
 }
 
+export interface IPostsResponse {
+    posts: IPost[];
+    currentPage: number;
+    totalPages: number;
+    totalPosts: number;
+}
 
 export interface IPostForm {
     // cover: string;

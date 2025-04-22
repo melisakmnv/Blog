@@ -7,6 +7,7 @@ import { PostItemCard } from "@/components/card/PostItemCard";
 export const Posts = () => {
 
     const { data: posts } = useFetchPosts();
+	console.log('posts: ', posts);
 
     return (
         <main>

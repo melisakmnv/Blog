@@ -1,9 +1,9 @@
-import { IPost, IPostForm } from "@/interfaces/post.interface";
+import { IPost, IPostForm, IPostsResponse } from "@/interfaces/post.interface";
 import { axiosInstance } from "../instance";
 
 
 // GET ALL POST
-export const getPosts = async (): Promise<IPost[]> => {
+export const getPosts = async (): Promise<IPostsResponse> => {
     try {
 
         const { data } = await axiosInstance.get("/posts")
@@ -31,7 +31,7 @@ export const getPostDetails = async (slug: string): Promise<IPost> => {
 
 
 // GET USER POSTS
-export const getUserPosts = async (id: string): Promise<IPost[]> => {
+export const getUserPosts = async (id: string): Promise<IPostsResponse> => {
     try {
 
         const { data } = await axiosInstance.get(`/posts/user/${id}`)
@@ -103,7 +103,3 @@ export const savePost = async (id: string) => {
         throw error;
     }
 }
-
-
-
-
