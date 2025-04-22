@@ -10,7 +10,7 @@ import { SaveButton } from "../button/SaveButton";
 import { OptionsMenu } from "./BlogMenuBar";
 import { formattedDate } from "@/lib/utils";
 import useUserStore from "@/store/useUserStore";
-import { useSavePost } from "@/hooks/usePost";
+import { useDeletePost, useSavePost } from "@/hooks/usePost";
 
 interface PostItemCardProps {
     post: IPost;
@@ -22,6 +22,7 @@ export const PostItemCard = ({ post }: PostItemCardProps) => {
 
     const { user } = useUserStore()
     const { savePost } = useSavePost()
+    const { deletePost } = useDeletePost()
 
     const hasSavedByUser = post.savedBy.includes(user?._id!)
     const isAuthor = user?._id === post.author._id
@@ -65,7 +66,7 @@ export const PostItemCard = ({ post }: PostItemCardProps) => {
                             <OptionsMenu
                                 actions={[
                                     { label: "Edit post", onClick: () => { navigate(`/edit-story/${post.slug}`) } },
-                                    { label: "Delete post", onClick: () => { }, danger: true }
+                                    { label: "Delete post", onClick: () => { deletePost(post._id) }, danger: true }
                                 ]}
                             />
                         ) : (

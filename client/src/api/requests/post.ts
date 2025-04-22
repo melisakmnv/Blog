@@ -72,6 +72,24 @@ export const editPost = async (id: string, formData: IPostForm): Promise<IPost> 
 }
 
 
+// DELETE POST
+export const deletePost = async (id:string) => {
+
+    try {
+
+        const { data } = await axiosInstance.delete(`posts/${id}`, {
+            withCredentials: true,
+        })
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during saving/unsaving post:", error);
+        throw error;
+    }
+}
+
+
+
 // LIKE OR DISLIKE POST 
 export const likePost = async (id: string) => {
     try {

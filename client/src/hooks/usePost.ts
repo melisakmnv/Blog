@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import { createPost, editPost, getPostDetails, getPosts, getUserPosts, likePost, savePost } from "@/api/requests/post";
+import { createPost, deletePost, editPost, getPostDetails, getPosts, getUserPosts, likePost, savePost } from "@/api/requests/post";
 import { PostFormSchema } from "@/schema/post.schema";
 import { IPost } from "@/interfaces/post.interface";
 import { getUserSavedPosts } from "@/api/requests/user";
@@ -147,3 +147,27 @@ export const useSavePost = () => {
         isLoading: mutation.isPending
     }
 }
+
+
+export const useDeletePost = () => {
+    const navigate = useNavigate();
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: deletePost,
+        onSuccess: (data) => {
+            navigate(`/profile/me`);
+            toast.success(data.message);
+            queryClient.invalidateQueries({ queryKey: ["me"] });
+        },
+        onError: (error: any) => {
+            console.log(error.response?.data);
+            toast.error(error?.response?.data?.message || "Error creating new post");
+        },
+    });
+
+    return {
+        deletePost: mutation.mutate,
+        isLoading: mutation.isPending,
+    };
+};

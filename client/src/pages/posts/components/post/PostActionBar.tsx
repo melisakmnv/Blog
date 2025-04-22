@@ -3,7 +3,7 @@ import { LikeButton } from "@/components/button/LikeButton"
 import { SaveButton } from "@/components/button/SaveButton";
 import { OptionsMenu } from "@/components/card/BlogMenuBar";
 import { Button } from "@/components/ui/button";
-import { useLikePost, useSavePost } from "@/hooks/usePost";
+import { useDeletePost, useLikePost, useSavePost } from "@/hooks/usePost";
 import { IComment } from "@/interfaces/comment.interface";
 import { IPost } from "@/interfaces/post.interface"
 import useUserStore from "@/store/useUserStore";
@@ -15,10 +15,11 @@ interface ActionBarProps {
     comments: IComment[];
 }
 export const PostActionBar = ({ post, comments }: ActionBarProps) => {
-    
-    const {user} = useUserStore()
+
+    const { user } = useUserStore()
     const { likePost } = useLikePost()
     const { savePost } = useSavePost()
+
 
     const hasLiked = post.likes.includes(user?._id!)
     const hasSavedByUser = post.savedBy.includes(user?._id!)
@@ -45,12 +46,15 @@ export const PostActionBar = ({ post, comments }: ActionBarProps) => {
 
 
 export const UserPostActionBar = ({ post }: ActionBarProps) => {
+
+    const { deletePost } = useDeletePost()
+    
     return (
         <div className="flex items-center justify-end gap-4 py-2">
             <Link to={`/edit-story/${post.slug}`}>
                 <Button variant={"outline"}>Edit</Button>
             </Link>
-            <Button variant={"destructive"}>Delete</Button>
+            <Button onClick={() => deletePost(post._id)} variant={"destructive"}>Delete</Button>
         </div>
     )
 }
