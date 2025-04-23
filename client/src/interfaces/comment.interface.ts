@@ -6,7 +6,7 @@ export interface IComment {
 	author: IUserPayload | string;
 	post: IPost | string;
 	content: string;
-	likes: (IUserPayload | string)[];
+	likes: IUserPayload[];
 	isEdited: boolean;
 	createdAt: string;
 	updatedAt: string;

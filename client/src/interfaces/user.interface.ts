@@ -19,20 +19,11 @@ export interface IUserPayload {
 	email: string;
 	avatar?: string;
 	role: 'user' | 'admin';
-	savedPosts: (IPost | string)[];
-	followings: (IUser | string)[];
-	followers: (IUser | string)[];
+	savedPosts: IPost[];
+	followings: IUser[];
+	followers: IUser[];
 	username?: string;
 	bio?: string;
 	createdAt: string;
 	updatedAt: string;
-}
-
-export interface IUserSummary {
-    _id : string;
-    firstname: string; 
-    lastname: string; 
-    username : string;
-    avatar : string
-    bio : string;
 }
