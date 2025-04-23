@@ -1,5 +1,5 @@
 // Defines the structure for a User based on the backend schema
-import { Post } from '@/types/post'; // Using path alias
+import { Post } from '@/backup.types/post'; // Using path alias
 
 export interface User {
   _id: string; // MongoDB ObjectId

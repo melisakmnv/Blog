@@ -1,6 +1,6 @@
 // Defines the structure for a Comment based on the backend schema
-import { User } from '@/types/user'; // Using path alias
-import { Post } from '@/types/post'; // Using path alias
+import { User } from '@/backup.types/user'; // Using path alias
+import { Post } from '@/backup.types/post'; // Using path alias
 
 export interface Comment {
   _id: string; // MongoDB ObjectId

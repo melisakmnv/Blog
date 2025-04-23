@@ -2,10 +2,10 @@
 
 // Assuming you have a User type defined elsewhere, e.g., '@/types/user'
 // If not, define a basic structure or import it.
-import { User } from '@/types/user'; // Using path alias
+import { User } from '@/backup.types/user'; // Using path alias
 
 // Assuming a Comment type exists, e.g., '@/types/comment'
-import { Comment } from '@/types/comment'; // Using path alias
+import { Comment } from '@/backup.types/comment'; // Using path alias
 
 export interface Post {
   _id: string; // MongoDB ObjectId is usually represented as a string
