@@ -13,19 +13,19 @@ export interface IUser {
 
 
 export interface IUserPayload {
-    _id: string; 
-    firstname: string; 
-    lastname: string; 
-    role: string;
-    email : string;
-    avatar : string;
-    savedPosts : IPost[];
-    createdAt : string;
-    updatedAt : string;
-    followers : IUserSummary[];
-    followings : IUserSummary[];
-    username : string;
-    bio : string;
+	_id: string;
+	firstname: string;
+	lastname: string;
+	email: string;
+	avatar?: string;
+	role: 'user' | 'admin';
+	savedPosts: (IPost | string)[];
+	followings: (IUser | string)[];
+	followers: (IUser | string)[];
+	username?: string;
+	bio?: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface IUserSummary {

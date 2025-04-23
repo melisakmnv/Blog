@@ -1,21 +1,22 @@
-// src/hooks/useCreatePost.ts
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
 import { createPost, deletePost, editPost, getPostDetails, getPosts, getUserPosts, likePost, savePost } from "@/api/requests/post";
 import { PostFormSchema } from "@/schema/post.schema";
-import { IPost } from "@/interfaces/post.interface";
+import { IPost, IPostsResponse } from "@/interfaces/post.interface";
 import { getUserSavedPosts } from "@/api/requests/user";
 import { IUserPayload } from "@/interfaces/user.interface";
+import { useFilterStore } from "@/store/useFilterStore";
 
 
 export const useFetchPosts = () => {
-    return useSuspenseQuery<IPost[]>({
+    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["posts"],
-        queryFn: getPosts,
+        queryFn: () => getPosts(), 
         staleTime: 10000,
+        select: (data) => data.posts,
     })
 }
 
@@ -30,19 +31,20 @@ export const useGetPostBySlug = (slug: string) => {
 
 export const useFetchUserPosts = (userId: string) => {
 
-    return useSuspenseQuery<IPost[]>({
+    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["user-posts", userId],
-        queryFn: () => getUserPosts(userId)
+        queryFn: () => getUserPosts(userId),
+        select: (data) => data.posts,
     })
 }
 
 
 export const useFetchUserSavedPosts = () => {
 
-
-    return useSuspenseQuery<IPost[]>({
+    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["saved-posts"],
-        queryFn: () => getUserSavedPosts()
+        queryFn: () => getUserSavedPosts(),
+        select: (data) => data.posts,
     })
 }
 
@@ -148,26 +150,47 @@ export const useSavePost = () => {
     }
 }
 
+export const useFilteredPosts = () => {
+    const { filters, updateFilters, resetFilters } = useFilterStore();
 
-export const useDeletePost = () => {
-    const navigate = useNavigate();
-    const queryClient = useQueryClient()
-
-    const mutation = useMutation({
-        mutationFn: deletePost,
-        onSuccess: (data) => {
-            navigate(`/profile/me`);
-            toast.success(data.message);
-            queryClient.invalidateQueries({ queryKey: ["me"] });
-        },
-        onError: (error: any) => {
-            console.log(error.response?.data);
-            toast.error(error?.response?.data?.message || "Error creating new post");
-        },
+    const query = useQuery<IPostsResponse>({
+        queryKey: ["posts", "filtered", filters],
+        queryFn: () => getPosts(filters),
+        staleTime: 5000,
     });
 
     return {
-        deletePost: mutation.mutate,
-        isLoading: mutation.isPending,
+        ...query,
+        filters,
+        updateFilters,
+        resetFilters,
+        pagination: {
+            currentPage: query.data?.currentPage || 1,
+            totalPages: query.data?.totalPages || 1,
+            totalPosts: query.data?.totalPosts || 0,
+        }
     };
+};
+
+export const useDeletePost = () => {
+	const navigate = useNavigate();
+	const queryClient = useQueryClient()
+
+	const mutation = useMutation({
+		mutationFn: deletePost,
+		onSuccess: (data) => {
+			navigate(`/profile/me`);
+			toast.success(data.message);
+			queryClient.invalidateQueries({ queryKey: ["me"] });
+		},
+		onError: (error: any) => {
+			console.log(error.response?.data);
+			toast.error(error?.response?.data?.message || "Error creating new post");
+		},
+	});
+
+	return {
+		deletePost: mutation.mutate,
+		isLoading: mutation.isPending,
+	};
 };

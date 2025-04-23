@@ -1,6 +1,6 @@
 import { IUserPayload } from "@/interfaces/user.interface";
 import { axiosInstance } from "../instance";
-import { IPost } from "@/interfaces/post.interface";
+import { IPostsResponse } from "@/interfaces/post.interface";
 import { UpdateProfileSchema } from "@/schema/user.schema";
 
 
@@ -34,7 +34,7 @@ export const getMyProfile = async (): Promise<IUserPayload> => {
 
 
 // TO BE REMOVED
-export const getUserSavedPosts = async (): Promise<IPost[]> => {
+export const getUserSavedPosts = async (): Promise<IPostsResponse> => {
 
     try {
 
