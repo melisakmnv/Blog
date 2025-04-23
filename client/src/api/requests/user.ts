@@ -86,17 +86,10 @@ export const editUser = async (formData:UpdateProfileSchema): Promise<IUserPaylo
     }
 }
 
-export interface UsersResponse {
-    users: IUserPayload[];
-    total: number;
-    page: number;
-    limit: number;
-}
-
 export const getUsers = async (
     page: number = 1, 
     limit: number = 10
-): Promise<UsersResponse> => {
+): Promise<IUserPayload[]> => {
     try {
         const { data } = await axiosInstance.get(`/users`, {
             params: { page, limit },

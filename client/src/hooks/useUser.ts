@@ -1,4 +1,4 @@
-import { editUser, followUser, getMyProfile, getUserProfile, getUsers, UsersResponse } from "@/api/requests/user"
+import { editUser, followUser, getMyProfile, getUserProfile, getUsers } from "@/api/requests/user"
 import { IUserPayload } from "@/interfaces/user.interface"
 import { UpdateProfileSchema } from "@/schema/user.schema"
 import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
@@ -95,7 +95,7 @@ export const useFetchUsers = (options: UseFetchUsersOptions = {}) => {
         enabled = true 
     } = options;
 
-    return useQuery<UsersResponse>({
+    return useQuery<IUserPayload[]>({
         queryKey: ["users", { page, limit }],
         queryFn: () => getUsers(page, limit),
         enabled,

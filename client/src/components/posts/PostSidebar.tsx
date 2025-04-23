@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { Badge } from "../ui/badge";
-import { Avatar } from "../ui/avatar";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "../ui/input";
 import { FormEvent, useState } from "react";
 import { PostFilters } from "@/api/requests/post";
 import { X } from "lucide-react";
+import { useFetchUsers } from "@/hooks/useUser";
 
 interface PostSidebarProps {
     filters: PostFilters;
@@ -31,6 +31,8 @@ export const PostSidebar = ({ filters, updateFilters, resetFilters, totalPosts }
 
     // Local state for search input
     const [searchInput, setSearchInput] = useState(filters.search || '');
+
+	const { data: users } = useFetchUsers()
 
     // Handle search form submission
     const handleSearch = (e: FormEvent) => {
@@ -171,27 +173,27 @@ export const PostSidebar = ({ filters, updateFilters, resetFilters, totalPosts }
             <div>
                 <h2 className="text-lg font-semibold mb-2">Filter by Author</h2>
                 <ul className="space-y-4 mb-2">
-                    {peopleToFollow.map((person) => (
+                    {users?.map((person) => (
                         <li key={person.username} className="flex items-center justify-between">
                             <div 
                                 className="flex items-center gap-4 cursor-pointer"
-                                onClick={() => handleAuthorSelect(person.id)}
+                                onClick={() => handleAuthorSelect(person._id)}
                             >
                                 <Avatar>
                                     <AvatarImage src={person.avatar} alt="Publisher Avatar" />
                                     <AvatarFallback>Publisher Avatar</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <p className="font-medium text-sm">{person.name}</p>
+                                    <p className="font-medium text-sm">{person.firstname} {person.lastname}</p>
                                     <p className="text-xs text-gray-500">{person.username}</p>
                                 </div>
                             </div>
                             <Button 
-                                variant={filters.author === person.id ? "default" : "outline"} 
+                                variant={filters.author === person._id ? "default" : "outline"} 
                                 className="text-sm"
-                                onClick={() => handleAuthorSelect(person.id)}
+                                onClick={() => handleAuthorSelect(person._id)}
                             >
-                                {filters.author === person.id ? 'Selected' : 'View Posts'}
+                                {filters.author === person._id ? 'Selected' : 'View Posts'}
                             </Button>
                         </li>
                     ))}
