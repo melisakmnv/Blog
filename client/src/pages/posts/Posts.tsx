@@ -140,6 +140,7 @@ export const Posts = () => {
     
     // Extract posts and pagination data
     const posts = data?.posts || [];
+	console.log('posts: ', posts);
     const { currentPage, totalPages, totalPosts } = pagination;
 
     // Handle pagination
@@ -172,7 +173,6 @@ export const Posts = () => {
                     <div className="lg:flex-2">
                         {
 						isLoading 
-							// true
 						? (
                             <PostSkeletons />
                         ) : isError ? (

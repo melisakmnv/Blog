@@ -1,4 +1,3 @@
-// src/hooks/useCreatePost.ts
 import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -151,12 +150,9 @@ export const useSavePost = () => {
     }
 }
 
-// New hook for filtered posts
 export const useFilteredPosts = () => {
-    // Utiliser le store pour les filtres au lieu du state local
     const { filters, updateFilters, resetFilters } = useFilterStore();
 
-    // Utiliser useQuery au lieu de useSuspenseQuery
     const query = useQuery<IPostsResponse>({
         queryKey: ["posts", "filtered", filters],
         queryFn: () => getPosts(filters),
