@@ -5,8 +5,6 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
-
-
 export const formattedDate = (time: string) => {
     return new Date(time).toLocaleDateString("fr-FR", {
         day: "numeric",
@@ -14,4 +12,8 @@ export const formattedDate = (time: string) => {
         month: "short",
     })
 
+}
+
+export const formatName = (name: string) => {
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
