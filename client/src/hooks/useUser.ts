@@ -1,9 +1,8 @@
-import { editUser, followUser, getMyProfile, getUserProfile } from "@/api/requests/user"
+import { editUser, followUser, getMyProfile, getUserProfile, getUsers, UsersResponse } from "@/api/requests/user"
 import { IUserPayload } from "@/interfaces/user.interface"
 import { UpdateProfileSchema } from "@/schema/user.schema"
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import { toast } from "react-toastify"
-
 
 
 // FETCH PUBLIC USER
@@ -81,4 +80,25 @@ export const useEditUser = () => {
         editUser: mutation.mutate,
         isLoading: mutation.isPending
     }
+}
+
+export interface UseFetchUsersOptions {
+    page?: number;
+    limit?: number;
+    enabled?: boolean;
+}
+
+export const useFetchUsers = (options: UseFetchUsersOptions = {}) => {
+    const { 
+        page = 1, 
+        limit = 10, 
+        enabled = true 
+    } = options;
+
+    return useQuery<UsersResponse>({
+        queryKey: ["users", { page, limit }],
+        queryFn: () => getUsers(page, limit),
+        enabled,
+        staleTime: 60000, // 1 minute
+    });
 }

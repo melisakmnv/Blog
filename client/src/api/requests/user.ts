@@ -3,7 +3,6 @@ import { axiosInstance } from "../instance";
 import { IPostsResponse } from "@/interfaces/post.interface";
 import { UpdateProfileSchema } from "@/schema/user.schema";
 
-
 export const getUserProfile = async (username: string): Promise<IUserPayload> => {
     try {
 
@@ -83,6 +82,30 @@ export const editUser = async (formData:UpdateProfileSchema): Promise<IUserPaylo
 
     } catch (error) {
         console.error("❌ Error during following:", error);
+        throw error;
+    }
+}
+
+export interface UsersResponse {
+    users: IUserPayload[];
+    total: number;
+    page: number;
+    limit: number;
+}
+
+export const getUsers = async (
+    page: number = 1, 
+    limit: number = 10
+): Promise<UsersResponse> => {
+    try {
+        const { data } = await axiosInstance.get(`/users`, {
+            params: { page, limit },
+            withCredentials: true,
+        });
+        
+        return data;
+    } catch (error) {
+        console.error("❌ Error during fetching users:", error);
         throw error;
     }
 }
