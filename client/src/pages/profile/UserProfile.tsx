@@ -1,19 +1,20 @@
 import { useParams } from "react-router-dom";
 
-import { useFetchUserProfile } from "@/hooks/useUser";
-import { useFetchUserPosts } from "@/hooks/usePost";
+import { useFetchUserProfile } from "@/hooks/user/useUserQuery";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { ProfileSidebar } from "./components/ProfileSidebar";
-import { BlogTab } from "./components/BlogTab";
+import { UserPosts } from "@/components/posts/UserPosts";
 import { BioTab } from "./components/BioTab";
+import { Suspense } from "react";
+import { PostSkeletons } from "../posts/Posts";
+import { ProfileAsideSkeleton } from "@/components/skeleton/Skeletons";
 
 export const UserProfile = () => {
 
     const { username } = useParams<{ username: string }>();
     const { data: user } = useFetchUserProfile(username!)
-    const { data: posts } = useFetchUserPosts(user._id)
 
     return (
         <main>
@@ -26,17 +27,19 @@ export const UserProfile = () => {
                             <TabsTrigger value="bio">Bio</TabsTrigger>
                         </TabsList>
                         <TabsContent value="home">
-                            {/* USER'S POSTS */}
-                            <BlogTab posts={posts} />
+                            <Suspense fallback={<PostSkeletons />}>
+                                <UserPosts userId={user._id} />
+                            </Suspense>
                         </TabsContent>
                         <TabsContent value="bio">
-                            {/* USER'S BIO */}
-                            <BioTab />
+                            <BioTab user={user} />
                         </TabsContent>
                     </Tabs>
                 </div>
                 <div className="flex-1 hidden lg:block">
-                    <ProfileSidebar user={user} />
+                    <Suspense fallback={<ProfileAsideSkeleton />}>
+                        <ProfileSidebar user={user} />
+                    </Suspense>
                 </div>
             </section>
         </main>

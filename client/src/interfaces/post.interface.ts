@@ -11,7 +11,7 @@ export interface IPostAuthor {
 
 export interface IPost {
 	_id: string;
-	author: IUserPayload | string;
+	author: IUserPayload;
 	title: string;
 	slug: string;
 	cover: string;
@@ -19,9 +19,9 @@ export interface IPost {
 	content: string;
 	readingTime: string;
 	tag?: string;
-	likes: (IUser | string)[];
-	savedBy: (IUser | string)[];
-	comments: (Comment | string)[];
+	likes: IUser[];
+	savedBy: IUser[];
+	comments: Comment[];
 	createdAt: string;
 	updatedAt: string;
 }

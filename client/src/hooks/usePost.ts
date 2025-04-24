@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import { createPost, deletePost, editPost, getPostDetails, getPosts, getUserPosts, likePost, savePost } from "@/api/requests/post";
+import { createPost, deletePost, editPost, getPostDetails, getPosts, likePost, savePost } from "@/api/requests/post";
 import { PostFormSchema } from "@/schema/post.schema";
 import { IPost, IPostsResponse } from "@/interfaces/post.interface";
-import { getUserSavedPosts } from "@/api/requests/user";
+
 import { IUserPayload } from "@/interfaces/user.interface";
 import { useFilterStore } from "@/store/useFilterStore";
+
 
 
 export const useFetchPosts = () => {
     return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
         queryKey: ["posts"],
-        queryFn: () => getPosts(), 
+        queryFn: () => getPosts(),
         staleTime: 10000,
         select: (data) => data.posts,
     })
@@ -29,24 +30,6 @@ export const useGetPostBySlug = (slug: string) => {
 };
 
 
-export const useFetchUserPosts = (userId: string) => {
-
-    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
-        queryKey: ["user-posts", userId],
-        queryFn: () => getUserPosts(userId),
-        select: (data) => data.posts,
-    })
-}
-
-
-export const useFetchUserSavedPosts = () => {
-
-    return useSuspenseQuery<IPostsResponse, Error, IPost[]>({
-        queryKey: ["saved-posts"],
-        queryFn: () => getUserSavedPosts(),
-        select: (data) => data.posts,
-    })
-}
 
 
 export const useCreatePost = () => {
@@ -173,24 +156,24 @@ export const useFilteredPosts = () => {
 };
 
 export const useDeletePost = () => {
-	const navigate = useNavigate();
-	const queryClient = useQueryClient()
+    const navigate = useNavigate();
+    const queryClient = useQueryClient()
 
-	const mutation = useMutation({
-		mutationFn: deletePost,
-		onSuccess: (data) => {
-			navigate(`/profile/me`);
-			toast.success(data.message);
-			queryClient.invalidateQueries({ queryKey: ["me"] });
-		},
-		onError: (error: any) => {
-			console.log(error.response?.data);
-			toast.error(error?.response?.data?.message || "Error creating new post");
-		},
-	});
+    const mutation = useMutation({
+        mutationFn: deletePost,
+        onSuccess: (data) => {
+            navigate(`/profile/me`);
+            toast.success(data.message);
+            queryClient.invalidateQueries({ queryKey: ["me"] });
+        },
+        onError: (error: any) => {
+            console.log(error.response?.data);
+            toast.error(error?.response?.data?.message || "Error creating new post");
+        },
+    });
 
-	return {
-		deletePost: mutation.mutate,
-		isLoading: mutation.isPending,
-	};
+    return {
+        deletePost: mutation.mutate,
+        isLoading: mutation.isPending,
+    };
 };

@@ -3,12 +3,12 @@ import { axiosInstance } from "../instance";
 
 // Type for filter parameters
 export interface PostFilters {
-  tag?: string;
-  author?: string;
-  search?: string;
-  sort?: string;
-  page?: number;
-  limit?: number;
+    tag?: string;
+    author?: string;
+    search?: string;
+    sort?: string;
+    page?: number;
+    limit?: number;
 }
 
 // GET ALL POST
@@ -16,7 +16,7 @@ export const getPosts = async (filters?: PostFilters): Promise<IPostsResponse> =
     try {
         // Construct the query parameters
         const params = new URLSearchParams();
-        
+
         if (filters) {
             if (filters.tag) params.append('tag', filters.tag);
             if (filters.author) params.append('author', filters.author);
@@ -50,24 +50,11 @@ export const getPostDetails = async (slug: string): Promise<IPost> => {
 }
 
 
-// GET USER POSTS
-export const getUserPosts = async (id: string): Promise<IPostsResponse> => {
-    try {
-
-        const { data } = await axiosInstance.get(`/posts/user/${id}`)
-        return data
-
-    } catch (error) {
-        console.error("❌ Error during fetching user' post:", error);
-        throw error;
-    }
-}
-
-
 // CREATE POST
 export const createPost = async (formData: IPostForm): Promise<IPost> => {
     try {
 
+        console.log("first")
         const { data } = await axiosInstance.post(`/posts/`, formData)
         return data
 
@@ -93,7 +80,7 @@ export const editPost = async (id: string, formData: IPostForm): Promise<IPost> 
 
 
 // DELETE POST
-export const deletePost = async (id:string) => {
+export const deletePost = async (id: string) => {
 
     try {
 
