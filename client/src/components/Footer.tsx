@@ -25,7 +25,7 @@ export const Footer = () => {
                                     </a>
                                 </TooltipTrigger>
                                 <TooltipContent side="top">
-                                    Suivez-nous sur Instagram
+                                    Follow us on Instagram
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -38,7 +38,7 @@ export const Footer = () => {
                                     </a>
                                 </TooltipTrigger>
                                 <TooltipContent side="top">
-                                    Suivez-nous sur Twitter
+                                    Follow us on Twitter
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -51,7 +51,7 @@ export const Footer = () => {
                                     </a>
                                 </TooltipTrigger>
                                 <TooltipContent side="top">
-                                    Suivez-nous sur Facebook
+                                    Follow us on Facebook
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -64,7 +64,7 @@ export const Footer = () => {
                                     </a>
                                 </TooltipTrigger>
                                 <TooltipContent side="top">
-                                    Contactez-nous
+                                    Contact us
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -76,29 +76,29 @@ export const Footer = () => {
                 {/* Middle section with links */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-6">
                     <div>
-                        <h3 className="font-medium text-foreground mb-3">À propos</h3>
+                        <h3 className="font-medium text-foreground mb-3">About</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Notre histoire</a></li>
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">L'équipe féline</a></li>
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Témoignages</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Our Story</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">The Feline Team</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Testimonials</a></li>
                         </ul>
                     </div>
                     
                     <div>
-                        <h3 className="font-medium text-foreground mb-3">Catégories</h3>
+                        <h3 className="font-medium text-foreground mb-3">Categories</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Aventures</a></li>
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Alimentation</a></li>
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Santé</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Sunbeam Napping Spots</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Gourmet Kibble Reviews</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Human Training Tips</a></li>
                         </ul>
                     </div>
                     
                     <div>
-                        <h3 className="font-medium text-foreground mb-3">Ressources</h3>
+                        <h3 className="font-medium text-foreground mb-3">Resources</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Guide du parfait chat</a></li>
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Devenir rédacteur</a></li>
-                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Nous soutenir</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">The Art of the Purr</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">DIY Cardboard Box Castles</a></li>
+                            <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-200">Emergency Hairball Hotline</a></li>
                         </ul>
                     </div>
                 </div>
@@ -108,7 +108,7 @@ export const Footer = () => {
                 {/* Bottom section with copyright and paw prints */}
                 <div className="pt-6 flex flex-col md:flex-row justify-between items-center">
                     <p className="text-sm text-muted-foreground mb-4 md:mb-0">
-                        {currentYear} Meow Blog. Tous droits réservés.
+                        {currentYear} Meow Blog. All rights reserved.
                     </p>
                     
                     <div className="flex items-center space-x-2">
