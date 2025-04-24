@@ -7,10 +7,10 @@ import { Input } from "../ui/input";
 import { FormEvent, useState } from "react";
 import { PostFilters } from "@/api/requests/post";
 import { X } from "lucide-react";
-import { useFetchUsers } from "@/hooks/useUser";
 import { TAGS } from "@/data/tags";
 import { formatName } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { useFetchUsers } from "@/hooks/user/useUserMutation";
 
 interface PostSidebarProps {
 	filters: PostFilters;
