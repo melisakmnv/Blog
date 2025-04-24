@@ -48,7 +48,7 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
                 </div>
             </div>
             <div>
-                <Separator className="bg-accent" />
+                <Separator className="bg-secondary" />
                 {
                     isAuthor ? (
                         <UserPostActionBar post={post} comments={comments} />
@@ -57,7 +57,7 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
                     )
                 }
 
-                <Separator className="bg-accent" />
+                <Separator className="bg-secondary" />
             </div>
         </header>
     )
