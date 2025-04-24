@@ -88,7 +88,7 @@ const PostSkeletons = () => {
     return (
         <div className="space-y-8">
             {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} className="flex flex-col md:flex-row gap-4 p-4 border rounded-lg">
+                <div key={i} className="flex flex-col md:flex-row-reverse gap-4 p-4 border rounded-lg">
                     {/* Image skeleton */}
                     <Skeleton className="h-48 md:w-64 w-full rounded-md" />
                     
