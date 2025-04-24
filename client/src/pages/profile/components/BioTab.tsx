@@ -35,7 +35,7 @@ export const BioTab = ({ user }: BioTabProps) => {
                     </div>
                 )
             }
-            <Separator className="bg-accent" />
+            <Separator className="bg-secondary" />
             <p className="text-sm text-neutral-600 hover:underline cursor-pointer">{followers} Follower{followers > 1 && "s"}&nbsp; · &nbsp;{followings} Following{followings > 1 && "s"}</p>
         </div>
     )

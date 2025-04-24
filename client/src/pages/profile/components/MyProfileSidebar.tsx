@@ -34,7 +34,7 @@ export const MyProfileSidebar = ({ user }: ProfileSidebarProps) => {
                     <FollowingList followings={followings} userId={user._id} />
                 </div>
 
-                <Separator className="bg-accent" />
+                <Separator className="bg-secondary" />
 
                 <div className="text-xs text-gray-300 pt-4 mt-auto font-Karla">
                     <p>Crafted with curiosity and caffeine.</p>

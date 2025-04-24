@@ -7,7 +7,7 @@ export const Footer = () => {
     const currentYear = new Date().getFullYear();
     
     return (
-        <footer className="mt-15 mb-15 w-full bg-[#f3f0e8] rounded-md py-8 px-4 md:px-8">
+		<footer className="mt-15 mb-15 w-full bg-primary/10 rounded-md py-8 px-4 md:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Top section with logo and social links */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-6">

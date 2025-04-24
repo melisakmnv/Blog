@@ -2,7 +2,7 @@
 
 export const Header = () => {
     return (
-        <div className="mt-10 flex flex-col justify-center items-center gap-2 md:gap-4  bg-[#f3f0e8] py-3 md:py-6 px-4 rounded-md">
+        <div className="mt-10 flex flex-col justify-center items-center gap-2 md:gap-4 bg-primary/10 py-3 md:py-6 px-4 rounded-md">
             <div className="">
                 <h3 className="font-Poppins ">Welcome to {" "} <span className="font-DancingScript text-2xl text-[#bba07f]">Story •</span> </h3>
             </div>
