@@ -34,6 +34,8 @@ export const PostSidebar = ({ filters, updateFilters, resetFilters, totalPosts }
 
 	// Local state for search input
 	const [searchInput, setSearchInput] = useState(filters.search || '');
+	// State to control dialog open/close
+	const [dialogOpen, setDialogOpen] = useState(false);
 
 	const { data: users } = useFetchUsers()
 
@@ -66,6 +68,8 @@ export const PostSidebar = ({ filters, updateFilters, resetFilters, totalPosts }
 	// Handle author selection
 	const handleAuthorSelect = (authorId: string) => {
 		updateFilters({ author: authorId });
+		// Close the dialog when an author is selected
+		setDialogOpen(false);
 	};
 
 	return (
@@ -204,9 +208,9 @@ export const PostSidebar = ({ filters, updateFilters, resetFilters, totalPosts }
 						))}
 					</ul>
 					{hasMoreUsers && (
-						<Dialog>
+						<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
 							<DialogTrigger asChild>
-								<Button variant="link" className="underline text-sm p-0 h-auto font-normal">
+								<Button variant="link" className="underline text-sm p-0 h-auto font-normal" onClick={() => setDialogOpen(true)}>
 									See more authors
 								</Button>
 							</DialogTrigger>
