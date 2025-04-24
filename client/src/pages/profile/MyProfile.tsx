@@ -14,6 +14,7 @@ export const MyProfile = () => {
 
     const { data: user } = useFetchMyProfile()
 
+
     return (
         <main>
             <section className="flex">

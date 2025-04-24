@@ -45,7 +45,7 @@ export const PostCreateForm = () => {
                         name="title"
                         placeholder="Enter your blog title..."
                         control={form.control}
-                        variant={"story"}
+                        direction="col"
                     />
 
                     <InputField
@@ -54,9 +54,10 @@ export const PostCreateForm = () => {
                         placeholder="Brief summary of your blog post....."
                         textarea
                         control={form.control}
-                        variant={"story"}
+                        direction="col"
                     />
 
+                    {/* Tag should be free to create */}
                     <FormField
                         control={form.control}
                         name="tag"
@@ -90,7 +91,7 @@ export const PostCreateForm = () => {
                         placeholder="StorY.."
                         quill
                         control={form.control}
-                        variant={"story"}
+                        direction={"col"}
                     />
 
                     <div className="flex justify-end gap-4 pt-4">
@@ -134,7 +135,7 @@ export const PostEditForm = () => {
                         name="title"
                         placeholder="Enter your blog title..."
                         control={form.control}
-                        variant={"story"}
+                        direction="col"
                     />
 
                     <InputField
@@ -143,7 +144,7 @@ export const PostEditForm = () => {
                         placeholder="Brief summary of your blog post....."
                         textarea
                         control={form.control}
-                        variant={"story"}
+                        direction="col"
                     />
 
                     <FormField
@@ -179,7 +180,7 @@ export const PostEditForm = () => {
                         placeholder="StorY.."
                         quill
                         control={form.control}
-                        variant={"story"}
+                        direction="col"
                     />
 
                     <div className="flex justify-end gap-4 pt-4">

@@ -16,6 +16,7 @@ export interface IUserPayload {
     _id: string;
     firstname: string;
     lastname: string;
+    pseudonym: string;
     email: string;
     avatar?: string;
     role: 'user' | 'admin';
@@ -23,7 +24,8 @@ export interface IUserPayload {
     followings: IUserSummary[];
     followers: IUserSummary[];
     username?: string;
-    bio?: string;
+    bio: string;
+    tagline: string;
     createdAt: string;
     updatedAt: string;
 }

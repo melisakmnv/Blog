@@ -18,10 +18,10 @@ interface FieldProps {
     textarea?: boolean;
     quill?: boolean;
     control: any;
-    variant?: "story" | "default";
+    direction?: "row" | "col";
 }
 
-export const InputField = ({ label, name, placeholder, textarea = false, quill = false, control, variant = "default" }: FieldProps) => {
+export const InputField = ({ label, name, placeholder, textarea = false, quill = false, control, direction = "row" }: FieldProps) => {
 
     const renderInput = (field: any) => {
         if (quill) {
@@ -31,16 +31,16 @@ export const InputField = ({ label, name, placeholder, textarea = false, quill =
                     value={field.value}
                     onChange={field.onChange}
                     // style={{ height: "450px" }}
-                     className="min-h-[200px] h-[300px] sm:h-[400px] md:h-[450px]"
+                    className="min-h-[200px] h-[300px] sm:h-[400px] md:h-[450px]"
                 />
             );
         }
 
         if (textarea) {
-            return <Textarea rows={4} placeholder={placeholder} {...field} />;
+            return <Textarea className="resize-none h-10 overflow-y-auto placeholder:italic placeholder:text-[12px]" rows={4} placeholder={placeholder} {...field} />;
         }
 
-        return <Input placeholder={placeholder} {...field} />;
+        return <Input className="placeholder:italic placeholder:text-[12px]" placeholder={placeholder} {...field} />;
     };
 
     return (
@@ -49,7 +49,7 @@ export const InputField = ({ label, name, placeholder, textarea = false, quill =
             control={control}
             render={({ field }) => (
                 <FormItem className={quill ? "h-[500px]" : ""}>
-                    {variant === "story" ? (
+                    {direction === "col" ? (
                         <>
                             <FormLabel>{label}</FormLabel>
                             <FormControl>{renderInput(field)}</FormControl>
