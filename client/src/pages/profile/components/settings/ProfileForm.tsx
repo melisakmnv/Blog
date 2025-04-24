@@ -3,7 +3,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { useEditUser } from "@/hooks/useUser"
+
 import { updateProfileSchema, UpdateProfileSchema } from "@/schema/user.schema"
 import useUserStore from "@/store/useUserStore"
 
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { InputField } from "@/components/InputField"
+import { useEditUser } from "@/hooks/user/useUserMutation"
 
 
 export const ProfileForm = () => {

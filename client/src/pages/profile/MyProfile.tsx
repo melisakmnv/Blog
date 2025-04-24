@@ -1,16 +1,18 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BlogTab } from "./components/BlogTab";
-import { ListTab } from "./components/ListTab";
 import { BioTab } from "./components/BioTab";
 
 import { MyProfileSidebar } from "./components/MyProfileSidebar";
-import { useFetchMyProfile } from "@/hooks/useUser";
-import { useFetchUserPosts } from "@/hooks/usePost";
+
+import { Suspense } from "react";
+import { PostSkeletons } from "../posts/Posts";
+
+import { useFetchMyProfile } from "@/hooks/useMe";
+import { ProfileAsideSkeleton } from "@/components/skeleton/Skeletons";
+import { UserPosts, UserSavedPosts } from "@/components/posts/UserPosts";
 
 export const MyProfile = () => {
 
     const { data: user } = useFetchMyProfile()
-    const { data: posts } = useFetchUserPosts(user._id)
 
     return (
         <main>
@@ -24,10 +26,14 @@ export const MyProfile = () => {
                             <TabsTrigger value="bio">Bio</TabsTrigger>
                         </TabsList>
                         <TabsContent value="home">
-                            <BlogTab posts={posts} />
+                            <Suspense fallback={<PostSkeletons />}>
+                                <UserPosts userId={user._id} />
+                            </Suspense>
                         </TabsContent>
                         <TabsContent value="savedposts">
-                            <ListTab posts={user.savedPosts} />
+                            <Suspense fallback={<PostSkeletons />}>
+                                <UserSavedPosts />
+                            </Suspense>
                         </TabsContent>
 
                         <TabsContent value="bio">
@@ -36,9 +42,15 @@ export const MyProfile = () => {
                     </Tabs>
                 </div>
                 <div className="flex-1 hidden lg:block">
-                    <MyProfileSidebar user={user} />
+                    <Suspense fallback={<ProfileAsideSkeleton />}>
+                        <MyProfileSidebar user={user} />
+                    </Suspense>
                 </div>
             </section>
         </main>
     );
 }
+
+
+
+

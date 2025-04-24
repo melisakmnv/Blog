@@ -20,8 +20,8 @@ export interface IPost {
 	readingTime: string;
 	tag?: string;
 	likes: IUser[];
-	savedBy: IUserPayload[];
-	comments: (Comment | string)[];
+	savedBy: IUser[];
+	comments: Comment[];
 	createdAt: string;
 	updatedAt: string;
 }

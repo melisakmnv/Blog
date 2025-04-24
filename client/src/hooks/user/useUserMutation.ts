@@ -1,29 +1,11 @@
-import { editUser, followUser, getMyProfile, getUserProfile, getUsers } from "@/api/requests/user"
-import { IUserPayload } from "@/interfaces/user.interface"
-import { UpdateProfileSchema } from "@/schema/user.schema"
-import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
-import { toast } from "react-toastify"
+import { editUser, followUser, getUsers } from "@/api/requests/user";
+import { IUserPayload } from "@/interfaces/user.interface";
+import { UpdateProfileSchema } from "@/schema/user.schema";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 
-// FETCH PUBLIC USER
-export const useFetchUserProfile = (username: string) => {
-
-    return useSuspenseQuery<IUserPayload>({
-        queryKey: ["userProfile", username],
-        queryFn: () => getUserProfile(username)
-    })
-
-}
-
-export const useFetchMyProfile = () => {
-    return useSuspenseQuery<IUserPayload>({
-        queryKey: ["me"],
-        queryFn: getMyProfile,
-        staleTime: 10000
-    })
-}
-
-
+// FOLLOW OR UNFOLLOW USERS //
 export const useFollowUser = () => {
 
     const queryClient = useQueryClient();
@@ -34,18 +16,18 @@ export const useFollowUser = () => {
         },
         onSuccess: (data, userId) => {
 
+            toast.success(data.message)
             if (data.action === "unfollow") {
                 // Remove the user from followings if they have unfollowed
-                queryClient.setQueryData<IUserPayload>(["me"], (old) => {
+                queryClient.setQueryData<IUserPayload>(["user-followings"], (old) => {
                     if (!old) return old;
                     return {
                         ...old,
                         followings: old.followings.filter(following => following._id !== userId),
                     };
                 });
-            } 
-            queryClient.invalidateQueries({ queryKey: ["me"] })
-            toast.success(data.message)
+            }
+            queryClient.invalidateQueries({ queryKey: ["user-followings"] })
         },
         onError: (error: any) => {
             console.log(error.response?.data);
@@ -60,12 +42,13 @@ export const useFollowUser = () => {
 }
 
 
+// EDIT USER PROFILE //
 export const useEditUser = () => {
 
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
-        mutationFn: (values: UpdateProfileSchema ) => editUser(values),
+        mutationFn: (values: UpdateProfileSchema) => editUser(values),
         onSuccess: () => {
             toast.success("Your profile has been updated")
             queryClient.invalidateQueries({ queryKey: ["me"] })

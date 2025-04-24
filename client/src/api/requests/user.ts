@@ -1,6 +1,5 @@
-import { IUserPayload } from "@/interfaces/user.interface";
+import { IUserPayload, IUserSummary } from "@/interfaces/user.interface";
 import { axiosInstance } from "../instance";
-import { IPostsResponse } from "@/interfaces/post.interface";
 import { UpdateProfileSchema } from "@/schema/user.schema";
 
 export const getUserProfile = async (username: string): Promise<IUserPayload> => {
@@ -11,40 +10,6 @@ export const getUserProfile = async (username: string): Promise<IUserPayload> =>
 
     } catch (error) {
         console.error("❌ Error during fetching:", error);
-        throw error;
-    }
-}
-
-export const getMyProfile = async (): Promise<IUserPayload> => {
-
-    try {
-
-        const { data } = await axiosInstance.get(`/users/me`, {
-            withCredentials: true,
-        });
-
-        return data
-
-    } catch (error) {
-        console.error("❌ Error during fetching:", error);
-        throw error;
-    }
-}
-
-
-// TO BE REMOVED
-export const getUserSavedPosts = async (): Promise<IPostsResponse> => {
-
-    try {
-
-        const { data } = await axiosInstance.get(`/users/me/saved-posts`, {
-            withCredentials: true,
-        });
-
-        return data
-
-    } catch (error) {
-        console.error("❌ Error during fetching user's saved posts:", error);
         throw error;
     }
 }
@@ -68,7 +33,7 @@ export const followUser = async (id: string) => {
     }
 };
 
-export const editUser = async (formData:UpdateProfileSchema): Promise<IUserPayload> => {
+export const editUser = async (formData: UpdateProfileSchema): Promise<IUserPayload> => {
     try {
 
         const { data } = await axiosInstance.patch(
@@ -102,3 +67,23 @@ export const getUsers = async (
         throw error;
     }
 }
+
+
+
+// GET MY FOLLOWINGS LIST //
+export const getUserFollowings = async (id: string): Promise<IUserSummary[]> => {
+
+    try {
+        const { data } = await axiosInstance.get(`/users/${id}/followings`, {
+            withCredentials: true,
+        });
+
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during fetching following list:", error);
+        throw error;
+    }
+}
+
+
