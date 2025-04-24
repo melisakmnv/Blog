@@ -20,12 +20,6 @@ interface PostSidebarProps {
 }
 
 export const PostSidebar = ({ filters, updateFilters, resetFilters, totalPosts }: PostSidebarProps) => {
-	const tags = ['React', 'JavaScript', 'Design', 'UX', 'Tailwind', 'Yoga', 'Renovation', 'Business'];
-	const peopleToFollow = [
-		{ name: 'Jane Doe', username: '@janedoe', avatar: 'https://randomuser.me/api/portraits/women/50.jpg', id: 'user1' },
-		{ name: 'John Smith', username: '@johnsmith', avatar: 'https://randomuser.me/api/portraits/men/25.jpg', id: 'user2' },
-		{ name: 'Jim Smith', username: '@jimsmith', avatar: 'https://randomuser.me/api/portraits/men/60.jpg', id: 'user3' },
-	];
 	const recentActivity = [
 		'Commented on "How to use Tailwind"',
 		'Liked "Top 10 JavaScript Tricks"',
