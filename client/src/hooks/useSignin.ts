@@ -11,9 +11,9 @@ export const useSignin = () => {
     const mutation = useMutation({
         mutationFn: signin,
         onSuccess: (data) => {
+            navigate("/profile/me");
             toast.success(data.message);
             setUser(data.user);
-            navigate("/profile/me");
         },
         onError: (error: any) => {
             console.log(error.response?.data);

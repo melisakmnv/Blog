@@ -23,6 +23,8 @@ export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
     );
 
     const [countFollow, setCountFollow] = useState(user.followers.length);
+    
+    console.log(isFollowing)
 
     const handleFollow = () => {
         const newFollowState = !isFollowing;

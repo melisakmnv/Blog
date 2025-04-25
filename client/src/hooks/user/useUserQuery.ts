@@ -20,8 +20,6 @@ export const useFetchUserFollowings = (userId: string) => {
         queryFn: () => getUserFollowings(userId),
         refetchOnWindowFocus: true,
         refetchOnMount: true,
-        staleTime: 0,
+        // staleTime: 0,
     })
 }
-
-

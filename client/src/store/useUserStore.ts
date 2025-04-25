@@ -1,6 +1,7 @@
 
 import { logoutUser } from '@/api/requests/auth';
 import { IUserPayload } from '@/interfaces/user.interface';
+import { queryClient } from '@/lib/queryClient';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -12,13 +13,15 @@ interface UserState {
 }
 
 const useUserStore = create<UserState>()(
+
     persist(
         (set) => ({
             user: null,
             isAuthenticated: false,
             setUser: (user) => set({ user, isAuthenticated: true }),
             logout: () => {
-                logoutUser()
+                logoutUser();
+                queryClient.removeQueries();
                 set({ user: null, isAuthenticated: false })
             },
         }),
