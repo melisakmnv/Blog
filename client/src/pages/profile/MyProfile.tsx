@@ -6,13 +6,14 @@ import { MyProfileSidebar } from "./components/MyProfileSidebar";
 import { Suspense } from "react";
 import { PostSkeletons } from "../posts/Posts";
 
-import { useFetchMyProfile } from "@/hooks/useMe";
 import { ProfileAsideSkeleton } from "@/components/skeleton/Skeletons";
 import { UserPosts, UserSavedPosts } from "@/components/posts/UserPosts";
+import useUserStore from "@/store/useUserStore";
 
 export const MyProfile = () => {
 
-    const { data: user } = useFetchMyProfile()
+    // const { data: user } = useFetchMyProfile()
+    const {user} = useUserStore()
 
     return (
         <main>
@@ -27,7 +28,7 @@ export const MyProfile = () => {
                         </TabsList>
                         <TabsContent value="home">
                             <Suspense fallback={<PostSkeletons />}>
-                                <UserPosts userId={user._id} />
+                                <UserPosts userId={user?._id!} />
                             </Suspense>
                         </TabsContent>
                         <TabsContent value="savedposts">
@@ -37,13 +38,13 @@ export const MyProfile = () => {
                         </TabsContent>
 
                         <TabsContent value="bio">
-                            <BioTab user={user} />
+                            <BioTab user={user!} />
                         </TabsContent>
                     </Tabs>
                 </div>
                 <div className="flex-1 hidden lg:block">
                     <Suspense fallback={<ProfileAsideSkeleton />}>
-                        <MyProfileSidebar user={user} />
+                        <MyProfileSidebar user={user!} />
                     </Suspense>
                 </div>
             </section>

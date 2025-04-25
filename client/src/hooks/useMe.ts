@@ -8,7 +8,7 @@ export const useFetchMyProfile = () => {
     return useSuspenseQuery<IUserPayload>({
         queryKey: ["me"],
         queryFn: getMyProfile,
-        staleTime: 10000
+        staleTime: 0, 
     })
 }
 

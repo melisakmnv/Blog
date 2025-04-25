@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "../ui/menubar"
 import { IUserPayload } from "@/interfaces/user.interface";
+import { toast } from "react-toastify";
 
 interface UserMenuProps {
     logout: () => void;
@@ -13,6 +14,13 @@ interface UserMenuProps {
 export const UserMenu = ({ logout, user }: UserMenuProps) => {
 
     const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        navigate("/login");
+        logout();
+        toast.success("Logout successfully");
+    };
+
 
     return (
         <>
@@ -33,7 +41,7 @@ export const UserMenu = ({ logout, user }: UserMenuProps) => {
                         <MenubarSeparator />
                         <MenubarItem inset>Settings</MenubarItem>
                         <MenubarSeparator />
-                        <MenubarItem onClick={logout} inset className="text-red-500 hover:text-red-500">Logout</MenubarItem>
+                        <MenubarItem onClick={handleLogout} inset className="text-red-500 hover:text-red-500">Logout</MenubarItem>
                     </MenubarContent>
                 </MenubarMenu>
             </Menubar>
