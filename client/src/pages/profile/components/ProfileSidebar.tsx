@@ -1,12 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IUserPayload } from "@/interfaces/user.interface"
 
-import useUserStore from "@/store/useUserStore";
 import { FollowButton } from "@/components/button/FollowButton";
 import { useFollowUser } from "@/hooks/user/useUserMutation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFetchUserFollowings } from "@/hooks/user/useUserQuery";
 import { FollowingList } from "./settings/FollowingList";
+import { useFetchMyProfile } from "@/hooks/useMe";
+import { Separator } from "@/components/ui/separator";
 
 interface ProfileSidebarProps {
     user: IUserPayload;
@@ -14,25 +15,39 @@ interface ProfileSidebarProps {
 
 export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
 
-    const { user: currentUser } = useUserStore();
     const { data: followings } = useFetchUserFollowings(user._id)
-    const { followUser } = useFollowUser()
+    const { data: me } = useFetchMyProfile()
 
-    const [isFollowing, setIsFollowing] = useState(() =>
-        user.followers.some(f => f._id === currentUser?._id)
-    );
 
-    const [countFollow, setCountFollow] = useState(user.followers.length);
-    
-    console.log(isFollowing)
+    // const checkFollow = useMemo(() => {
+    //     if (!me) return false;
+    //     return me.followings.some((followed) => followed._id === user._id);
+    // }, [me, user._id]);
+
+    const checkFollow = useMemo(() => {
+        if (!me) return false;
+        return me.followings.some((followed) => followed._id === user._id);
+      }, [me, user._id]);
+
+    const initialCount = user.followers.length;
+    const [count, setCount] = useState<number>(initialCount);
+    const [followed, setFollowed] = useState<boolean>(checkFollow)
+
+    const { mutationFollowUser, isLoading } = useFollowUser()
+
+    // Able to follow
+
+    console.log(followed)
+
+    useEffect(() => {
+        setFollowed(checkFollow);
+    }, [checkFollow]);
+
 
     const handleFollow = () => {
-        const newFollowState = !isFollowing;
-
-        // Update local UI immediately (optimistic update)
-        setIsFollowing(newFollowState);
-        setCountFollow(prev => newFollowState ? prev + 1 : Math.max(prev - 1, 0));
-        followUser(user._id);
+        mutationFollowUser(user._id);
+        setFollowed(prev => !prev);  // ← immediately flip the button follow state
+        setCount(prev => (followed ? prev - 1 : prev + 1));
     };
 
     return (
@@ -49,11 +64,12 @@ export const ProfileSidebar = ({ user }: ProfileSidebarProps) => {
                             <h2 className="text-neutral-800 font-semibold">{user.firstname} {user.lastname}</h2>
                             <h3 className="text-neutral-800 text-sm font-medium">{user.pseudonym}</h3>
                             <p className="text-neutral-500 text-[12px] font-normal">{user.tagline}</p>
-                            <p className="text-neutral-500 font-light">{countFollow} {countFollow > 1 ? 'Followers' : 'Follower'}</p>
+                            <p className="text-neutral-500 font-light">{count} {count > 1 ? 'Followers' : 'Follower'}</p>
                         </div>
                     </div>
 
-                    <FollowButton variant={"outline"} onClick={handleFollow} initialfollowed={isFollowing} />
+                    <FollowButton isLoading={isLoading} variant={"outline"} onClick={handleFollow} initialfollowed={followed} />
+                    <Separator className="bg-secondary" />
                     <FollowingList followings={followings} userId={user._id} />
                 </div>
 

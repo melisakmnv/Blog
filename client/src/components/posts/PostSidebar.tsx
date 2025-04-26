@@ -10,7 +10,8 @@ import { X } from "lucide-react";
 import { TAGS } from "@/data/tags";
 import { formatName } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
-import { useFetchUsers } from "@/hooks/user/useUserMutation";
+import { useFetchUsers } from "@/hooks/user/useUserQuery";
+
 
 interface PostSidebarProps {
 	filters: PostFilters;

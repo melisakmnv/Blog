@@ -18,12 +18,12 @@ const useUserStore = create<UserState>()(
         (set) => ({
             user: null,
             isAuthenticated: false,
-            // setUser: (user) => set({ user, isAuthenticated: true }),
-            setUser: (user) => set((state) => {
-                // prevent unnecessary re-renders if same user
-                if (JSON.stringify(state.user) === JSON.stringify(user)) return state;
-                return { user, isAuthenticated: true };
-            }),
+            setUser: (user) => set({ user, isAuthenticated: true }),
+            // setUser: (user) => set((state) => {
+            //     // prevent unnecessary re-renders if same user
+            //     if (JSON.stringify(state.user) === JSON.stringify(user)) return state;
+            //     return { user, isAuthenticated: true };
+            // }),
             logout: () => {
                 logoutUser();
                 queryClient.removeQueries();

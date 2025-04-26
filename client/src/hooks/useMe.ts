@@ -1,4 +1,5 @@
 import { getMyPosts, getMyProfile, getMySavedPosts } from "@/api/requests/me"
+import { MY_PROFILE_KEY, MY_SAVED_POSTS_KEY } from "@/constants/queryKey/user.query.key";
 import { IPost } from "@/interfaces/post.interface"
 import { IUserPayload } from "@/interfaces/user.interface"
 import useUserStore from "@/store/useUserStore";
@@ -9,7 +10,7 @@ export const useFetchMyProfile = () => {
     const setUser = useUserStore((state) => state.setUser);
 
     return useSuspenseQuery<IUserPayload>({
-        queryKey: ["me"],
+        queryKey: [MY_PROFILE_KEY],
         queryFn: async () => {
             const data = await getMyProfile();
             setUser(data);
@@ -22,7 +23,7 @@ export const useFetchMyProfile = () => {
 
 export const useFetchMySavedLists = () => {
     return useSuspenseQuery<IPost[]>({
-        queryKey: ["my-savedposts"],
+        queryKey: [MY_SAVED_POSTS_KEY],
         queryFn: getMySavedPosts,
         staleTime: 10000
     })

@@ -17,10 +17,10 @@ interface FollowingListProps {
 export const FollowingList = ({ followings, userId }: FollowingListProps) => {
 
     const { data: currentUser } = useFetchMyProfile()
-    const { followUser } = useFollowUser()
+    const { mutationFollowUser } = useFollowUser()
 
     const handleFollow = (userId: string) => {
-        followUser(userId)
+        mutationFollowUser(userId)
     }
 
     const isOwnProfile = currentUser?._id === userId;
@@ -114,7 +114,7 @@ const UserFollowingItem = ({ person, onFollow, isMe }: UserFollowingItemProps) =
                     </div>
                 </Link>
             </div>
-            <FollowButton initialfollowed={true} variant={"outline"} onClick={() => onFollow(person._id)} />
+            <FollowButton  initialfollowed={true} variant={"outline"} onClick={() => onFollow(person._id)} />
         </li>
     )
 }
