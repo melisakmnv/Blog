@@ -2,6 +2,7 @@ import { editUser, followUser, getUsers } from "@/api/requests/user";
 import { IUserPayload } from "@/interfaces/user.interface";
 import { UpdateProfileSchema } from "@/schema/user.schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
@@ -46,12 +47,14 @@ export const useFollowUser = () => {
 export const useEditUser = () => {
 
     const queryClient = useQueryClient()
+    const navigate = useNavigate()
 
     const mutation = useMutation({
         mutationFn: (values: UpdateProfileSchema) => editUser(values),
         onSuccess: () => {
             toast.success("Your profile has been updated")
             queryClient.invalidateQueries({ queryKey: ["me"] })
+            navigate(-1)
         },
         onError: (error: any) => {
             console.log(error.response?.data);
@@ -72,10 +75,10 @@ export interface UseFetchUsersOptions {
 }
 
 export const useFetchUsers = (options: UseFetchUsersOptions = {}) => {
-    const { 
-        page = 1, 
-        limit = 10, 
-        enabled = true 
+    const {
+        page = 1,
+        limit = 10,
+        enabled = true
     } = options;
 
     return useQuery<IUserPayload[]>({

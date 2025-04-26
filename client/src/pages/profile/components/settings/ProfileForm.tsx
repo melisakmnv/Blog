@@ -36,6 +36,7 @@ export const ProfileForm = () => {
 
     const onSubmit = (values: UpdateProfileSchema) => {
         editUser(values);
+        // navigate(-1)
     }
 
     const handleCancel = () => {
