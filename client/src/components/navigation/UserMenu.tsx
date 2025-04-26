@@ -39,7 +39,7 @@ export const UserMenu = ({ logout, user }: UserMenuProps) => {
                         <MenubarItem inset >Library</MenubarItem>
                         <MenubarItem inset>Story</MenubarItem>
                         <MenubarSeparator />
-                        <MenubarItem inset>Settings</MenubarItem>
+                        <MenubarItem onClick={() => navigate("/profile/me/settings")} inset>Settings</MenubarItem>
                         <MenubarSeparator />
                         <MenubarItem onClick={handleLogout} inset className="text-red-500 hover:text-red-500">Logout</MenubarItem>
                     </MenubarContent>
