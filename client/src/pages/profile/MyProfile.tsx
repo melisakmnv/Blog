@@ -12,9 +12,8 @@ import useUserStore from "@/store/useUserStore";
 
 export const MyProfile = () => {
 
-    // const { data: user } = useFetchMyProfile()
-    const {user} = useUserStore()
-
+    const { user } = useUserStore();
+ 
     return (
         <main>
             <section className="flex">

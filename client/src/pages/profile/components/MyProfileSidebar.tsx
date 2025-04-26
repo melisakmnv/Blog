@@ -25,8 +25,9 @@ export const MyProfileSidebar = ({ user }: ProfileSidebarProps) => {
                             <AvatarFallback>Publisher Avatar</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col gap-2 mt-4">
-                            <h2 className="text-neutral-800 font-medium">{user.firstname} {user.lastname}</h2>
-                            <p className="text-neutral-500 text-sm font-light">{user.bio}</p>
+                            <h2 className="text-neutral-800 font-semibold">{user.firstname} {user.lastname}</h2>
+                            <h3 className="text-neutral-800 text-sm font-medium">{user.pseudonym}</h3>
+                            <p className="text-neutral-500 text-[12px] font-normal">{user.tagline}</p>
                         </div>
                     </div>
 
