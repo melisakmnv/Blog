@@ -26,6 +26,8 @@ import { MyProfile } from './pages/profile/MyProfile.tsx';
 import { SettingsPage } from './pages/profile/SettingPage.tsx';
 import { ProtectedRoutes } from './components/navigation/ProtectedRoutes.tsx';
 import { NotFound } from './pages/NotFound.tsx';
+import { TestUserList } from './testing/TestUserList.tsx';
+import { TestUserProfilePage } from './testing/TestProfile.tsx';
 
 
 const router = createBrowserRouter(
@@ -37,6 +39,14 @@ const router = createBrowserRouter(
                 {
                     path: "*",
                     element: <NotFound />
+                },
+                {
+                    path: "/test",
+                    element: <TestUserList />
+                },
+                {
+                    path: "/test/:username",
+                    element: <TestUserProfilePage />
                 },
                 {
                     path: "/",
