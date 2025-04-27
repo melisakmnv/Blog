@@ -7,6 +7,7 @@ import { Suspense } from "react";
 
 import { FeaturedPosts } from "./components/FeaturedPosts";
 import { FeaturedPostSkeletons } from "@/components/skeleton/Skeletons";
+import { NewestPost } from "@/components/home/NewestPost";
 
 
 export const HomeT = () => {
@@ -15,7 +16,7 @@ export const HomeT = () => {
             <Header />
             <section className="flex flex-col gap-4">
                 <h2 className="font-Montserrat font-bold text-xl">Newest post</h2>
-                {/* <NewestPost /> */}
+                <NewestPost />
             </section>
             <section className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
