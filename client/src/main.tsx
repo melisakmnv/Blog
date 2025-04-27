@@ -26,12 +26,12 @@ import { MyProfile } from './pages/profile/MyProfile.tsx';
 import { SettingsPage } from './pages/profile/SettingPage.tsx';
 import { ProtectedRoutes } from './components/navigation/ProtectedRoutes.tsx';
 import { NotFound } from './pages/NotFound.tsx';
-<<<<<<< HEAD
-import { TestUserList } from './testing/TestUserList.tsx';
-import { TestUserProfilePage } from './testing/TestProfile.tsx';
-=======
 import { HomeT } from './pages/home/HomeT.tsx';
->>>>>>> c44e3ecfce11b03fdf34bafa466c2b8cf944db71
+
+
+import { FollowerProfile, TestUserFollowersFetch } from './testing/TestUserFollowersFetch.tsx';
+
+
 
 
 const router = createBrowserRouter(
@@ -46,11 +46,11 @@ const router = createBrowserRouter(
                 },
                 {
                     path: "/test",
-                    element: <TestUserList />
+                    element: <TestUserFollowersFetch />
                 },
                 {
                     path: "/test/:username",
-                    element: <TestUserProfilePage />
+                    element: <FollowerProfile />
                 },
                 {
                     path: "/",

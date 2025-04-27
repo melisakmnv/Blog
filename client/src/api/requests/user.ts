@@ -74,20 +74,64 @@ export const getUsers = async (
 
 
 
-// GET MY FOLLOWINGS LIST //
-export const getUserFollowings = async (id: string): Promise<IUserSummary[]> => {
+// // GET MY FOLLOWINGS LIST //
+// export const getUserFollowings = async (id: string): Promise<IUserSummary[]> => {
+
+//     try {
+//         const { data } = await axiosInstance.get(`/users/${id}/followings`, {
+//             withCredentials: true,
+//         });
+
+//         return data
+
+//     } catch (error) {
+//         console.error("❌ Error during fetching following list:", error);
+//         throw error;
+//     }
+// }
+
+
+
+
+export interface UserListResponse {
+    payload: IUserSummary[];
+    currentPage: number;
+    totalPages: number;
+    totalPayload: number;
+}
+
+
+// GET USER FOLLOWERS LIST //  TESTED 
+export const getUserFollowers = async (id: string, page: number, limit: number): Promise<UserListResponse> => {
 
     try {
-        const { data } = await axiosInstance.get(`/users/${id}/followings`, {
+        const { data } = await axiosInstance.get(`/users/${id}/followers`, {
+            params: { page, limit },
             withCredentials: true,
         });
 
         return data
 
     } catch (error) {
-        console.error("❌ Error during fetching following list:", error);
+        console.log(error)
+        console.error("❌ Error during fetching followers list:", error);
         throw error;
     }
 }
 
+export const getUserFollowings = async (id: string, page: number, limit: number): Promise<UserListResponse> => {
 
+    try {
+        const { data } = await axiosInstance.get(`/users/${id}/followings`, {
+            params: { page, limit },
+            withCredentials: true,
+        });
+
+        return data
+
+    } catch (error) {
+        console.log(error)
+        console.error("❌ Error during fetching followings list:", error);
+        throw error;
+    }
+}

@@ -4,10 +4,6 @@ import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { TooltipProvider } from './components/ui/tooltip'
 import { ScrollToTop } from './components/ScrollTop'
-<<<<<<< HEAD
-=======
-
->>>>>>> c44e3ecfce11b03fdf34bafa466c2b8cf944db71
 import ErrorBoundary from './components/ErrorBoundary'
 
 
