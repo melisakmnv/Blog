@@ -23,7 +23,7 @@ export const useFetchPosts = () => {
 
 
 export const useGetPostBySlug = (slug: string) => {
-    return useSuspenseQuery<IPost>({
+    return useQuery<IPost>({
         queryKey: ["posts", slug],
         queryFn: () => getPostDetails(slug),
     });
