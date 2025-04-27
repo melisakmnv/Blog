@@ -1,3 +1,4 @@
+
 import { Skeleton } from "../ui/skeleton"
 
 
@@ -45,3 +46,32 @@ export const ProfileAsideSkeleton = () => {
 }
 
 
+
+export const FeaturedPostSkeletons = () => {
+    return (
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className="rounded-lg overflow-hidden border border-border bg-background flex flex-col">
+            {/* Image */}
+            <Skeleton className="w-full h-[200px]" />
+  
+            {/* Content */}
+            <div className="p-4 space-y-4">
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+            </div>
+  
+            {/* Footer */}
+            <div className="flex justify-between items-center p-4 border-t">
+              <div className="flex items-center gap-3">
+                <Skeleton className="h-10 w-10 rounded-full" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+              <Skeleton className="h-10 w-10 rounded-full" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };

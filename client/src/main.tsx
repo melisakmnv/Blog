@@ -15,7 +15,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 
-import { Home } from './pages/Home.tsx';
+// import { Home } from './pages/Home.tsx';
 import { Login } from './pages/connexion/Login.tsx';
 import { Posts } from './pages/posts/Posts.tsx';
 import { Post } from './pages/posts/Post.tsx';
@@ -26,6 +26,7 @@ import { MyProfile } from './pages/profile/MyProfile.tsx';
 import { SettingsPage } from './pages/profile/SettingPage.tsx';
 import { ProtectedRoutes } from './components/navigation/ProtectedRoutes.tsx';
 import { NotFound } from './pages/NotFound.tsx';
+import { HomeT } from './pages/home/HomeT.tsx';
 
 
 const router = createBrowserRouter(
@@ -40,7 +41,7 @@ const router = createBrowserRouter(
                 },
                 {
                     path: "/",
-                    element: <Home />
+                    element: <HomeT />
                 },
                 {
                     path: "/login",
