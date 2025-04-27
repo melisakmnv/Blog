@@ -16,8 +16,6 @@ export const TestUserProfilePage = () => {
     const { data: posts, isLoading: postsLoading } = useFetchMyPosts(user._id);
 
 
-    console.log('userLoading:', userLoading);  // Debugging output
-    console.log('user:', user);
     if (userLoading) return <div>Loading user profile...</div>;
 
     if (followingsLoading) return <div>Loading...</div>;
