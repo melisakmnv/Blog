@@ -1,11 +1,13 @@
 
-import { Outlet } from 'react-router-dom'
-import { Navbar } from './components/Navbar'
-import { Footer } from './components/Footer'
-import { TooltipProvider } from './components/ui/tooltip'
-import { ScrollToTop } from './components/ScrollTop'
+// import { Outlet } from 'react-router-dom'
+// import { Navbar } from './old/components/Navbar'
+// import { Footer } from './old/components/Footer'
 
-import ErrorBoundary from './components/ErrorBoundary'
+import { Outlet } from 'react-router-dom'
+import ErrorBoundary from './old/components/ErrorBoundary'
+import { ScrollToTop } from './old/components/ScrollTop'
+import { TooltipProvider } from './old/components/ui/tooltip'
+
 
 function App() {
     return (
@@ -13,9 +15,7 @@ function App() {
                 <TooltipProvider>
                     <ScrollToTop />
                     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-                        <Navbar />
                         <Outlet />
-                        <Footer />
                     </div>
                 </TooltipProvider>
         </ErrorBoundary>
