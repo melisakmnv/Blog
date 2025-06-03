@@ -1,7 +1,5 @@
 import { axiosInstance } from "../instance";
 
-
-
 export interface IUserProfile {
     _id: string;
     firstname: string;
@@ -11,10 +9,11 @@ export interface IUserProfile {
     username: string;
     avatar: string;
     bio: string;
+    followers: string[];
+    followings: string[];
 }
 
 export interface IPost {
-
     _id: string;
     author: IUserProfile;
     title: string;
@@ -31,12 +30,8 @@ export interface IPost {
     slug: string;
 }
 
-
-
-
 export const getUserProfile = async (username: string): Promise<IUserProfile> => {
     try {
-
         const { data } = await axiosInstance.get(`/users/${username}`)
         return data
 

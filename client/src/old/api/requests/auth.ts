@@ -1,5 +1,5 @@
-import { SigninSchema } from "@/old/pages/connexion/Login";
-import { RegisterSchema } from "@/old/pages/connexion/Register"; 
+import { SigninSchema } from "@/new/pages/connexion/Login";
+import { RegisterSchema } from "@/new/pages/connexion/Register"; 
 import { axiosInstance } from "../instance";
 import { toast } from "react-toastify";
 

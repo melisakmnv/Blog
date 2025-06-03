@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { signup } from "../old/api/requests/auth";
-import { RegisterSchema } from "@/old/pages/connexion/Register";
+import { RegisterSchema } from "@/new/pages/connexion/Register";
 import { AxiosError } from "axios";
 import useUserStore from "@/old/store/useUserStore";
 interface ApiErrorResponse {

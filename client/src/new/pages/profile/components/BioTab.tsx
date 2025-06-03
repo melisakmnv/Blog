@@ -1,5 +1,5 @@
 import { IUserProfile } from "@/new/api/request/user";
-import { Separator } from "@/old/components/ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { useParams } from "react-router-dom";
 
 interface BioTabProps {
@@ -7,8 +7,8 @@ interface BioTabProps {
 }
 export const BioTab = ({ user }: BioTabProps) => {
 
-    // const followers = user.followers.length;
-    // const followings = user.followings.length;
+    const followers = user.followers.length;
+    const followings = user.followings.length;
 
     const { username } = useParams()
 
@@ -35,8 +35,8 @@ export const BioTab = ({ user }: BioTabProps) => {
                 )
             }
             <Separator className="bg-secondary" />
-            {/* <p className="text-sm text-neutral-600 hover:underline cursor-pointer">{followers} Follower{followers > 1 && "s"}&nbsp; · &nbsp;{followings} Following{followings > 1 && "s"}</p> */}
-            <p className="text-sm text-neutral-600 hover:underline cursor-pointer">35K Followers&nbsp; · &nbsp;16K Followings</p>
+            <p className="text-sm text-neutral-600 hover:underline cursor-pointer">{followers} Follower{followers > 1 && "s"}&nbsp; · &nbsp;{followings} Following{followings > 1 && "s"}</p>
+            {/* <p className="text-sm text-neutral-600 hover:underline cursor-pointer">35K Followers&nbsp; · &nbsp;16K Followings</p> */}
         </div>
     )
 }

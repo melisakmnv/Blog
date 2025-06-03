@@ -1,7 +1,7 @@
 import { IPost } from "@/new/api/request/user";
-import { CoverImage } from "@/old/components/CoverImage";
-import { Avatar, AvatarFallback, AvatarImage } from "@/old/components/ui/avatar";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/old/components/ui/card";
+import { CoverImage } from "@/components/CoverImage";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { formattedDate } from "@/old/lib/utils";
 
 

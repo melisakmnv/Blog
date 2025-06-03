@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query"
-import { useParams } from "react-router-dom"
 import { useMemo } from "react"
 
 import { getUserFollowings, getUserPosts, getUserProfile, IPost, IUserProfile } from "@/new/api/request/user"
@@ -10,19 +9,17 @@ import { FollowingList } from "./components/FollowingList"
 import { UserInfo } from "./components/UserInfo"
 import { BioTab } from "./components/BioTab"
 import { PostsTab } from "./components/PostsTab"
+import { getMyFollowings, getMyPosts, getMyProfile } from "@/new/api/request/me"
 
-const Profile = () => {
-
-    const { username } = useParams<{ username: string }>()
+const MyProfile = () => {
 
     const {
         data: user,
         isLoading: userLoading,
         error: userError
     } = useQuery<IUserProfile>({
-        queryKey: ["userProfile", username],
-        queryFn: () => getUserProfile(username!),
-        enabled: !!username
+        queryKey: ["userProfile"],
+        queryFn: () => getMyProfile(),
     })
 
     const {
@@ -30,9 +27,8 @@ const Profile = () => {
         isLoading: postsLoading,
         error: postsError
     } = useQuery<IPost[]>({
-        queryKey: ["userPosts", username],
-        queryFn: () => getUserPosts(username!),
-        enabled: !!username
+        queryKey: ["userPosts"],
+        queryFn: () => getMyPosts(),
     })
 
     const {
@@ -40,9 +36,8 @@ const Profile = () => {
         isLoading: followingsLoading,
         error: followingsError
     } = useQuery<IUserProfile[]>({
-        queryKey: ["userFollowings", username],
-        queryFn: () => getUserFollowings(username!),
-        enabled: !!username
+        queryKey: ["userFollowings"],
+        queryFn: () => getMyFollowings(),
     })
 
     const isLoading = useMemo(() => userLoading || postsLoading || followingsLoading, [userLoading, postsLoading, followingsLoading])
@@ -86,5 +81,5 @@ const Profile = () => {
     )
 }
 
-export default Profile
+export default MyProfile
 
