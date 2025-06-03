@@ -14,7 +14,6 @@ export const getMyProfile = async (): Promise<IUserProfile> => {
 
 export const getMyPosts = async (): Promise<IPost[]> => {
     try {
-
         const { data } = await axiosInstance.get("/users/me/posts")
         return data
 
@@ -22,6 +21,18 @@ export const getMyPosts = async (): Promise<IPost[]> => {
         console.error("❌ Error during fetching my posts:", error);
         throw error;
     }
+}
+
+export const getMySavedPosts = async (): Promise<IPost[]> => {
+    try {
+        const { data } = await axiosInstance.get("/users/me/saved-posts")
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during fetching my saved posts:", error);
+        throw error;
+    }
+
 }
 
 export const getMyFollowings = async (): Promise<IUserProfile[]> => {

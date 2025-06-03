@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
 
-import { getUserFollowings, getUserPosts, getUserProfile, IPost, IUserProfile } from "@/new/api/request/user"
+import { IPost, IUserProfile } from "@/new/api/request/user"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -9,7 +9,7 @@ import { FollowingList } from "./components/FollowingList"
 import { UserInfo } from "./components/UserInfo"
 import { BioTab } from "./components/BioTab"
 import { PostsTab } from "./components/PostsTab"
-import { getMyFollowings, getMyPosts, getMyProfile } from "@/new/api/request/me"
+import { getMyFollowings, getMyPosts, getMyProfile, getMySavedPosts } from "@/new/api/request/me"
 
 const MyProfile = () => {
 
@@ -32,6 +32,15 @@ const MyProfile = () => {
     })
 
     const {
+        data: savedPosts,
+        isLoading: savedPostsLoading,
+        error: savedPostsError
+    } = useQuery<IPost[]>({
+        queryKey: ["userSavedPosts"],
+        queryFn: () => getMySavedPosts()
+    })
+
+    const {
         data: followings,
         isLoading: followingsLoading,
         error: followingsError
@@ -40,8 +49,8 @@ const MyProfile = () => {
         queryFn: () => getMyFollowings(),
     })
 
-    const isLoading = useMemo(() => userLoading || postsLoading || followingsLoading, [userLoading, postsLoading, followingsLoading])
-    const hasError = useMemo(() => userError || postsError || followingsError, [userError, postsError, followingsError])
+    const isLoading = useMemo(() => userLoading || postsLoading || followingsLoading || savedPostsLoading, [userLoading, postsLoading, followingsLoading, savedPostsLoading])
+    const hasError = useMemo(() => userError || postsError || followingsError || savedPostsError, [userError, postsError, followingsError, savedPostsError])
 
 
     if (isLoading) return <p>Loading full profile...</p>;
@@ -53,12 +62,16 @@ const MyProfile = () => {
             <div className="flex-2 px-20">
                 <h1 className="text-5xl capitalize font-semiBold font-Poppins text-neutral-800 my-10">{user?.firstname} {user?.lastname}</h1>
                 <Tabs defaultValue="home">
-                    <TabsList className="grid w-full grid-cols-2 mb-10">
+                    <TabsList className="grid w-full grid-cols-3 mb-10">
                         <TabsTrigger value="home">Home</TabsTrigger>
+                        <TabsTrigger value="saved">Saved Posts</TabsTrigger>
                         <TabsTrigger value="bio">Bio</TabsTrigger>
                     </TabsList>
                     <TabsContent value="home">
                         <PostsTab posts={posts!} />
+                    </TabsContent>
+                    <TabsContent value="saved">
+                        <PostsTab posts={savedPosts!} />
                     </TabsContent>
                     <TabsContent value="bio">
                         <BioTab user={user!} />
