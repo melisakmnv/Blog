@@ -11,7 +11,7 @@ import { OptionsMenu } from "@/components/card/BlogMenuBar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useDeleteComment, useLikeComment } from "@/hooks/useComment";
+import { useDeleteComment, useLikeComment } from "@/old/hooks/useComment";
 import { useState } from "react";
 import { CommentEditForm } from "./CommentForm";
 

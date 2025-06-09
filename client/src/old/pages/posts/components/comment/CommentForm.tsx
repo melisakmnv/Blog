@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import useUserStore from "@/old/store/useUserStore"
-import { useCreateComment, useEditComment } from "@/hooks/useComment"
+
 import { commentSchema, CommentFormSchema } from "@/old/schema/comment.schema"
 
 import { Button } from "@/components/ui/button"
@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Textarea } from "@/components/ui/textarea"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { IComment } from "@/old/interfaces/comment.interface"
+import { useCreateComment, useEditComment } from "@/old/hooks/useComment"
 
 
 interface CommentFormProps {

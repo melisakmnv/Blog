@@ -7,7 +7,10 @@
 
 
 :root {
-	--background: oklch(0.99 0.01 56.32);
+	/* --background: oklch(0.99 0.01 56.32); */
+	/* --background: #A66C6B; */
+	/* --background: #CFDFC2; */
+	--background: #FFE0B1;
 	--foreground: oklch(0.34 0.01 2.77);
 	--card: oklch(1.00 0 0);
 	--card-foreground: oklch(0.34 0.01 2.77);
@@ -182,3 +185,23 @@
 .word-spacing {
     word-spacing: 5px;
 }
+
+
+@keyframes bounceBackUp {
+    0% {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 0 #c53030;
+    }
+    50% {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 0 0 #c53030;
+    }
+    100% {
+      transform: translateY(0);
+      box-shadow: 0 4px 0 0 #c53030;
+    }
+  }
+
+  .animate-bounce-back {
+    animation: bounceBackUp 300ms cubic-bezier(0.25, 1.5, 0.5, 1);
+  }

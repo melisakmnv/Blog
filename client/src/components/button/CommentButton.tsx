@@ -1,4 +1,3 @@
-import { IPost } from "@/old/interfaces/post.interface";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import { Button } from "../ui/button";
 import { Drawer, DrawerTrigger } from "../ui/drawer";
@@ -7,6 +6,7 @@ import { FaRegComment, FaComment } from "react-icons/fa";
 
 import { CommentSidebar } from "@/old/pages/posts/components/comment/CommentSidebar";
 import { IComment } from "@/old/interfaces/comment.interface";
+import { IPost } from "@/new/api/request/user";
 
 
 interface CommentButtonProps {

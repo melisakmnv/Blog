@@ -18,6 +18,7 @@ import Profile from './new/pages/profile/Profile.tsx';
 import { Login } from './new/pages/connexion/Login.tsx';
 import { ProtectedRoutes } from './components/navigation/ProtectedRoutes.tsx';
 import MyProfile from './new/pages/profile/MyProfile.tsx';
+import Post from './new/pages/posts/Post.tsx';
 
 
 // import { Home } from './pages/Home.tsx';
@@ -64,10 +65,10 @@ const router = createBrowserRouter(
                 //     path: "/posts",
                 //     element: <Posts />
                 // },
-                // {
-                //     path: "/posts/:slug",
-                //     element: <Post />
-                // },
+                {
+                    path: "/posts/:slug",
+                    element: <Post />
+                },
                 // {
                 //     path: "/profile/:username",
                 //     element: <UserProfile />

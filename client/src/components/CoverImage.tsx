@@ -3,11 +3,11 @@
 interface CoverImageProps {
     src: string;
     size? : string;
-
+    className? : string;
 }
 
-export const CoverImage = ({ src }: CoverImageProps) => {
+export const CoverImage = ({ src, className }: CoverImageProps) => {
     return (
-        <img className="object-cover w-full" src={src} alt="Post Cover" />
+        <img className={`object-cover w-full ${className}`} src={src} alt="Post Cover" />
     )
 }

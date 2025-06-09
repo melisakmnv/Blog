@@ -22,9 +22,9 @@ export interface IPost {
     content: string;
     readingTime: string;
     tag: string;
-    likes: IUserProfile[];
-    savedBy: IUserProfile[];
-    comments: [];
+    likes: string[];
+    savedBy: string[];
+    comments: string[];
     createdAt: string;
     updatedAt: string;
     slug: string;
@@ -58,6 +58,18 @@ export const getUserFollowings = async (username: string): Promise<IUserProfile[
     try {
 
         const { data } = await axiosInstance.get(`/users/${username}/followings`)
+        return data
+
+    } catch (error) {
+        console.error("❌ Error during fetching:", error);
+        throw error;
+    }
+}
+
+export const checkISFollowing = async (userId: string) => {
+    try {
+
+        const { data } = await axiosInstance.get(`/users/${userId}/is-following`)
         return data
 
     } catch (error) {
